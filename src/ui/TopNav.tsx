@@ -42,11 +42,11 @@ export const TopNav: React.FC<TopNavProps> = ({
           className="flex items-center gap-2.5 group focus-visible:outline-none rounded-[var(--radius-sm)]"
           aria-label="דף הבית"
         >
-          <span className="flex items-center justify-center h-11 w-11 flex-shrink-0">
+          <span className="flex items-center justify-center h-11 w-11 flex-shrink-0 overflow-visible">
             <img
               src={logoIcon}
               alt="Eliaz Selam"
-              className="h-8 w-8 object-contain"
+              className="h-10 w-10 object-contain"
             />
           </span>
           <span className="hidden md:inline font-semibold tracking-tight text-[hsl(var(--ink-900))]">
