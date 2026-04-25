@@ -1,0 +1,7 @@
+{
+  "name": "Engineering Mastery",
+  "description": "The ultimate engineering learning platform with interactive simulations, Spaced Repetition, and 30 unique daily lessons across control, robotics, and physics.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

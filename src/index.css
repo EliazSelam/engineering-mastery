@@ -1,0 +1,378 @@
+@import "tailwindcss";
+
+/*
+═══════════════════════════════════════════════════════════════════════════
+  ENGINEERING MASTERY — DESIGN SYSTEM V2
+  Editorial Premium · Lumina × Eliaz
+  Inspired by: Stripe, Linear, Vercel, The New York Times
+═══════════════════════════════════════════════════════════════════════════
+*/
+
+@theme {
+  /* ───── Type stack ──────────────────────────────────────────── */
+  --font-sans: "Inter", "Heebo", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", "Playfair Display", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* ───── Fluid type scale (clamp-based, editorial) ─────────── */
+  --text-eyebrow: 0.6875rem;    /* 11px — uppercase tracked labels */
+  --text-meta:    0.75rem;      /* 12px — captions, meta */
+  --text-sm:      0.875rem;     /* 14px — body small */
+  --text-base:    1rem;         /* 16px — body */
+  --text-lead:    1.125rem;     /* 18px — lead paragraph */
+  --text-h4:      1.25rem;      /* 20px */
+  --text-h3:      1.5rem;       /* 24px */
+  --text-h2:      2rem;         /* 32px */
+  --text-h1:      clamp(2.25rem, 3vw + 1.5rem, 3.5rem);
+  --text-display: clamp(2.75rem, 4vw + 2rem, 4.75rem);
+
+  /* ───── Spacing scale (8pt + editorial gutters) ───────────── */
+  --space-0:   0;
+  --space-1:   0.25rem;   /* 4  */
+  --space-2:   0.5rem;    /* 8  */
+  --space-3:   0.75rem;   /* 12 */
+  --space-4:   1rem;      /* 16 */
+  --space-5:   1.5rem;    /* 24 */
+  --space-6:   2rem;      /* 32 */
+  --space-7:   3rem;      /* 48 */
+  --space-8:   4rem;      /* 64 */
+  --space-9:   6rem;      /* 96 */
+  --space-10:  8rem;      /* 128 — hero padding */
+
+  /* ───── Radii (refined, no more rounded-3xl everywhere) ──── */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+  --radius-pill: 999px;
+
+  /* ───── Motion tokens ─────────────────────────────────────── */
+  --ease-standard:  cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-emphasize: cubic-bezier(0.2, 0, 0, 1);
+  --ease-accel:     cubic-bezier(0.4, 0, 1, 1);
+  --dur-fast:   120ms;
+  --dur-base:   200ms;
+  --dur-slow:   420ms;
+  --dur-xslow:  720ms;
+}
+
+/*
+───── Color System (HSL components, light theme) ───────────────────────
+Editorial palette: warm ink scale, restrained accents.
+Brand colors from LUMINA × ELIAZ preserved (Coral / Deep Blue / Gold).
+*/
+:root {
+  /* Brand accents — used sparingly */
+  --color-primary:        14 92% 59%;    /* #FF6B35 Coral */
+  --color-primary-soft:   14 95% 96%;    /* Coral 50 */
+  --color-primary-ink:    14 70% 42%;    /* Coral 700 (for text on light) */
+
+  --color-secondary:      207 100% 27%;  /* #004E89 Deep Blue */
+  --color-secondary-soft: 207 85% 96%;
+  --color-secondary-ink:  207 85% 22%;
+
+  --color-accent:         43 97% 49%;    /* #F7B801 Gold */
+  --color-accent-soft:    43 95% 95%;
+  --color-accent-ink:     36 75% 32%;
+
+  /* Editorial ink scale (warm neutral, not blue-tinted) */
+  --ink-950: 24 10%  8%;
+  --ink-900: 24 10%  14%;
+  --ink-800: 24 9%   20%;   /* #2E2E2E-ish — body text */
+  --ink-700: 24 8%   30%;
+  --ink-600: 24 7%   42%;
+  --ink-500: 24 6%   55%;   /* muted text */
+  --ink-400: 24 6%   68%;
+  --ink-300: 24 8%   82%;   /* borders */
+  --ink-200: 28 14%  91%;   /* subtle fills */
+  --ink-100: 32 30%  95%;   /* surface-2 */
+  --ink-50:  36 40%  98%;   /* canvas */
+
+  /* Semantic aliases (back-compat for existing components) */
+  --color-bg:          var(--ink-50);
+  --color-surface:     0 0% 100%;
+  --color-surface-2:   var(--ink-100);
+  --color-surface-3:   var(--ink-200);
+  --color-border:      var(--ink-300);
+  --color-border-strong: var(--ink-400);
+  --color-text:        var(--ink-800);
+  --color-text-muted:  var(--ink-600);
+  --color-text-faint:  var(--ink-500);
+
+  --color-primary-hover: 14 90% 54%;
+
+  /* State colors */
+  --color-success: 152 58% 38%;
+  --color-success-soft: 152 55% 94%;
+  --color-warning: 35 92% 50%;
+  --color-warning-soft: 35 95% 95%;
+  --color-error:   0 72% 50%;
+  --color-error-soft: 0 75% 96%;
+  --color-info:    207 85% 46%;
+  --color-info-soft: 207 85% 96%;
+
+  /* Pastels (for category chips, legacy compatibility) */
+  --color-pastel-teal:   174 60% 93%;
+  --color-pastel-purple: 265 55% 94%;
+  --color-pastel-amber:  38 90% 93%;
+  --color-pastel-green:  142 55% 93%;
+  --color-pastel-red:    4 75% 94%;
+  --color-pastel-blue:   210 70% 93%;
+
+  /* Elevation — 5 tiers, editorial (low diffusion, crisp) */
+  --shadow-e0: none;
+  --shadow-e1: 0 1px 2px hsl(var(--ink-950) / 0.04), 0 1px 1px hsl(var(--ink-950) / 0.02);
+  --shadow-e2: 0 1px 3px hsl(var(--ink-950) / 0.06), 0 2px 6px hsl(var(--ink-950) / 0.04);
+  --shadow-e3: 0 4px 12px hsl(var(--ink-950) / 0.08), 0 2px 4px hsl(var(--ink-950) / 0.04);
+  --shadow-e4: 0 12px 32px hsl(var(--ink-950) / 0.10), 0 4px 12px hsl(var(--ink-950) / 0.06);
+  --shadow-e5: 0 24px 60px hsl(var(--ink-950) / 0.14), 0 8px 20px hsl(var(--ink-950) / 0.08);
+
+  /* Focus ring */
+  --ring-color: hsl(var(--color-primary) / 0.4);
+  --ring-offset: 2px;
+
+  /* Legacy radius alias */
+  --radius: var(--radius-xl);
+}
+
+/*
+───── Base layer ───────────────────────────────────────────────
+*/
+@layer base {
+  html {
+    font-feature-settings: "ss01", "cv11", "cv03", "kern";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: hsl(var(--color-bg));
+    color: hsl(var(--color-text));
+    font-family: var(--font-sans);
+    direction: rtl;
+    font-size: var(--text-base);
+    line-height: 1.6;
+  }
+
+  /* Headings: tight tracking, display-grade */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: hsl(var(--ink-900));
+  }
+
+  /* Editorial serif on demand */
+  .font-display {
+    font-family: var(--font-display);
+    font-feature-settings: "ss01", "ss02", "liga";
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+
+  /* Consistent selection */
+  ::selection {
+    background: hsl(var(--color-primary) / 0.2);
+    color: hsl(var(--color-primary-ink));
+  }
+
+  /* Focus: visible and editorial */
+  :focus-visible {
+    outline: 2px solid var(--ring-color);
+    outline-offset: var(--ring-offset);
+    border-radius: var(--radius-sm);
+  }
+
+  /* Remove default button focus outlines (we handle via :focus-visible) */
+  button:focus { outline: none; }
+}
+
+/*
+───── Utility classes ────────────────────────────────────────────
+*/
+.eyebrow {
+  font-size: var(--text-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--color-text-faint));
+}
+
+.lead {
+  font-size: var(--text-lead);
+  line-height: 1.65;
+  color: hsl(var(--color-text-muted));
+  font-weight: 400;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "zero", "ss01";
+}
+
+/* Subtle grain overlay for editorial backgrounds */
+.grain {
+  position: relative;
+}
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Editorial divider */
+.rule {
+  height: 1px;
+  background: hsl(var(--color-border));
+  border: none;
+  margin: 0;
+}
+.rule-heavy {
+  height: 1px;
+  background: hsl(var(--ink-800));
+  border: none;
+}
+
+/* Card primitive hook */
+.card {
+  background: hsl(var(--color-surface));
+  border: 1px solid hsl(var(--color-border));
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-e1);
+  transition: box-shadow var(--dur-base) var(--ease-standard),
+              border-color var(--dur-base) var(--ease-standard),
+              transform var(--dur-base) var(--ease-standard);
+}
+.card:hover {
+  box-shadow: var(--shadow-e3);
+  border-color: hsl(var(--color-border-strong));
+}
+.card-interactive:hover {
+  transform: translateY(-2px);
+}
+
+/* Glass — used sparingly for floating elements */
+.glass {
+  background: hsl(var(--color-surface) / 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid hsl(var(--color-border) / 0.6);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--ink-300));
+  border-radius: var(--radius-pill);
+  border: 2px solid hsl(var(--color-bg));
+}
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--ink-400)); }
+
+/* Tight prose for DayPage body copy */
+.prose-editorial {
+  font-size: var(--text-lead);
+  line-height: 1.75;
+  color: hsl(var(--color-text));
+}
+.prose-editorial p {
+  margin-block: 0.75em;
+  max-width: 66ch;
+}
+.prose-editorial strong { color: hsl(var(--ink-900)); font-weight: 600; }
+.prose-editorial em { font-style: italic; color: hsl(var(--color-text-muted)); }
+.prose-editorial code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: hsl(var(--color-surface-2));
+  padding: 0.125em 0.375em;
+  border-radius: var(--radius-xs);
+  color: hsl(var(--color-primary-ink));
+}
+
+/* Pill / chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: hsl(var(--color-surface-2));
+  color: hsl(var(--color-text-muted));
+  border: 1px solid hsl(var(--color-border));
+}
+
+/* Grid utility for editorial layouts */
+.grid-editorial {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+/* KaTeX override: inherit color, feel like native type */
+.katex { font-size: 1.05em; }
+.katex-display { margin: 1em 0; overflow-x: auto; overflow-y: hidden; }
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Gentle reveal animation for page mounts */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.rise-in { animation: rise-in var(--dur-slow) var(--ease-standard) both; }
+
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--color-primary) / 0.4); }
+  50%      { box-shadow: 0 0 0 8px hsl(var(--color-primary) / 0); }
+}
+.pulse-ring { animation: pulse-ring 2.4s var(--ease-standard) infinite; }
+
+/* Print styles (for PDF export of summary) */
+@media print {
+  body { background: white; }
+  .no-print { display: none !important; }
+  .card { box-shadow: none; border: 1px solid hsl(var(--ink-300)); }
+  header, nav { display: none !important; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

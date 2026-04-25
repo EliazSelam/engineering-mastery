@@ -2,7 +2,6 @@ import React from 'react';
 import { useLocation } from 'wouter';
 import { cn } from '@/src/lib/utils';
 import { Home as HomeIcon, Flame, ChevronLeft } from 'lucide-react';
-import logoIcon from '../../public/logo-icon.png';
 
 interface TopNavProps {
   streak?: number;
@@ -42,11 +41,9 @@ export const TopNav: React.FC<TopNavProps> = ({
           className="flex items-center gap-2.5 group focus-visible:outline-none rounded-[var(--radius-sm)]"
           aria-label="דף הבית"
         >
-          <img
-            src={logoIcon}
-            alt="Eliaz Selam"
-            className="h-10 w-10 object-contain"
-          />
+          <div className="w-8 h-8 rounded-[var(--radius-md)] bg-[hsl(var(--ink-900))] text-[hsl(var(--ink-50))] flex items-center justify-center font-display font-semibold text-sm">
+            E
+          </div>
           <span className="hidden md:inline font-semibold tracking-tight text-[hsl(var(--ink-900))]">
             Engineering Mastery
           </span>
