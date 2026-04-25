@@ -16,10 +16,17 @@ export default function FeedbackForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const feedbacks = JSON.parse(localStorage.getItem('user_feedbacks') ?? '[]');
-    feedbacks.push({ ...feedback, timestamp: Date.now() });
-    localStorage.setItem('user_feedbacks', JSON.stringify(feedbacks));
-    setSubmitted(true);
+    try {
+      const feedbacks = JSON.parse(localStorage.getItem('user_feedbacks') ?? '[]');
+      feedbacks.push({ ...feedback, timestamp: Date.now() });
+      localStorage.setItem('user_feedbacks', JSON.stringify(feedbacks));
+      setSubmitted(true);
+    } catch {
+      // Fallback: if parsing fails, start with empty array
+      const feedbacks = [{ ...feedback, timestamp: Date.now() }];
+      localStorage.setItem('user_feedbacks', JSON.stringify(feedbacks));
+      setSubmitted(true);
+    }
   };
 
   const canSubmit = feedback.good.trim() || feedback.bad.trim() || feedback.rating > 0;

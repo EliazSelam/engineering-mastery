@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, AlertTriangle, ArrowLeft, X, Check, ChevronDown } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, ArrowLeft, X, Check, ChevronDown, Share2 } from 'lucide-react';
 import { Card } from '@/src/ui/Card';
 import { H3, H4, Body, Meta, Eyebrow } from '@/src/ui/Typography';
 import { Badge } from '@/src/ui/Badge';
+import { Button } from '@/src/ui/Button';
+import ShareCard from './ShareCard';
 import { cn } from '@/src/lib/utils';
 
 interface SummaryPoint {
@@ -24,6 +26,10 @@ interface SummaryPanelProps {
   nextDayDesc?: string;
   completedCount?: number;
   totalCount?: number;
+  /** Day number for sharing */
+  dayNumber?: number;
+  /** Streak for sharing */
+  streak?: number;
 }
 
 // SVG progress ring
@@ -55,8 +61,12 @@ export default function SummaryPanel({
   nextDayDesc,
   completedCount = 5,
   totalCount = 5,
+  dayNumber = 1,
+  streak = 0,
 }: SummaryPanelProps) {
   const pct = Math.round((completedCount / totalCount) * 100);
+  const [showShare, setShowShare] = useState(false);
+  const isFullyComplete = completedCount === totalCount;
 
   return (
     <div className="flex flex-col gap-6">
@@ -82,16 +92,28 @@ export default function SummaryPanel({
             </Meta>
           </div>
 
-          {/* Check badge */}
+          {/* Check badge + share */}
           {completedCount === totalCount && (
-            <motion.div
-              initial={{ scale: 0, rotate: -15 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: 'spring', stiffness: 350, damping: 22 }}
-              className="shrink-0 w-10 h-10 rounded-full bg-[hsl(var(--color-success))] flex items-center justify-center"
-            >
-              <Check size={18} className="text-white" />
-            </motion.div>
+            <div className="flex items-center gap-2 shrink-0">
+              <motion.button
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 22, delay: 0.4 }}
+                onClick={() => setShowShare(true)}
+                className="h-10 px-3 rounded-[var(--radius-md)] bg-white/10 text-white/70 hover:bg-white/20 hover:text-white transition-all flex items-center gap-1.5 text-[12px] font-semibold"
+              >
+                <Share2 size={13} />
+                שתף
+              </motion.button>
+              <motion.div
+                initial={{ scale: 0, rotate: -15 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: 'spring', stiffness: 350, damping: 22 }}
+                className="w-10 h-10 rounded-full bg-[hsl(var(--color-success))] flex items-center justify-center"
+              >
+                <Check size={18} className="text-white" />
+              </motion.div>
+            </div>
           )}
         </div>
 
@@ -211,6 +233,18 @@ export default function SummaryPanel({
           </Card>
         </motion.div>
       )}
+
+      {/* ── Share Card Modal ─────────────────────────────────────── */}
+      <AnimatePresence>
+        {showShare && (
+          <ShareCard
+            dayNumber={dayNumber}
+            dayTitle={title}
+            streak={streak}
+            onClose={() => setShowShare(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

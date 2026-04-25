@@ -1,20 +1,59 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Engineering Mastery Challenge
 
-# Run and deploy your AI Studio app
+> A free 30-day interactive engineering challenge combining Control Systems, DSP, Robotics, and embedded algorithms.
 
-This contains everything you need to run your app locally.
+Built by **[Eliaz Selam](https://www.linkedin.com/in/eliaz-selam)** — Electrical Engineering student specializing in Control Systems and Signal Processing.
 
-View your app in AI Studio: https://ai.studio/apps/ed045f77-06ec-44aa-8c94-e0921b2cd1be
+## What This Is
+
+A public challenge: 30 days, 30 lessons, 30 minutes/day.
+
+Each lesson has 5 layers:
+- Background intuition
+- Full mathematical derivation
+- Interactive simulation
+- Practice challenge (3 questions)
+- Summary with key equations and misconceptions
+
+**Topics:** PID Control → Frequency Response → Sampling Theory → State Space → Kalman Filter → LQR → Motor Control → Path Planning → MPC → Neural Networks in Control
+
+**36+ interactive simulations** built in TypeScript/React.
+
+## Why It Exists
+
+To prove: engineering depth + product execution + communication — all in one project.
+
+## Tech Stack
+
+React 19 · TypeScript · Vite 6 · Tailwind CSS · KaTeX · Framer Motion · PWA
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
+```bash
+npm install
+npm run dev
+```
 
+## Build (Single-File HTML)
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+VITE_STATIC=true npm run build
+```
+
+## What It Demonstrates
+
+- Engineering depth (Control, DSP, embedded, robotics)
+- Interactive simulation design
+- Product thinking (viral challenge mechanics)
+- Technical communication (Hebrew + English)
+- Execution speed (built in weeks)
+
+## Challenge Yourself
+
+[Start the 30-Day Challenge →](https://engineering-mastery.vercel.app)
+
+Built your own version? Tag me on LinkedIn.
+
+---
+
+**LinkedIn:** [Eliaz Selam](https://www.linkedin.com/in/eliaz-selam) · **GitHub:** [@eliazselam](https://github.com/eliazselam)

@@ -175,7 +175,7 @@ $P_{k|k}=(1-K_k)P_{k|k-1}
         questions: [
           { id: 1, question: 'מה המשמעות של Q גדול ב-LQR?', options: [{ id: 'a', text: 'חיסכון בכוח', correct: false }, { id: 'b', text: 'עונש גבוה על שגיאת מצב → בקר אגרסיבי יותר', correct: true }, { id: 'c', text: 'מערכת לא יציבה', correct: false }, { id: 'd', text: 'אין השפעה', correct: false }], explanation: 'Q גדול = "כואב לי מאוד אם x ≠ 0" → המינימיזציה תייצר K גדולים לתיקון מהיר.' },
           { id: 2, question: 'מה ההבדל המהותי בין LQR ל-PID?', options: [{ id: 'a', text: 'LQR עובד רק לדרגה ראשונה', correct: false }, { id: 'b', text: 'LQR פועל על וקטור מצב מלא, PID על שגיאה סקלרית', correct: true }, { id: 'c', text: 'PID תמיד מהיר יותר', correct: false }, { id: 'd', text: 'LQR לא יכול לייצב מערכות', correct: false }], explanation: 'PID: u = f(e). LQR: u = -Kx — פועל על כל מרכיבי המצב בו-זמנית.' },
-          { id: 3, question: 'מה נדרש כדי לממש LQR בפועל?', options: [{ id: 'a', text: 'רק חיישן מיקום', correct: false }, { id: 'b', text: 'מדידה מלאה של כל רכיבי וקטור המצב x', correct: true }, { id: 'c', text: 'מדידה של מצב המערכת במלואו', correct: true }], explanation: 'u = -Kx דורש ידיעת x המלא. בפועל לרוב משלבים עם Kalman Observer.' }
+          { id: 3, question: 'מה נדרש כדי לממש LQR בפועל?', options: [{ id: 'a', text: 'רק חיישן מיקום', correct: false }, { id: 'b', text: 'מדידה מלאה של כל רכיבי וקטור המצב x', correct: true }, { id: 'c', text: 'רק אות הכניסה u(t) ומטריצת R', correct: false }, { id: 'd', text: 'מדידת שגיאת המוצא e(t) בלבד', correct: false }], explanation: 'u = -Kx דורש ידיעת x המלא. בפועל לרוב משלבים עם Kalman Observer כי לא כל מצבים נמדדים ישירות.' }
         ]
       },
       summary: {

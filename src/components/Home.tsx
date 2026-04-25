@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   BookOpen,
   Settings as SettingsIcon,
@@ -11,15 +11,19 @@ import {
   Clock,
   BarChart2,
   ArrowUpLeft,
+  Share2,
+  Linkedin,
+  Github,
 } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
 import { DAYS } from '../content/days';
 
 import { Section } from '../ui/Section';
-import { Display, H3, Lead, Eyebrow, Body, Meta } from '../ui/Typography';
+import { Display, H3, H4, Lead, Eyebrow, Body, Meta } from '../ui/Typography';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
+import ShareCard from './ShareCard';
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -31,6 +35,7 @@ interface HomeProps {
 export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: HomeProps) {
   const currentLesson = DAYS.find(l => l.day === currentDay) || DAYS[DAYS.length - 1];
   const completedCount = Math.max(0, currentDay - 1);
+  const [showShare, setShowShare] = useState(false);
 
   // Time until next lesson (midnight)
   const getTimeUntilMidnight = () => {
@@ -78,13 +83,25 @@ export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: H
               <Button size="lg" variant="secondary" onClick={() => onNavigate('plan')}>
                 תוכנית חודשית
               </Button>
-              <button
-                onClick={onAdvanceDay}
-                className="h-12 px-4 text-[13px] text-[hsl(var(--color-text-faint))] hover:text-[hsl(var(--color-primary-ink))] transition-colors flex items-center gap-1.5"
-              >
-                <Zap size={14} />
-                דלג ליום הבא (dev)
-              </button>
+              {completedCount > 0 && (
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  onClick={() => setShowShare(true)}
+                  iconRight={<Share2 size={16} />}
+                >
+                  שתף התקדמות
+                </Button>
+              )}
+              {import.meta.env.DEV && (
+                <button
+                  onClick={onAdvanceDay}
+                  className="h-12 px-4 text-[13px] text-[hsl(var(--color-text-faint))] hover:text-[hsl(var(--color-primary-ink))] transition-colors flex items-center gap-1.5"
+                >
+                  <Zap size={14} />
+                  דלג ליום הבא (dev)
+                </button>
+              )}
             </div>
           </div>
 
@@ -192,6 +209,128 @@ export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: H
         </div>
       </Section>
 
+      {/* ─── RECRUITER SIGNAL ─── */}
+      <Section pad="base" max="2xl">
+        <div className="rounded-[var(--radius-xl)] border border-[hsl(var(--color-border))] bg-[hsl(var(--color-surface))] p-6 md:p-8 text-right">
+          <div className="flex items-start gap-4 mb-5">
+            <div className="flex-1">
+              <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[hsl(var(--color-text-faint))] mb-1.5">
+                למגייסים ומנהלים
+              </p>
+              <h3 className="font-display text-xl font-semibold text-[hsl(var(--ink-900))] mb-2">
+                מה הפרויקט הזה מדגים
+              </h3>
+              <p className="text-[13px] text-[hsl(var(--color-text-muted))] leading-relaxed">
+                אתגר הנדסה אינטראקטיבי חינמי עם 30 שיעורים, 36+ סימולציות, ולידציה מתמטית מלאה.
+                בנוי מאפס בתוך שבועות.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {([
+              { label: 'React + TypeScript',        type: 'tech' },
+              { label: 'Control Systems',            type: 'eng' },
+              { label: 'DSP / Signal Processing',    type: 'eng' },
+              { label: 'Interactive Simulations',    type: 'tech' },
+              { label: 'Product Thinking',           type: 'soft' },
+              { label: 'Technical Communication',    type: 'soft' },
+              { label: 'Engineering Depth',          type: 'eng' },
+              { label: 'Execution Speed',            type: 'soft' },
+            ] as { label: string; type: 'tech' | 'eng' | 'soft' }[]).map(({ label, type }) => (
+              <span
+                key={label}
+                className={cn(
+                  'h-7 px-3 rounded-[var(--radius-pill)] text-[11px] font-semibold border',
+                  type === 'eng'
+                    ? 'bg-[hsl(var(--color-secondary)/0.08)] border-[hsl(var(--color-secondary)/0.25)] text-[hsl(var(--color-secondary-ink))]'
+                    : type === 'tech'
+                    ? 'bg-[hsl(var(--color-primary)/0.06)] border-[hsl(var(--color-primary)/0.2)] text-[hsl(var(--color-primary-ink))]'
+                    : 'bg-[hsl(var(--color-surface-2))] border-[hsl(var(--color-border))] text-[hsl(var(--color-text-muted))]'
+                )}
+              >
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* ─── VIRALITY — Build Your Own ─── */}
+      <Section pad="base" max="2xl">
+        <div className="rounded-[var(--radius-2xl)] bg-[hsl(var(--ink-950))] overflow-hidden relative">
+          {/* Blue/cyan glow — technical signal aesthetic */}
+          <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[hsl(var(--color-primary)/0.18)] blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-16 -left-16 w-48 h-48 rounded-full bg-[hsl(var(--color-secondary)/0.14)] blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 p-8 md:p-12 text-right" dir="rtl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div>
+                <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[hsl(var(--color-primary))] mb-3">
+                  אתגר ה-30 ימים
+                </p>
+                <h2 className="font-display text-3xl font-semibold text-white leading-tight mb-4">
+                  בנה גם אתה
+                  <br />
+                  <span className="text-[hsl(var(--color-primary))]">אפליקציה כזאת.</span>
+                </h2>
+                <p className="text-white/60 text-[14px] leading-relaxed mb-6">
+                  הקוד פתוח. האתגר פתוח. לקח לי 30 ימים לבנות 30 שיעורים עם סימולציות אינטראקטיביות.
+                  האתגר הבא שלך — לבנות משהו שלך.
+                </p>
+                <div className="flex items-center gap-3 flex-wrap">
+                  <a
+                    href="https://github.com/eliazselam"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 h-10 px-5 rounded-[var(--radius-pill)] bg-[hsl(var(--color-primary))] text-white text-[13px] font-semibold hover:opacity-90 transition-opacity"
+                  >
+                    <Github size={14} />
+                    GitHub
+                  </a>
+                  <button
+                    onClick={() => setShowShare(true)}
+                    className="inline-flex items-center gap-2 h-10 px-5 rounded-[var(--radius-pill)] border border-white/20 text-white/70 text-[13px] font-semibold hover:bg-white/10 hover:text-white transition-all"
+                  >
+                    <Share2 size={14} />
+                    שתף את האתגר
+                  </button>
+                </div>
+              </div>
+
+              {/* Creator card */}
+              <div className="flex justify-center md:justify-start">
+                <div className="w-full max-w-[260px] p-6 rounded-[var(--radius-xl)] bg-white/5 border border-white/10 text-right">
+                  <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/30 mb-3">
+                    Created by
+                  </p>
+                  <h3 className="font-display text-xl font-semibold text-white mb-1">
+                    Eliaz Selam
+                  </h3>
+                  <p className="text-white/50 text-[12px] mb-5 leading-relaxed">
+                    מהנדס חשמל · בקרה ועיבוד אותות
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <a
+                      href="https://www.linkedin.com/in/eliaz-selam"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 h-8 px-3 rounded-[var(--radius-md)] bg-[#0A66C2] text-white text-[11px] font-semibold hover:bg-[#004182] transition-colors"
+                    >
+                      <Linkedin size={12} />
+                      Connect
+                    </a>
+                    <span className="text-white/20 text-[11px]">·</span>
+                    {['Control', 'DSP', 'EE'].map(tag => (
+                      <span key={tag} className="text-[10px] text-white/30 font-mono">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section>
+
       {/* ─── FEEDBACK ─── */}
       <Section pad="base" max="2xl">
         <button
@@ -210,6 +349,18 @@ export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: H
           <ChevronLeft className="text-[hsl(var(--color-text-faint))] group-hover:text-[hsl(var(--color-primary))] group-hover:-translate-x-1 transition-all" />
         </button>
       </Section>
+
+      {/* ─── SHARE CARD MODAL ─── */}
+      <AnimatePresence>
+        {showShare && (
+          <ShareCard
+            dayNumber={completedCount > 0 ? completedCount : currentDay}
+            dayTitle={currentLesson.title}
+            streak={streak}
+            onClose={() => setShowShare(false)}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }

@@ -60,37 +60,45 @@
 
 /*
 ───── Color System (HSL components, light theme) ───────────────────────
-Editorial palette: warm ink scale, restrained accents.
-Brand colors from LUMINA × ELIAZ preserved (Coral / Deep Blue / Gold).
+Engineering-first palette: precise, technical, high-tech.
+Blue primary · Cyan control accent · Orange energy-only (≤5%).
 */
 :root {
-  /* Brand accents — used sparingly */
-  --color-primary:        14 92% 59%;    /* #FF6B35 Coral */
-  --color-primary-soft:   14 95% 96%;    /* Coral 50 */
-  --color-primary-ink:    14 70% 42%;    /* Coral 700 (for text on light) */
+  /* ── Primary — Technical Blue (CTA, links, progress) ─────── */
+  --color-primary:        221 83% 53%;   /* #2563EB Blue */
+  --color-primary-soft:   221 90% 95%;   /* Blue-50 */
+  --color-primary-ink:    221 68% 35%;   /* Blue-700 (text on light bg) */
+  --color-primary-hover:  220 72% 46%;   /* #1D4ED8 Blue dark */
 
-  --color-secondary:      207 100% 27%;  /* #004E89 Deep Blue */
-  --color-secondary-soft: 207 85% 96%;
-  --color-secondary-ink:  207 85% 22%;
+  /* ── Secondary — Control Cyan (DSP / signal / technical) ─── */
+  --color-secondary:      192 95% 44%;   /* #06B6D4 Control Cyan */
+  --color-secondary-soft: 192 80% 94%;
+  --color-secondary-ink:  192 90% 22%;
 
+  /* ── Accent — Gold (insights / KPIs) ────────────────────── */
   --color-accent:         43 97% 49%;    /* #F7B801 Gold */
   --color-accent-soft:    43 95% 95%;
   --color-accent-ink:     36 75% 32%;
 
-  /* Editorial ink scale (warm neutral, not blue-tinted) */
-  --ink-950: 24 10%  8%;
-  --ink-900: 24 10%  14%;
-  --ink-800: 24 9%   20%;   /* #2E2E2E-ish — body text */
-  --ink-700: 24 8%   30%;
-  --ink-600: 24 7%   42%;
-  --ink-500: 24 6%   55%;   /* muted text */
-  --ink-400: 24 6%   68%;
-  --ink-300: 24 8%   82%;   /* borders */
-  --ink-200: 28 14%  91%;   /* subtle fills */
-  --ink-100: 32 30%  95%;   /* surface-2 */
-  --ink-50:  36 40%  98%;   /* canvas */
+  /* ── Energy — Orange (streak flame · ≤5% of UI) ─────────── */
+  --color-energy:         14 100% 60%;   /* #FF6B35 Energy Orange */
+  --color-energy-soft:    14 95% 96%;
+  --color-energy-ink:     14 68% 38%;
 
-  /* Semantic aliases (back-compat for existing components) */
+  /* ── Cool Graphite ink scale (technical / precise) ──────── */
+  --ink-950: 222 47%  8%;    /* #0B1120 Deep Graphite */
+  --ink-900: 222 35%  13%;   /* #141929 */
+  --ink-800: 222 20%  20%;   /* #29303D — body text */
+  --ink-700: 222 15%  30%;   /* #42495A */
+  --ink-600: 222 12%  42%;   /* #5C6475 */
+  --ink-500: 222 10%  55%;   /* #7D8490 — muted text */
+  --ink-400: 222 10%  68%;   /* #9FA5AE */
+  --ink-300: 222 15%  82%;   /* #C5CAD3 — borders */
+  --ink-200: 222 18%  91%;   /* #DDE1EB — subtle fills */
+  --ink-100: 220 22%  95%;   /* #ECF0F6 — surface-2 */
+  --ink-50:  220 14%  97%;   /* #F5F7FA — canvas ≈ F7F8FA */
+
+  /* Semantic aliases */
   --color-bg:          var(--ink-50);
   --color-surface:     0 0% 100%;
   --color-surface-2:   var(--ink-100);
@@ -101,17 +109,15 @@ Brand colors from LUMINA × ELIAZ preserved (Coral / Deep Blue / Gold).
   --color-text-muted:  var(--ink-600);
   --color-text-faint:  var(--ink-500);
 
-  --color-primary-hover: 14 90% 54%;
-
   /* State colors */
-  --color-success: 152 58% 38%;
-  --color-success-soft: 152 55% 94%;
+  --color-success: 142 71% 38%;
+  --color-success-soft: 142 60% 94%;
   --color-warning: 35 92% 50%;
   --color-warning-soft: 35 95% 95%;
   --color-error:   0 72% 50%;
   --color-error-soft: 0 75% 96%;
-  --color-info:    207 85% 46%;
-  --color-info-soft: 207 85% 96%;
+  --color-info:    221 83% 53%;
+  --color-info-soft: 221 90% 95%;
 
   /* Pastels (for category chips, legacy compatibility) */
   --color-pastel-teal:   174 60% 93%;
@@ -354,8 +360,8 @@ Brand colors from LUMINA × ELIAZ preserved (Coral / Deep Blue / Gold).
 .rise-in { animation: rise-in var(--dur-slow) var(--ease-standard) both; }
 
 @keyframes pulse-ring {
-  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--color-primary) / 0.4); }
-  50%      { box-shadow: 0 0 0 8px hsl(var(--color-primary) / 0); }
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--color-secondary) / 0.4); }
+  50%      { box-shadow: 0 0 0 8px hsl(var(--color-secondary) / 0); }
 }
 .pulse-ring { animation: pulse-ring 2.4s var(--ease-standard) infinite; }
 

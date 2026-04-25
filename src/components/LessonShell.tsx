@@ -131,6 +131,8 @@ export default function LessonShell({ dayContent, onComplete, streak, onPrevDay,
               nextDayDesc={dayContent.sections.summary.next_day.desc}
               completedCount={currentProgress}
               totalCount={totalSteps}
+              dayNumber={dayContent.day}
+              streak={streak}
             />
 
             <div className="mt-14 pt-10 border-t border-[hsl(var(--color-border))] flex flex-col items-center gap-5">

@@ -1628,81 +1628,146 @@ export default function DayPage({ id, onComplete, streak, onPrevDay, onNextDay }
           {/* Background Section */}
           <section id="background" ref={el => { sectionRefs.current['background'] = el; }} className="scroll-mt-24">
             <h2 className="text-3xl font-black text-[hsl(var(--color-primary))] mb-2">{content.title}</h2>
-            <h3 className="text-xl font-bold text-[hsl(var(--color-secondary))] mb-6">{content.hero.subtitle}</h3>
-            
-            <div className="space-y-8">
-              <div className="prose prose-slate max-w-none">
-                <p className="text-lg leading-relaxed opacity-90">{background.problem}</p>
+            <h3 className="text-xl font-bold text-[hsl(var(--color-secondary))] mb-5">{content.hero.subtitle}</h3>
+
+            {/* ── Why Today banner ──────────────────────────────── */}
+            <div className="mb-8 rounded-2xl bg-[hsl(var(--color-primary-soft))] border border-[hsl(var(--color-primary)/0.15)] p-5 flex gap-4 items-start">
+              <div className="text-2xl shrink-0 mt-0.5">💡</div>
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[hsl(var(--color-primary-ink))] mb-1">למה זה רלוונטי לך היום</p>
+                <p className="text-[15px] font-semibold text-[hsl(var(--ink-800))] leading-snug">{content.hero.why_today}</p>
+              </div>
+            </div>
+
+            <div className="space-y-10">
+
+              {/* ── Full overview (summary_extended.overview) ────── */}
+              {summary_extended?.overview && (
+                <div className="space-y-3">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[hsl(var(--color-text-faint))]">הסבר כללי</p>
+                  <p className="text-[16px] leading-[1.8] text-[hsl(var(--ink-800))]">{summary_extended.overview}</p>
+                </div>
+              )}
+
+              {/* ── Problem statement ──────────────────────────── */}
+              <div className="border-r-4 border-[hsl(var(--color-secondary))] pr-5 py-1">
+                <p className="text-[17px] leading-relaxed text-[hsl(var(--ink-800))]">{background.problem}</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {background.real_world.map((item, i) => (
-                  <div key={i} className="bg-white p-6 rounded-3xl border border-slate-100 flex items-center gap-4 shadow-sm">
-                    <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-[hsl(var(--color-primary))]">
-                       {/* Simplified icon rendering, normally would use a map or dynamic component */}
-                       {(() => {
-                         const IconComp = ICON_MAP[(item as any).icon] || Activity;
-                         return <IconComp size={24} />;
-                       })()}
+              {/* ── Real-world products ───────────────────────── */}
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[hsl(var(--color-text-faint))] mb-3">רואים את זה בעולם האמיתי</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {background.real_world.map((item, i) => (
+                    <div key={i} className="bg-white p-4 rounded-2xl border border-[hsl(var(--color-border))] flex items-center gap-4 shadow-[var(--shadow-e1)]">
+                      <div className="w-11 h-11 bg-[hsl(var(--color-primary-soft))] rounded-xl flex items-center justify-center text-[hsl(var(--color-primary))] shrink-0">
+                        {(() => {
+                          const IconComp = ICON_MAP[(item as any).icon] || Activity;
+                          return <IconComp size={22} />;
+                        })()}
+                      </div>
+                      <div className="min-w-0">
+                        <h4 className="font-bold text-[14px] text-[hsl(var(--ink-900))] leading-tight">{item.name}</h4>
+                        <p className="text-[12px] text-[hsl(var(--color-text-muted))] mt-0.5">{item.sensor}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-black text-sm">{item.name}</h4>
-                      <p className="text-[10px] text-slate-400 font-mono italic uppercase tracking-wider">{item.sensor}</p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {background.key_ideas.map((idea, i) => (
-                  <div key={i} className="flex flex-col gap-2">
-                    <span className="text-4xl font-black text-slate-100 leading-none">{idea.number}</span>
-                    <h4 className="font-bold text-sm text-[hsl(var(--color-secondary))]">{idea.title}</h4>
-                    <p className="text-[10px] leading-relaxed text-slate-500">{idea.desc}</p>
+              {/* ── Industrial applications (summary_extended) ─── */}
+              {summary_extended?.applications && summary_extended.applications.length > 0 && (
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[hsl(var(--color-text-faint))] mb-3">יישומים תעשייתיים אמיתיים</p>
+                  <div className="flex flex-col gap-2">
+                    {summary_extended.applications.map((app, i) => (
+                      <div key={i} className="flex items-start gap-3 p-4 bg-white rounded-xl border border-[hsl(var(--color-border))] shadow-[var(--shadow-e1)]">
+                        <span className="w-6 h-6 rounded-full bg-[hsl(var(--color-secondary-soft))] text-[hsl(var(--color-secondary-ink))] text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+                        <p className="text-[13px] leading-relaxed text-[hsl(var(--ink-800))]">{app}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+              )}
+
+              {/* ── Key ideas ─────────────────────────────────── */}
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[hsl(var(--color-text-faint))] mb-3">3 רעיונות מרכזיים</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {background.key_ideas.map((idea, i) => (
+                    <div key={i} className="bg-white rounded-2xl border border-[hsl(var(--color-border))] p-5 shadow-[var(--shadow-e1)] flex flex-col gap-3">
+                      <div className="flex items-center gap-2">
+                        <span className="w-7 h-7 rounded-full bg-[hsl(var(--color-primary-soft))] text-[hsl(var(--color-primary-ink))] text-[11px] font-bold flex items-center justify-center shrink-0">{idea.number}</span>
+                        <h4 className="font-bold text-[14px] text-[hsl(var(--ink-900))] leading-tight">{idea.title}</h4>
+                      </div>
+                      <p className="text-[13px] leading-relaxed text-[hsl(var(--color-text-muted))]">{idea.desc}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </section>
 
           {/* Theory Section */}
           <section id="theory" ref={el => { sectionRefs.current['theory'] = el; }} className="scroll-mt-24 space-y-8">
-            <div className="h-px bg-slate-200" />
+            <div className="h-px bg-[hsl(var(--color-border))]" />
+
+            {/* ── Deep theory — collapsible ─────────────────── */}
+            {summary_extended?.theory_deep && (
+              <details className="group rounded-2xl border border-[hsl(var(--color-secondary)/0.2)] bg-[hsl(var(--color-secondary-soft))] overflow-hidden">
+                <summary className="flex items-center justify-between px-5 py-4 cursor-pointer select-none list-none">
+                  <span className="text-[13px] font-bold text-[hsl(var(--color-secondary-ink))]">📖 הסבר מעמיק — לפני שנכנסים לדיאגרמה</span>
+                  <span className="text-[hsl(var(--color-secondary-ink))] text-xs opacity-60 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div className="px-5 pb-5 pt-1 border-t border-[hsl(var(--color-secondary)/0.15)]">
+                  <p className="text-[14px] leading-[1.85] text-[hsl(var(--ink-800))] whitespace-pre-line">{summary_extended.theory_deep}</p>
+                </div>
+              </details>
+            )}
+
             <div className="flex flex-col gap-8">
               {React.createElement(DIAGRAM_COMPONENTS[theory.diagram] || (() => <div className="bg-slate-100 aspect-video rounded-3xl flex items-center justify-center">DUMMY DIAGRAM: {theory.diagram}</div>))}
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                <div className="bg-white p-8 rounded-3xl border border-slate-100 space-y-4">
-                  <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">משוואת המפתח</h5>
-                  <div className="bg-slate-50 p-6 rounded-2xl flex items-center justify-center min-h-[6rem] overflow-x-auto">
-                    <div 
-                      className="text-[hsl(var(--color-primary))] text-lg"
-                      dangerouslySetInnerHTML={{ 
-                        __html: katex.renderToString(theory.key_equation.latex, { 
-                          throwOnError: false, 
-                          displayMode: true 
-                        }) 
-                      }} 
-                    />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                {/* ── Key Equation ─────────────────────────── */}
+                <div className="bg-white rounded-2xl border border-[hsl(var(--color-border))] shadow-[var(--shadow-e1)] overflow-hidden">
+                  <div className="px-5 pt-5 pb-2">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[hsl(var(--color-text-faint))] mb-3">משוואת המפתח</p>
+                    <div className="bg-[hsl(var(--color-surface-2))] p-5 rounded-xl flex items-center justify-center min-h-[5rem] overflow-x-auto mb-4">
+                      <div 
+                        className="text-[hsl(var(--color-primary))]"
+                        dangerouslySetInnerHTML={{ 
+                          __html: katex.renderToString(theory.key_equation.latex, { 
+                            throwOnError: false, 
+                            displayMode: true 
+                          }) 
+                        }} 
+                      />
+                    </div>
                   </div>
-                  <p className="text-xs text-slate-500 leading-relaxed">{theory.key_equation.explanation}</p>
+                  {/* ── Plain-language explanation ────────── */}
+                  <div className="px-5 pb-5 border-t border-[hsl(var(--color-border))] pt-4">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[hsl(var(--color-secondary-ink))] mb-2">מה זה אומר בפשטות</p>
+                    <p className="text-[14px] leading-relaxed text-[hsl(var(--ink-800))]">{theory.key_equation.explanation}</p>
+                  </div>
                 </div>
 
-                <div className="bg-[hsl(var(--color-accent))] p-8 rounded-3xl space-y-6">
-                   <h5 className="text-[10px] font-black text-slate-700 uppercase tracking-widest">Trade-offs & Insights</h5>
+                {/* ── Trade-offs ────────────────────────── */}
+                <div className="bg-[hsl(var(--color-accent-soft))] border border-[hsl(var(--color-accent)/0.25)] p-6 rounded-2xl space-y-5">
+                   <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[hsl(var(--color-accent-ink))]">יתרונות ומגבלות</p>
                    <div className="space-y-4">
-                      <div className="flex gap-4">
-                         <div className="w-8 h-8 bg-white/40 rounded-lg flex items-center justify-center text-xs shrink-0">✅</div>
+                      <div className="flex gap-3 items-start">
+                         <div className="w-8 h-8 bg-white/60 rounded-xl flex items-center justify-center text-sm shrink-0">✅</div>
                          <div>
-                            <span className="text-[10px] font-black block uppercase text-slate-700">{theory.tradeoff.pro_label}</span>
-                            <p className="text-xs font-bold">{theory.tradeoff.pro}</p>
+                            <span className="text-[12px] font-bold block text-[hsl(var(--ink-800))] mb-0.5">{theory.tradeoff.pro_label}</span>
+                            <p className="text-[13px] text-[hsl(var(--color-text-muted))] leading-snug">{theory.tradeoff.pro}</p>
                          </div>
                       </div>
-                      <div className="flex gap-4">
-                         <div className="w-8 h-8 bg-white/40 rounded-lg flex items-center justify-center text-xs shrink-0">⚠️</div>
+                      <div className="flex gap-3 items-start">
+                         <div className="w-8 h-8 bg-white/60 rounded-xl flex items-center justify-center text-sm shrink-0">⚠️</div>
                          <div>
-                            <span className="text-[10px] font-black block uppercase text-slate-700">{theory.tradeoff.con_label}</span>
-                            <p className="text-xs font-bold">{theory.tradeoff.con}</p>
+                            <span className="text-[12px] font-bold block text-[hsl(var(--ink-800))] mb-0.5">{theory.tradeoff.con_label}</span>
+                            <p className="text-[13px] text-[hsl(var(--color-text-muted))] leading-snug">{theory.tradeoff.con}</p>
                          </div>
                       </div>
                    </div>
@@ -1713,10 +1778,15 @@ export default function DayPage({ id, onComplete, streak, onPrevDay, onNextDay }
 
           {/* Simulation Section */}
           <section id="simulation" ref={el => { sectionRefs.current['simulation'] = el; }} className="scroll-mt-24 space-y-8">
-            <div className="h-px bg-slate-200" />
-            <div className="space-y-4">
-              <h4 className="text-2xl font-black">המעבדה הוויזואלית</h4>
-              <p className="text-sm opacity-60">{simulation.intuition}</p>
+            <div className="h-px bg-[hsl(var(--color-border))]" />
+            <div className="space-y-5">
+              <h4 className="text-2xl font-bold text-[hsl(var(--ink-900))]">🎮 המעבדה הוויזואלית</h4>
+
+              {/* ── Intuition callout ─────────────────────── */}
+              <div className="rounded-xl bg-[hsl(var(--color-secondary-soft))] border border-[hsl(var(--color-secondary)/0.2)] px-5 py-4 flex gap-3 items-start">
+                <span className="text-[hsl(var(--color-secondary-ink))] text-lg mt-0.5">🔬</span>
+                <p className="text-[15px] text-[hsl(var(--ink-800))] leading-relaxed font-medium">{simulation.intuition}</p>
+              </div>
             </div>
             <div className="w-full min-h-[420px] rounded-2xl overflow-hidden">
               {React.createElement(SIMULATION_COMPONENTS[simulation.component] || (() => (

@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'wouter';
 import { cn } from '@/src/lib/utils';
 import { Home as HomeIcon, Flame, ChevronLeft } from 'lucide-react';
+import logoIcon from '../../public/logo-icon.png';
 
 interface TopNavProps {
   streak?: number;
@@ -41,9 +42,13 @@ export const TopNav: React.FC<TopNavProps> = ({
           className="flex items-center gap-2.5 group focus-visible:outline-none rounded-[var(--radius-sm)]"
           aria-label="דף הבית"
         >
-          <div className="w-8 h-8 rounded-[var(--radius-md)] bg-[hsl(var(--ink-900))] text-[hsl(var(--ink-50))] flex items-center justify-center font-display font-semibold text-sm">
-            E
-          </div>
+          <span className="flex items-center justify-center h-11 w-11 flex-shrink-0">
+            <img
+              src={logoIcon}
+              alt="Eliaz Selam"
+              className="h-8 w-8 object-contain"
+            />
+          </span>
           <span className="hidden md:inline font-semibold tracking-tight text-[hsl(var(--ink-900))]">
             Engineering Mastery
           </span>
@@ -81,11 +86,11 @@ export const TopNav: React.FC<TopNavProps> = ({
           </div>
         )}
 
-        {/* Streak */}
+        {/* Streak — energy orange (flame = energy accent) */}
         {streak !== undefined && (
-          <div className="flex items-center gap-1.5 h-8 px-3 rounded-[var(--radius-pill)] bg-[hsl(var(--color-primary-soft))] border border-[hsl(var(--color-primary)/0.2)]">
-            <Flame size={14} className="text-[hsl(var(--color-primary))]" />
-            <span className="text-[13px] font-bold text-[hsl(var(--color-primary-ink))]">{streak}</span>
+          <div className="flex items-center gap-1.5 h-8 px-3 rounded-[var(--radius-pill)] bg-[hsl(var(--color-energy-soft))] border border-[hsl(var(--color-energy)/0.25)]">
+            <Flame size={14} className="text-[hsl(var(--color-energy))]" />
+            <span className="text-[13px] font-bold text-[hsl(var(--color-energy-ink))]">{streak}</span>
           </div>
         )}
       </div>

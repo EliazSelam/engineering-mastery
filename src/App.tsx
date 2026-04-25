@@ -16,6 +16,8 @@ import { TopNav } from './ui/TopNav';
 import { Section } from './ui/Section';
 import { H1, Lead } from './ui/Typography';
 import { Button } from './ui/Button';
+import Footer from './components/Footer';
+import Onboarding from './components/Onboarding';
 import { Bell } from 'lucide-react';
 
 // Page-level fade + slide transition
@@ -44,6 +46,19 @@ export default function App() {
   const [showNotification, setShowNotification] = useState(false);
   const [lastTriggeredMinute, setLastTriggeredMinute] = useState<string | null>(null);
 
+  // ── Onboarding (first-visit only) ──────────────────────────────
+  const [onboardingDone, setOnboardingDone] = useState<boolean>(() => {
+    try { return !!localStorage.getItem('onboarding_done'); } catch { return false; }
+  });
+
+  const handleOnboardingComplete = (role: string) => {
+    try {
+      localStorage.setItem('onboarding_done', '1');
+      localStorage.setItem('user_role', role);
+    } catch { /* ignore */ }
+    setOnboardingDone(true);
+  };
+
   const handleDayComplete = (dayId: number, score: number) => {
     markDayComplete(dayId, score);
     setLocation('/');
@@ -55,19 +70,23 @@ export default function App() {
   // ── Reminder notification check ───────────────────────────────
   useEffect(() => {
     const checkReminder = () => {
-      const raw = localStorage.getItem('reminder_settings');
-      if (!raw) return;
-      const settings = JSON.parse(raw);
-      if (!settings.enabled) return;
+      try {
+        const raw = localStorage.getItem('reminder_settings');
+        if (!raw) return;
+        const settings = JSON.parse(raw);
+        if (!settings.enabled) return;
 
-      const now       = new Date();
-      const currentIST = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
-      const triggerKey = `${now.toDateString()}_${currentIST}`;
+        const now       = new Date();
+        const currentIST = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
+        const triggerKey = `${now.toDateString()}_${currentIST}`;
 
-      if (currentIST === settings.time && lastTriggeredMinute !== triggerKey) {
-        setLastTriggeredMinute(triggerKey);
-        setShowNotification(true);
-        setTimeout(() => setShowNotification(false), 15000);
+        if (currentIST === settings.time && lastTriggeredMinute !== triggerKey) {
+          setLastTriggeredMinute(triggerKey);
+          setShowNotification(true);
+          setTimeout(() => setShowNotification(false), 15000);
+        }
+      } catch {
+        // Silently ignore invalid localStorage data
       }
     };
 
@@ -92,6 +111,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[hsl(var(--color-bg))] text-[hsl(var(--color-text))] font-sans" dir="rtl">
+
+      {/* ── Onboarding overlay — first visit only ─────────────── */}
+      <AnimatePresence>
+        {!onboardingDone && (
+          <Onboarding onComplete={handleOnboardingComplete} />
+        )}
+      </AnimatePresence>
+
       {!hideGlobalNav && (
         <TopNav streak={streak} currentDay={currentDay} breadcrumb={breadcrumb} />
       )}
@@ -221,6 +248,9 @@ export default function App() {
         )}
       </AnimatePresence>
       <Analytics />
+
+      {/* ── Footer ─────────────────────────────────────────────── */}
+      {!hideGlobalNav && <Footer />}
     </div>
   );
 }
