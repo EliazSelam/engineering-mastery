@@ -1,17 +1,14 @@
 import React from 'react';
 import { useLocation } from 'wouter';
 import { cn } from '@/src/lib/utils';
-import { Home as HomeIcon, Flame, ChevronLeft } from 'lucide-react';
-import logoIcon from '../../public/logo-icon.png';
+import { Flame } from 'lucide-react';
+import logoIcon from '../../public/logo.png';
 
 interface TopNavProps {
   streak?: number;
   currentDay?: number;
-  /** If set, show back arrow + breadcrumb label */
   breadcrumb?: string;
-  /** Optional right-side slot (e.g., timer) */
   trailing?: React.ReactNode;
-  /** Show the thin progress bar under the nav */
   progress?: { current: number; total: number };
   className?: string;
 }
@@ -24,82 +21,65 @@ export const TopNav: React.FC<TopNavProps> = ({
   progress,
   className,
 }) => {
-  const [location, setLocation] = useLocation();
-  const isHome = location === '/';
+  const [, setLocation] = useLocation();
 
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 glass border-b border-[hsl(var(--color-border))] overflow-visible',
+        'sticky top-0 z-50 h-24 border-b border-slate-200/70 bg-white/95',
         className
       )}
-      dir="rtl"
+      dir="ltr"
     >
-      <div className="mx-auto max-w-6xl px-5 md:px-8 h-20 flex items-center gap-4">
-        {/* Logo / Home */}
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6">
+
+        {/* LEFT: stats */}
+        <div className="flex items-center gap-3">
+          {streak !== undefined && (
+            <div className="flex h-11 items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-5 text-orange-700">
+              <span className="text-base font-bold">{streak}</span>
+              <Flame className="h-4 w-4" />
+            </div>
+          )}
+          {currentDay !== undefined && (
+            <div className="flex h-11 items-center gap-2 rounded-full border border-slate-300 bg-slate-100 px-5 text-slate-800">
+              <span className="text-base font-bold">{currentDay}/30</span>
+              <span className="text-[10px] font-bold tracking-[0.18em] text-slate-500">DAY</span>
+            </div>
+          )}
+          {trailing}
+        </div>
+
+        {/* CENTER: breadcrumb */}
+        {breadcrumb && (
+          <span className="hidden md:block text-sm font-semibold text-slate-600 truncate max-w-[30vw]">
+            {breadcrumb}
+          </span>
+        )}
+
+        {/* RIGHT: brand + logo */}
         <button
           onClick={() => setLocation('/')}
-          className="flex items-center gap-2.5 group focus-visible:outline-none rounded-[var(--radius-sm)]"
+          className="flex items-center gap-3 focus-visible:outline-none"
           aria-label="דף הבית"
         >
-          <span className="flex items-center justify-center h-14 w-14 flex-shrink-0 overflow-visible">
-            <img
-              src={logoIcon}
-              alt="Eliaz Selam"
-              className="h-14 w-14 object-contain"
-            />
-          </span>
-          <span className="hidden md:inline font-semibold tracking-tight text-[hsl(var(--ink-900))]">
+          <span className="hidden md:inline text-2xl font-bold tracking-tight text-slate-900">
             Engineering Mastery
           </span>
+          <img
+            src={logoIcon}
+            alt="Engineering Mastery"
+            className="h-14 w-14 object-contain"
+          />
         </button>
 
-        {/* Breadcrumb */}
-        {breadcrumb && !isHome && (
-          <>
-            <span className="text-[hsl(var(--color-text-faint))] text-xs mx-1">›</span>
-            <button
-              onClick={() => setLocation('/')}
-              className="text-[13px] text-[hsl(var(--color-text-muted))] hover:text-[hsl(var(--color-primary-ink))] transition-colors flex items-center gap-1"
-            >
-              <HomeIcon size={13} />
-              Home
-            </button>
-            <span className="text-[hsl(var(--color-text-faint))] text-xs mx-1">›</span>
-            <span className="text-[13px] font-semibold text-[hsl(var(--ink-900))] truncate max-w-[40vw]">
-              {breadcrumb}
-            </span>
-          </>
-        )}
-
-        {/* Spacer */}
-        <div className="flex-1" />
-
-        {/* Trailing slot (timer etc.) */}
-        {trailing}
-
-        {/* Day chip */}
-        {currentDay !== undefined && (
-          <div className="hidden sm:flex items-center gap-1.5 h-8 px-3 rounded-[var(--radius-pill)] bg-[hsl(var(--color-surface-2))] border border-[hsl(var(--color-border))]">
-            <span className="text-[10px] font-bold tracking-[0.14em] uppercase text-[hsl(var(--color-text-faint))]">Day</span>
-            <span className="text-[13px] font-bold text-[hsl(var(--ink-900))]">{currentDay}/30</span>
-          </div>
-        )}
-
-        {/* Streak — energy orange (flame = energy accent) */}
-        {streak !== undefined && (
-          <div className="flex items-center gap-1.5 h-8 px-3 rounded-[var(--radius-pill)] bg-[hsl(var(--color-energy-soft))] border border-[hsl(var(--color-energy)/0.25)]">
-            <Flame size={14} className="text-[hsl(var(--color-energy))]" />
-            <span className="text-[13px] font-bold text-[hsl(var(--color-energy-ink))]">{streak}</span>
-          </div>
-        )}
       </div>
 
-      {/* Thin progress bar */}
+      {/* Progress bar */}
       {progress && progress.total > 0 && (
-        <div className="h-[3px] bg-[hsl(var(--color-surface-2))] relative overflow-hidden">
+        <div className="h-[3px] bg-slate-100">
           <div
-            className="absolute inset-y-0 right-0 bg-gradient-to-l from-[hsl(var(--color-primary))] to-[hsl(var(--color-primary-hover))] transition-[width] duration-[var(--dur-slow)] ease-[var(--ease-standard)]"
+            className="h-full bg-blue-500 transition-[width] duration-500"
             style={{ width: `${Math.min(100, (progress.current / progress.total) * 100)}%` }}
           />
         </div>
