@@ -69,7 +69,7 @@ export const TopNav: React.FC<TopNavProps> = ({
           <img
             src={logoIcon}
             alt="Engineering Mastery"
-            className="h-16 w-16 object-contain"
+            className="h-24 w-24 object-contain"
           />
         </button>
 
