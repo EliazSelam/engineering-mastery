@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'wouter';
 import { cn } from '@/src/lib/utils';
 import { Flame } from 'lucide-react';
-import logoIcon from '../../public/logo.png';
+import logoIcon from '../../public/logo-icon.png';
 
 interface TopNavProps {
   streak?: number;
@@ -26,7 +26,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 h-[448px] border-b border-slate-200/70 bg-white/95',
+        'sticky top-0 z-50 h-24 border-b border-slate-200/70 bg-white/95 backdrop-blur-sm',
         className
       )}
       dir="ltr"
@@ -63,13 +63,13 @@ export const TopNav: React.FC<TopNavProps> = ({
           className="flex items-center gap-3 focus-visible:outline-none"
           aria-label="דף הבית"
         >
-          <span className="hidden md:inline text-2xl font-bold tracking-tight text-slate-900">
+          <span className="hidden md:inline text-xl font-bold tracking-tight text-slate-900">
             Engineering Mastery
           </span>
           <img
             src={logoIcon}
             alt="Engineering Mastery"
-            className="h-96 w-96 object-contain"
+            className="h-20 w-20 object-contain"
           />
         </button>
 
