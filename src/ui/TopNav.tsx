@@ -26,7 +26,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 h-16 border-b border-slate-200/70 bg-white/95 backdrop-blur-sm',
+        'sticky top-0 z-50 h-20 border-b border-slate-200/70 bg-white/95 backdrop-blur-sm overflow-visible',
         className
       )}
       dir="ltr"
@@ -69,7 +69,7 @@ export const TopNav: React.FC<TopNavProps> = ({
           <img
             src={logoIcon}
             alt="Engineering Mastery"
-            className="h-11 w-11 object-contain"
+            className="h-12 w-12 object-contain shrink-0"
           />
         </button>
 
