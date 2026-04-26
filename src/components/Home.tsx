@@ -274,7 +274,7 @@ export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: H
                   <span className="text-[hsl(var(--color-primary))]">אפליקציה כזאת.</span>
                 </h2>
                 <p className="text-white/60 text-[14px] leading-relaxed mb-6">
-                  הקוד פתוח. האתגר פתוח. לקח לי 30 ימים לבנות 30 שיעורים עם סימולציות אינטראקטיביות.
+                  הקוד פתוח. האתגר פתוח. 30 שיעורים עם סימולציות אינטראקטיביות.
                   האתגר הבא שלך — לבנות משהו שלך.
                 </p>
                 <div className="flex items-center gap-3 flex-wrap">

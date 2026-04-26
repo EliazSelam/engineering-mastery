@@ -30,7 +30,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 glass border-b border-[hsl(var(--color-border))]',
+        'sticky top-0 z-50 glass border-b border-[hsl(var(--color-border))] overflow-visible',
         className
       )}
       dir="rtl"
