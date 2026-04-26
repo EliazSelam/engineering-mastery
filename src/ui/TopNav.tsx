@@ -35,18 +35,18 @@ export const TopNav: React.FC<TopNavProps> = ({
       )}
       dir="rtl"
     >
-      <div className="mx-auto max-w-6xl px-5 md:px-8 h-16 flex items-center gap-4">
+      <div className="mx-auto max-w-6xl px-5 md:px-8 h-20 flex items-center gap-4">
         {/* Logo / Home */}
         <button
           onClick={() => setLocation('/')}
           className="flex items-center gap-2.5 group focus-visible:outline-none rounded-[var(--radius-sm)]"
           aria-label="דף הבית"
         >
-          <span className="flex items-center justify-center h-11 w-11 flex-shrink-0 overflow-visible">
+          <span className="flex items-center justify-center h-14 w-14 flex-shrink-0 overflow-visible">
             <img
               src={logoIcon}
               alt="Eliaz Selam"
-              className="h-10 w-10 object-contain"
+              className="h-14 w-14 object-contain"
             />
           </span>
           <span className="hidden md:inline font-semibold tracking-tight text-[hsl(var(--ink-900))]">
