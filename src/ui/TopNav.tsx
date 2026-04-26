@@ -26,7 +26,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 h-24 border-b border-slate-200/70 bg-white/95 backdrop-blur-sm',
+        'sticky top-0 z-50 h-16 border-b border-slate-200/70 bg-white/95 backdrop-blur-sm',
         className
       )}
       dir="ltr"
@@ -34,17 +34,17 @@ export const TopNav: React.FC<TopNavProps> = ({
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6">
 
         {/* LEFT: stats */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {streak !== undefined && (
-            <div className="flex h-11 items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-5 text-orange-700">
-              <span className="text-base font-bold">{streak}</span>
-              <Flame className="h-4 w-4" />
+            <div className="flex h-9 items-center gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-3.5 text-orange-700">
+              <span className="text-sm font-bold">{streak}</span>
+              <Flame className="h-3.5 w-3.5" />
             </div>
           )}
           {currentDay !== undefined && (
-            <div className="flex h-11 items-center gap-2 rounded-full border border-slate-300 bg-slate-100 px-5 text-slate-800">
-              <span className="text-base font-bold">{currentDay}/30</span>
-              <span className="text-[10px] font-bold tracking-[0.18em] text-slate-500">DAY</span>
+            <div className="flex h-9 items-center gap-1.5 rounded-full border border-slate-300 bg-slate-100 px-3.5 text-slate-800">
+              <span className="text-sm font-bold">{currentDay}/30</span>
+              <span className="text-[9px] font-bold tracking-[0.18em] text-slate-500">DAY</span>
             </div>
           )}
           {trailing}
@@ -63,13 +63,13 @@ export const TopNav: React.FC<TopNavProps> = ({
           className="flex items-center gap-3 focus-visible:outline-none"
           aria-label="דף הבית"
         >
-          <span className="hidden md:inline text-xl font-bold tracking-tight text-slate-900">
+          <span className="hidden md:inline text-lg font-bold tracking-tight text-slate-900">
             Engineering Mastery
           </span>
           <img
             src={logoIcon}
             alt="Engineering Mastery"
-            className="h-20 w-20 object-contain"
+            className="h-11 w-11 object-contain"
           />
         </button>
 
