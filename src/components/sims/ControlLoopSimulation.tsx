@@ -20,19 +20,22 @@ export default function ControlLoopSimulation() {
   const MAX_POINTS = 80;
 
   const getTakeaway = () => {
-    if (Kp > 6) return "⚠️ High Kp: Strong response leads to significant overshoot and rapid oscillation.";
-    if (Kd > 3) return "✅ High Kd: Damping is strong! The system approach the setpoint smoothly without bouncing.";
-    if (Ki > 1) return "⚠️ High Ki: Integral windup risk! The system takes a long time to stabilize and might overshoot due to accumulated error.";
-    return "💡 Balanced PID: Try to find a combination where the orange line meets the yellow line quickly with zero steady-state error.";
+    if (Kp > 6) return "⚠️ Kp גבוה: תגובה אגרסיבית — גרימה ל-overshoot חזק ותנודות מהירות.";
+    if (Kd > 3) return "✅ Kd גבוה: בלימה חזקה — המערכת מתקרבת ליעד בחלקות ללא תנודות.";
+    if (Ki > 1) return "⚠️ Ki גבוה: סיכון ל-windup — המערכת מתייצבת לאט עקב הצטברות שגיאה.";
+    if (Kp < 0.5) return "ℹ️ Kp נמוך מדי: המערכת לא מגיעה ליעד בזמן סביר.";
+    return "💡 PID מאוזן: שלב Kp לתגובה, Kd לבלימה, Ki לתיקון שגיאה קבועה.";
   };
 
   const step = useCallback(() => {
     const s = stateRef.current;
     const error = SETPOINT - s.pos;
-    s.integral += error * DT;
+    // Anti-windup: clamp integral to ±2 (prevents accumulation when error is persistent)
+    s.integral = Math.max(-2, Math.min(2, s.integral + error * DT));
     const derivative = (error - s.prevError) / DT;
     const u = Kp * error + Ki * s.integral + Kd * derivative;
     s.prevError = error;
+    // 2nd-order plant: m*x'' + c*x' = u  (m=1, c=1.5)
     const acc = u - 1.5 * s.vel;
     s.vel += acc * DT;
     s.pos += s.vel * DT;
@@ -62,7 +65,7 @@ export default function ControlLoopSimulation() {
   const SliderRow = ({ label, value, setter, min, max, step: s }: { label: string; value: number; setter: (v: number) => void; min: number; max: number; step: number }) => (
     <div className="flex items-center gap-3">
       <span className="text-xs font-bold text-slate-400 w-6 text-right font-mono">{label}</span>
-      <input type="range" min={min} max={max} step={s} value={value} onChange={e => { setter(parseFloat(e.target.value)); stateRef.current.integral = 0; }} className="flex-1 accent-[#FF6B35]" />
+      <input type="range" min={min} max={max} step={s} value={value} onChange={e => setter(parseFloat(e.target.value))} className="flex-1 accent-[#FF6B35]" />
       <span className="text-xs font-mono text-[#FF6B35] w-10 text-right">{value.toFixed(1)}</span>
     </div>
   );
@@ -89,14 +92,22 @@ export default function ControlLoopSimulation() {
         {getTakeaway()}
       </div>
 
-      <ResponsiveContainer width="100%" height={200}>
-        <LineChart data={data} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
+      <ResponsiveContainer width="100%" height={240}>
+        <LineChart data={data} margin={{ top: 10, right: 20, bottom: 20, left: 10 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-          <XAxis dataKey="t" tick={{ fontSize: 10, fill: '#64748b' }} />
-          <YAxis domain={[-0.5, 2]} tick={{ fontSize: 10, fill: '#64748b' }} />
+          <XAxis
+            dataKey="t"
+            tick={{ fontSize: 10, fill: '#64748b' }}
+            label={{ value: 'Time (s)', position: 'insideBottom', offset: -10, fill: '#94a3b8', fontSize: 11 }}
+          />
+          <YAxis
+            domain={[-0.5, 2.5]}
+            tick={{ fontSize: 10, fill: '#64748b' }}
+            label={{ value: 'Position', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 11 }}
+          />
           <Tooltip contentStyle={{ background: '#0f172a', border: '1px solid #334155', fontSize: 11 }} />
           <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Line type="monotone" dataKey="setpoint" stroke="#F7B801" strokeDasharray="4 4" dot={false} strokeWidth={1.5} name="Setpoint" />
+          <Line type="monotone" dataKey="setpoint" stroke="#F7B801" strokeDasharray="4 4" dot={false} strokeWidth={1.5} name="Setpoint" isAnimationActive={false} />
           <Line type="monotone" dataKey="position" stroke="#FF6B35" dot={false} strokeWidth={2} name="Position" isAnimationActive={false} />
         </LineChart>
       </ResponsiveContainer>

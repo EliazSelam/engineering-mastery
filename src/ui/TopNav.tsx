@@ -67,18 +67,14 @@ export const TopNav: React.FC<TopNavProps> = ({
           <span className="hidden sm:inline text-sm sm:text-lg font-bold tracking-tight text-slate-900">
             Engineering Mastery
           </span>
-          <div
-            className="shrink-0"
-            style={{
-              width: '36px',
-              height: '36px',
-              backgroundImage: `url(${logoIcon})`,
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-            }}
-            role="img"
-            aria-label="Engineering Mastery"
+          <img
+            src={logoIcon}
+            alt="Engineering Mastery"
+            width={40}
+            height={40}
+            className="shrink-0 select-none"
+            style={{ width: '40px', height: '40px', objectFit: 'contain' }}
+            draggable={false}
           />
         </button>
 

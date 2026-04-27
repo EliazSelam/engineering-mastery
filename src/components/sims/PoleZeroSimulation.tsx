@@ -12,23 +12,25 @@ export default function PoleZeroSimulation() {
 
   useEffect(() => {
     const step = () => {
-      time.current += 0.1;
-      
+      time.current += 0.05;
+
       // System Response calculation: y(t) = e^(sigma*t) * cos(omega*t)
-      // sigma = poleX, omega = poleY
+      // sigma = poleX, omega = poleY (continuous-time pole)
       const sigma = poleX;
       const omega = poleY;
-      
-      let val = Math.exp(sigma * (time.current % 10)) * Math.cos(omega * (time.current % 10));
-      
-      // Clamp for visualization
-      if (val > 50) val = 50;
-      if (val < -50) val = -50;
 
-      setHistory(h => [...h, val].slice(-100));
+      // Use modulo to prevent numerical blow-up over long runs
+      const t = time.current % 8;
+      let val = Math.exp(sigma * t) * Math.cos(omega * t);
+
+      // Clamp to display range (matches SVG viewBox -2..2)
+      if (val > 2.5) val = 2.5;
+      if (val < -2.5) val = -2.5;
+
+      setHistory(h => [...h, val].slice(-120));
       animationRef.current = requestAnimationFrame(step);
     };
-    
+
     animationRef.current = requestAnimationFrame(step);
     return () => {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
@@ -132,18 +134,42 @@ export default function PoleZeroSimulation() {
             תגובה בזמן (Time Response)
           </label>
           <div className="relative h-64 bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden">
-            <svg className="absolute inset-0 w-full h-full">
-              <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#334155" strokeDasharray="4" />
-              <polyline
-                fill="none"
-                stroke={isStable ? "#22c55e" : "#ef4444"}
-                strokeWidth="2"
-                points={history.map((val, i) => `${i}%,${128 - val * 20}`).join(' ')}
-              />
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+              {/* Zero line */}
+              <line x1="0" y1="50" x2="100" y2="50" stroke="#334155" strokeWidth="0.3" strokeDasharray="2 1" />
+              {/* Bounds (visual reference for ±1) */}
+              <line x1="0" y1="30" x2="100" y2="30" stroke="#1e293b" strokeWidth="0.2" strokeDasharray="1 2" />
+              <line x1="0" y1="70" x2="100" y2="70" stroke="#1e293b" strokeWidth="0.2" strokeDasharray="1 2" />
+              {/* Time response curve */}
+              {history.length > 1 && (
+                <polyline
+                  fill="none"
+                  stroke={isStable ? "#22c55e" : "#ef4444"}
+                  strokeWidth="0.6"
+                  vectorEffect="non-scaling-stroke"
+                  points={history.map((val, i) => {
+                    const x = (i / (history.length - 1)) * 100;
+                    const y = 50 - val * 20; // val=±2 -> y=10..90
+                    return `${x.toFixed(2)},${y.toFixed(2)}`;
+                  }).join(' ')}
+                />
+              )}
+              {/* Axis labels */}
+              <text x="2" y="15" fill="#475569" fontSize="3" fontFamily="monospace">y(t)</text>
+              <text x="92" y="55" fill="#475569" fontSize="3" fontFamily="monospace">t →</text>
             </svg>
             {!isStable && (
-              <div className="absolute inset-0 bg-red-500/10 flex items-center justify-center">
-                <div className="bg-red-600 text-white text-[10px] px-3 py-1 rounded-full font-bold animate-bounce">התבדרות!</div>
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 pointer-events-none">
+                <div className="bg-red-600/90 text-white text-[10px] px-3 py-1 rounded-full font-bold shadow-lg flex items-center gap-1.5">
+                  <span className="animate-pulse">●</span> התבדרות (Re(s) {'>'} 0)
+                </div>
+              </div>
+            )}
+            {isStable && isOscillatory && (
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 pointer-events-none">
+                <div className="bg-amber-500/90 text-white text-[10px] px-3 py-1 rounded-full font-bold shadow-lg">
+                  תנודות יציבות
+                </div>
               </div>
             )}
           </div>
