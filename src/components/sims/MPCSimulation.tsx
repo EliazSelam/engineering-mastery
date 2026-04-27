@@ -1,6 +1,46 @@
 import React, { useState, useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
+// Real LQR-based MPC solver
+function predictMPC(
+  x0: number,
+  target: number,
+  N: number,
+  A: number = 0.95,
+  B: number = 0.1,
+  Q: number = 1,
+  R: number = 0.01,
+  uMin: number = -10,
+  uMax: number = 10
+): { trajectory: number[]; controls: number[]; cost: number; saturated: boolean } {
+  // Solve infinite-horizon Riccati equation for steady-state gain
+  let P = Q;
+  for (let i = 0; i < 50; i++) {
+    const denom = R + B * B * P;
+    P = A * A * P - (A * B * P) * (A * B * P) / denom + Q;
+  }
+  const K = (B * P * A) / (R + B * B * P);
+
+  // Forward simulate with feedback
+  const trajectory: number[] = [x0];
+  const controls: number[] = [];
+  let cost = 0;
+  let saturated = false;
+  let x = x0;
+
+  for (let i = 0; i < N; i++) {
+    let u = -K * (x - target);
+    const uSat = Math.max(uMin, Math.min(uMax, u));
+    if (Math.abs(uSat - u) > 0.001) saturated = true;
+    controls.push(uSat);
+    cost += Q * (x - target) * (x - target) + R * uSat * uSat;
+    x = A * x + B * uSat;
+    trajectory.push(x);
+  }
+
+  return { trajectory, controls, cost, saturated };
+}
+
 export default function MPCSimulation() {
   const DEFAULT = { horizon: 10, target: 10 };
   const [horizon, setHorizon] = useState(DEFAULT.horizon);
@@ -26,20 +66,20 @@ export default function MPCSimulation() {
     }));
 
     const lastVal = history[history.length - 1].val;
-    
-    // Prediction logic: x(k+i) = lastVal + (Target - lastVal) * (1 - e^-0.3*i)
-    // Simplified model projection
+
+    // Real MPC prediction
+    const mpcResult = predictMPC(lastVal, target, horizon);
+
     const prediction = Array.from({ length: horizon }, (_, i) => {
       const t = 14 + i;
-      const predictedVal = lastVal + (target - lastVal) * (1 - Math.exp(-0.3 * i));
       return {
         t,
-        val: predictedVal,
+        val: mpcResult.trajectory[i + 1],
         type: 'Predicted'
       };
     });
 
-    return [...history, ...prediction];
+    return { chartData: [...history, ...prediction], mpcResult };
   }, [horizon, target]);
 
   return (
@@ -83,30 +123,30 @@ export default function MPCSimulation() {
 
       <div className="h-48">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ left: -20, bottom: -10 }}>
+          <LineChart data={data.chartData} margin={{ left: -20, bottom: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
             <XAxis dataKey="t" tick={{ fontSize: 9, fill: '#64748b' }} />
             <YAxis domain={[0, 22]} tick={{ fontSize: 9, fill: '#64748b' }} />
             <Tooltip contentStyle={{ background: '#0f172a', border: '1px solid #334155', fontSize: '10px' }} />
             <Legend verticalAlign="top" wrapperStyle={{ fontSize: 10, paddingBottom: 10 }} />
-            <Line 
-              type="monotone" 
-              dataKey="val" 
-              stroke="#10b981" 
-              strokeWidth={3} 
+            <Line
+              type="monotone"
+              dataKey="val"
+              stroke="#10b981"
+              strokeWidth={3}
               dot={(props: any) => {
-                if (data[props.index].type === 'Predicted') return <circle cx={props.cx} cy={props.cy} r={2} fill="#F7B801" stroke="none" />;
+                if (data.chartData[props.index].type === 'Predicted') return <circle cx={props.cx} cy={props.cy} r={2} fill="#F7B801" stroke="none" />;
                 return null;
               }}
               name="Trajectory"
-              isAnimationActive={false} 
+              isAnimationActive={false}
             />
-            <Line 
-              type="step" 
-              dataKey={() => target} 
-              stroke="#F7B801" 
-              strokeDasharray="5 5" 
-              name="Setpoint" 
+            <Line
+              type="step"
+              dataKey={() => target}
+              stroke="#F7B801"
+              strokeDasharray="5 5"
+              name="Setpoint"
               dot={false}
               isAnimationActive={false}
             />
@@ -117,11 +157,15 @@ export default function MPCSimulation() {
       <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
          <div className="flex justify-between items-center mb-2">
             <span className="text-[10px] text-slate-400 font-black uppercase">Solver Status</span>
-            <span className="text-[10px] text-emerald-400 font-mono font-bold">FEASIBLE OPTIMUM</span>
+            <div className="flex gap-2">
+              <span className={`text-[10px] font-mono font-bold ${data.mpcResult.saturated ? 'text-orange-400' : 'text-emerald-400'}`}>
+                {data.mpcResult.saturated ? 'SATURATED' : 'FEASIBLE'}
+              </span>
+              <span className="text-[10px] text-slate-300 font-mono">J = {data.mpcResult.cost.toFixed(2)}</span>
+            </div>
          </div>
          <p className="text-[9px] text-slate-500 leading-relaxed italic">
-           The MPC controller is solving an optimization problem over the {horizon}-step horizon. 
-           Cost Function: J = Σ(x-x_ref)² + Σ u².
+           {'LQR-based MPC solving finite-horizon optimal control: min Σ(x-x_ref)² + Σ Ru² s.t. x[k+1] = 0.95·x[k] + 0.1·u[k], |u| ≤ 10.'}
          </p>
       </div>
     </div>

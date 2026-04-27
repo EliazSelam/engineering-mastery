@@ -92,8 +92,21 @@ export default function NyquistSimulation() {
   // Marker for -1 point
   const minusOne = toScreen(-1, 0);
 
-  // Encirclements count (simplistic check)
-  const isEncircled = points.some(p => p.re < -1.1 && Math.abs(p.im) < 0.1);
+  // Winding number algorithm for encirclement detection
+  const computeWindingNumber = (points: Array<{re: number, im: number}>, target = {re: -1, im: 0}): number => {
+    let totalAngle = 0;
+    for (let i = 0; i < points.length - 1; i++) {
+      const v1 = { re: points[i].re - target.re, im: points[i].im - target.im };
+      const v2 = { re: points[i+1].re - target.re, im: points[i+1].im - target.im };
+      const cross = v1.re * v2.im - v1.im * v2.re;
+      const dot = v1.re * v2.re + v1.im * v2.im;
+      totalAngle += Math.atan2(cross, dot);
+    }
+    return Math.round(totalAngle / (2 * Math.PI));
+  };
+
+  const encirclements = computeWindingNumber(points);
+  const isEncircled = Math.abs(encirclements) >= 1;
 
   return (
     <div className="bg-slate-900 rounded-3xl border border-slate-800 p-8 space-y-8 font-sans" dir="rtl">
@@ -199,8 +212,11 @@ export default function NyquistSimulation() {
                  )}
                  {isEncircled ? 'חוסר יציבות!' : 'המערכת יציבה'}
               </div>
+              <div className="text-[12px] font-mono text-slate-400">
+                Encirclements: N = {encirclements}
+              </div>
               <p className="text-[11px] text-slate-300 leading-relaxed">
-                {isEncircled 
+                {isEncircled
                   ? "העקום מקיף את הנקודה (1-, 0j). לפי קריטריון נייקוויסט, זה מעיד על קיומם של קטבים בחצי המישור הימני (RHP) של החוג הסגור."
                   : "העקום אינו מקיף את נקודת הקריטית. המערכת תהיה יציבה בחוג סגור."}
               </p>

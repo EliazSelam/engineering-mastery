@@ -1,12 +1,87 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { Activity, Brain, Zap, RotateCcw, Info, TrendingDown } from 'lucide-react';
+
+// NN State and Training
+interface NNState {
+  W1: number[][];
+  b1: number[];
+  W2: number[];
+  b2: number;
+}
+
+function sigmoid(x: number) {
+  return 1 / (1 + Math.exp(-Math.max(-500, Math.min(500, x))));
+}
+
+function initNN(): NNState {
+  return {
+    W1: [[0.1, 0.05], [0.05, 0.1], [-0.08, -0.05], [0.06, -0.1]],
+    b1: [0, 0, 0, 0],
+    W2: [0.05, 0.08, -0.06, 0.07],
+    b2: 0
+  };
+}
+
+function nnForward(nn: NNState, input: number[]): { u: number; hidden: number[] } {
+  const hidden = nn.b1.map((b, i) => sigmoid(nn.W1[i][0] * input[0] + nn.W1[i][1] * input[1] + b));
+  const u = hidden.reduce((sum, h, i) => sum + nn.W2[i] * h, nn.b2);
+  return { u, hidden };
+}
+
+function trainStep(nn: NNState, x: number, target: number, alpha: number = 0.05): { nn: NNState; loss: number; u: number } {
+  const { u } = nnForward(nn, [x, target]);
+  const dx_dt = -x + u;
+  const x_next = x + dx_dt * 0.1;
+  const loss = (x_next - target) ** 2;
+
+  const eps = 1e-3;
+  const newNN: NNState = {
+    W1: nn.W1.map(row => [...row]),
+    b1: [...nn.b1],
+    W2: [...nn.W2],
+    b2: nn.b2
+  };
+
+  // Gradient on W2
+  for (let i = 0; i < nn.W2.length; i++) {
+    const W2_eps = [...nn.W2];
+    W2_eps[i] += eps;
+    const { u: u_eps } = nnForward({ ...nn, W2: W2_eps }, [x, target]);
+    const x_eps = x + (-x + u_eps) * 0.1;
+    const loss_eps = (x_eps - target) ** 2;
+    newNN.W2[i] -= alpha * (loss_eps - loss) / eps;
+  }
+
+  // Gradient on b2
+  const b2_eps = nn.b2 + eps;
+  const { u: u_b2 } = nnForward({ ...nn, b2: b2_eps }, [x, target]);
+  const x_b2 = x + (-x + u_b2) * 0.1;
+  const loss_b2 = (x_b2 - target) ** 2;
+  newNN.b2 -= alpha * (loss_b2 - loss) / eps;
+
+  // Gradient on W1 (selected weights for speed)
+  for (let i = 0; i < 2; i++) {
+    for (let j = 0; j < 2; j++) {
+      const W1_eps = nn.W1.map(row => [...row]);
+      W1_eps[i][j] += eps;
+      const { u: u_eps } = nnForward({ ...nn, W1: W1_eps }, [x, target]);
+      const x_eps = x + (-x + u_eps) * 0.1;
+      const loss_eps = (x_eps - target) ** 2;
+      newNN.W1[i][j] -= alpha * (loss_eps - loss) / eps;
+    }
+  }
+
+  return { nn: newNN, loss, u };
+}
 
 export default function NNControlSimulation() {
   const [loss, setLoss] = useState<number[]>([]);
   const [training, setTraining] = useState(false);
   const [performance, setPerformance] = useState(0);
   const [iteration, setIteration] = useState(0);
+  const nnRef = useRef<NNState>(initNN());
+  const stateRef = useRef<number>(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const reset = () => {
@@ -14,18 +89,20 @@ export default function NNControlSimulation() {
     setTraining(false);
     setPerformance(0);
     setIteration(0);
+    nnRef.current = initNN();
+    stateRef.current = 0;
   };
 
   useEffect(() => {
     if (!training) return;
     const interval = setInterval(() => {
+      const { nn: newNN, loss: newLoss, u } = trainStep(nnRef.current, stateRef.current, 1.0, 0.02);
+      nnRef.current = newNN;
+      stateRef.current = stateRef.current + (-stateRef.current + u) * 0.1;
+
       setIteration(i => i + 1);
-      setLoss(prev => {
-        const last = prev.length > 0 ? prev[prev.length - 1] : 2.5;
-        const next = Math.max(0.05, last * (0.95 + Math.random() * 0.04));
-        return [...prev, next].slice(-50);
-      });
-      setPerformance(p => Math.min(100, p + Math.random() * 2));
+      setLoss(prev => [...prev, newLoss].slice(-50));
+      setPerformance(p => Math.min(100, Math.max(0, 100 * Math.exp(-newLoss * 0.5))));
     }, 100);
     return () => clearInterval(interval);
   }, [training]);
@@ -40,8 +117,8 @@ export default function NNControlSimulation() {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
 
-    // Draw simple NN visualization
-    const layers = [3, 4, 3];
+    // Draw NN: input (2) -> hidden (4) -> output (1)
+    const layers = [2, 4, 1];
     const spacingX = 80;
     const spacingY = 40;
 
@@ -100,15 +177,15 @@ export default function NNControlSimulation() {
         {/* NETWORK VIZ */}
         <div className="flex flex-col items-center justify-center p-4 bg-slate-900/50 rounded-2xl border border-slate-800/50 relative">
            <canvas ref={canvasRef} width={300} height={250} className="w-full h-auto" />
-           <div className="absolute top-4 left-4 text-[10px] font-mono text-slate-600 uppercase">Architecture: 3-4-3 FFN</div>
+           <div className="absolute top-4 left-4 text-[10px] font-mono text-slate-600 uppercase">Architecture: 2-4-1 FFN</div>
            <div className="mt-4 flex gap-8">
               <div className="flex flex-col items-center">
-                 <span className="text-[8px] text-slate-500 uppercase font-black">Sensors</span>
+                 <span className="text-[8px] text-slate-500 uppercase font-black">Input: [x, x_target]</span>
                  <Brain size={16} className="text-emerald-500 mt-1" />
               </div>
               <div className="flex flex-col items-center">
-                 <span className="text-[8px] text-slate-500 uppercase font-black">Control</span>
-                 <Zap size={16} className="text-coral mt-1" />
+                 <span className="text-[8px] text-slate-500 uppercase font-black">Output: u</span>
+                 <Zap size={16} className="text-orange-400 mt-1" />
               </div>
            </div>
         </div>
@@ -148,7 +225,7 @@ export default function NNControlSimulation() {
            <div className="p-4 bg-indigo-500/10 rounded-2xl border border-indigo-500/20 flex gap-4">
               <Info size={16} className="text-indigo-400 shrink-0" />
               <p className="text-[10px] text-slate-400 leading-relaxed italic">
-                 <strong>Insight:</strong> Unlike PID, an NN-Controller "learns" the dynamics by minimizing a cost function (Loss). Over time, the weights adjust to stabilize the system across different operational envelopes.
+                 <strong>Algorithm:</strong> Plant ẋ = -x + u with target x_t. NN learns u = NN(x, x_t) by minimizing loss = (x_next - x_t)². Weights trained via numerical gradient descent at each step.
               </p>
            </div>
         </div>

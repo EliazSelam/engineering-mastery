@@ -26,25 +26,26 @@ export const TopNav: React.FC<TopNavProps> = ({
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 h-20 border-b border-slate-200/70 bg-white/95 backdrop-blur-sm overflow-visible',
+        'sticky top-0 z-50 border-b border-slate-200/70 bg-white/95 backdrop-blur-sm',
+        'h-16 sm:h-20',
         className
       )}
       dir="ltr"
     >
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-2 px-3 sm:px-6">
 
         {/* LEFT: stats */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {streak !== undefined && (
-            <div className="flex h-9 items-center gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-3.5 text-orange-700">
-              <span className="text-sm font-bold">{streak}</span>
-              <Flame className="h-3.5 w-3.5" />
+            <div className="flex h-7 sm:h-9 items-center gap-1 sm:gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-2.5 sm:px-3.5 text-orange-700">
+              <span className="text-xs sm:text-sm font-bold">{streak}</span>
+              <Flame className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
             </div>
           )}
           {currentDay !== undefined && (
-            <div className="flex h-9 items-center gap-1.5 rounded-full border border-slate-300 bg-slate-100 px-3.5 text-slate-800">
-              <span className="text-sm font-bold">{currentDay}/30</span>
-              <span className="text-[9px] font-bold tracking-[0.18em] text-slate-500">DAY</span>
+            <div className="flex h-7 sm:h-9 items-center gap-1 sm:gap-1.5 rounded-full border border-slate-300 bg-slate-100 px-2.5 sm:px-3.5 text-slate-800">
+              <span className="text-xs sm:text-sm font-bold">{currentDay}/30</span>
+              <span className="text-[8px] sm:text-[9px] font-bold tracking-[0.18em] text-slate-500">DAY</span>
             </div>
           )}
           {trailing}
@@ -60,16 +61,24 @@ export const TopNav: React.FC<TopNavProps> = ({
         {/* RIGHT: brand + logo */}
         <button
           onClick={() => setLocation('/')}
-          className="flex items-center gap-3 focus-visible:outline-none"
+          className="flex items-center gap-2 sm:gap-3 focus-visible:outline-none shrink-0"
           aria-label="דף הבית"
         >
-          <span className="hidden md:inline text-lg font-bold tracking-tight text-slate-900">
+          <span className="hidden sm:inline text-sm sm:text-lg font-bold tracking-tight text-slate-900">
             Engineering Mastery
           </span>
-          <img
-            src={logoIcon}
-            alt="Engineering Mastery"
-            className="h-12 w-12 object-contain shrink-0"
+          <div
+            className="shrink-0"
+            style={{
+              width: '36px',
+              height: '36px',
+              backgroundImage: `url(${logoIcon})`,
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
+            role="img"
+            aria-label="Engineering Mastery"
           />
         </button>
 

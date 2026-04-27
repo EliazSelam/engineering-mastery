@@ -10,6 +10,8 @@ export default function RoboticsProjectSimulation() {
   const [angle2, setAngle2] = useState(45);
   const [hasObject, setHasObject] = useState(false);
   const [score, setScore] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+  const [objectReachable, setObjectReachable] = useState<boolean>(true);
 
   const requestRef = useRef<number | undefined>(undefined);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -130,7 +132,12 @@ export default function RoboticsProjectSimulation() {
 
   const animateTo = async (tx: number, ty: number, cx: number, cy: number) => {
     const targetAngles = solveIK(tx, ty, cx, cy);
-    if (!targetAngles) return;
+    if (!targetAngles) {
+      console.warn(`[RoboticsProject] IK failed for target (${tx}, ${ty})`);
+      setError(`לא ניתן להגיע ליעד (${tx}, ${ty}) — מחוץ לטווח הזרוע`);
+      setTaskState('idle');
+      return;
+    }
 
     const steps = 60;
     const d1 = (targetAngles.a1 - angle1) / steps;
@@ -144,6 +151,13 @@ export default function RoboticsProjectSimulation() {
   };
 
   useEffect(() => {
+    // Check object reachability on mount
+    const cx = 300, cy = 360;
+    const test = solveIK(objPos.x, objPos.y - 20, cx, cy);
+    setObjectReachable(test !== null);
+  }, []);
+
+  useEffect(() => {
     draw();
   }, [angle1, angle2, hasObject]);
 
@@ -153,6 +167,7 @@ export default function RoboticsProjectSimulation() {
     setAngle2(45);
     setHasObject(false);
     setScore(0);
+    setError(null);
   };
 
   const getTakeaway = () => {
@@ -187,6 +202,18 @@ export default function RoboticsProjectSimulation() {
         {getTakeaway()}
       </div>
 
+      {error && (
+        <div className="p-3 bg-red-50 border border-red-200 rounded-md text-red-700 text-sm flex items-center justify-between">
+          <span>⚠️ {error}</span>
+          <button
+            onClick={() => { setError(null); setTaskState('idle'); }}
+            className="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-xs font-semibold transition-colors"
+          >
+            איפוס
+          </button>
+        </div>
+      )}
+
       <div className="flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="space-y-2">
           {/* Layout placeholder */}
@@ -219,7 +246,11 @@ export default function RoboticsProjectSimulation() {
         </div>
 
         <div className="flex flex-col gap-4">
-           <button 
+           <div className="text-xs text-slate-500 text-center">
+             אובייקט בטווח: {objectReachable ? '✓' : '✗ (מחוץ לטווח)'}
+           </div>
+
+           <button
              onClick={executeTask}
              disabled={taskState !== 'idle'}
              className="w-full py-6 rounded-2xl bg-blue-600 text-white font-black text-lg hover:bg-blue-500 disabled:opacity-30 disabled:grayscale transition-all shadow-xl shadow-blue-900/20 flex flex-col items-center gap-2"

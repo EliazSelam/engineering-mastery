@@ -24,6 +24,7 @@ export default function WeeklyReviewProject() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number | undefined>(undefined);
   const lastTimeRef = useRef<number | undefined>(undefined);
+  const integralRef = useRef<number>(0);
 
   // Constants
   const M = 1.0;  // Cart mass
@@ -38,6 +39,7 @@ export default function WeeklyReviewProject() {
     setX(0);
     setV(0);
     setIsRunning(false);
+    integralRef.current = 0; // Reset integral state
   };
 
   const simulate = (time: number) => {
@@ -46,15 +48,16 @@ export default function WeeklyReviewProject() {
       let F = 0;
       if (method === 'PID') {
         const error = 0 - theta;
-        // Simple PD for stabilization
-        F = - (kp * error + kd * omega);
+        // PID control with integral action
+        integralRef.current += error * dt;
+        F = - (kp * error + ki * integralRef.current + kd * omega);
       } else {
         // Simple LQR-like Gains (Optimized for this system)
         // Gain vector K = [-7, -10, 80, 20] -> [x, v, theta, omega]
         F = -( -7*x + -10*v + 120*theta + 25*omega );
       }
 
-      // Physics Equations (Simplified Linear Model for stability)
+      // Physics Equations (Nonlinear cart-pole dynamics using Lagrangian)
       // d2theta = (g*sin(theta) + cos(theta)*(-F - m*L*omega^2*sin(theta))/(M+m)) / (L*(4/3 - (m*cos(theta)^2)/(M+m)))
       
       const common = (F + m * L * omega * omega * Math.sin(theta)) / (M + m);
@@ -191,7 +194,7 @@ export default function WeeklyReviewProject() {
           <div className="space-y-4 font-sans">
             <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">שיטת בקרה</div>
             <div className="grid grid-cols-2 gap-2">
-              <button 
+              <button
                 onClick={() => setMethod('PID')}
                 className={`py-2 rounded-lg border transition-all ${
                   method === 'PID' ? 'bg-blue-500 border-blue-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400'
@@ -199,7 +202,7 @@ export default function WeeklyReviewProject() {
               >
                 PID
               </button>
-              <button 
+              <button
                 onClick={() => setMethod('LQR')}
                 className={`py-2 rounded-lg border transition-all ${
                   method === 'LQR' ? 'bg-purple-500 border-purple-400 text-white' : 'bg-slate-800 border-slate-700 text-slate-400'
@@ -209,6 +212,16 @@ export default function WeeklyReviewProject() {
               </button>
             </div>
           </div>
+
+          {method === 'LQR' && (
+            <div className="p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg">
+              <div className="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-2">LQR Gains</div>
+              <div className="text-[11px] font-mono text-slate-300 space-y-1">
+                <div>K = [Kx, Kv, Kθ, Kω]</div>
+                <div>K = [7, 10, 120, 25]</div>
+              </div>
+            </div>
+          )}
 
           {method === 'PID' && (
             <div className="space-y-4 pt-2">

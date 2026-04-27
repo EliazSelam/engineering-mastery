@@ -9,6 +9,30 @@ const FREQS = [
   { hz: 3000, label: '3 kHz', color: '#10b981' }
 ];
 const FS = 8000;
+const FFT_SIZE = 512;
+
+// Real DFT computation for educational integrity
+function computeDFT(x: number[], fs: number): { freqs: number[], magnitudes: number[] } {
+  const N = x.length;
+  const halfN = Math.floor(N / 2);
+  const freqs: number[] = [];
+  const magnitudes: number[] = [];
+
+  for (let k = 0; k < halfN; k++) {
+    let re = 0, im = 0;
+    for (let n = 0; n < N; n++) {
+      const angle = 2 * Math.PI * k * n / N;
+      re += x[n] * Math.cos(angle);
+      im -= x[n] * Math.sin(angle);
+    }
+    // One-sided amplitude spectrum: 2/N for k > 0, 1/N for DC
+    const scale = k === 0 ? 1 / N : 2 / N;
+    freqs.push((k * fs) / N);
+    magnitudes.push(Math.sqrt(re * re + im * im) * scale);
+  }
+
+  return { freqs, magnitudes };
+}
 
 export default function SpectrumAnalyzer() {
   const DEFAULT = [true, false, false, false];
@@ -31,10 +55,35 @@ export default function SpectrumAnalyzer() {
     return { t: parseFloat((t * 1000).toFixed(2)), y: parseFloat(y.toFixed(3)) };
   }), [active, activeFreqs]);
 
-  const spectrum = useMemo(() => [50, 100, 200, 300, 500, 750, 1000, 1500, 2000, 2500, 3000, 3500, 4000].map(f => ({
-    f: f >= 1000 ? `${f/1000}k` : `${f}`,
-    mag: parseFloat((activeFreqs.some(af => Math.abs(af.hz - f) < 80) ? 0.8 + Math.random() * 0.15 : Math.random() * 0.05).toFixed(3))
-  })), [activeFreqs]);
+  const spectrum = useMemo(() => {
+    // Generate time-domain signal with actual FFT size
+    const signal = Array.from({ length: FFT_SIZE }, (_, i) => {
+      const t = i / FS;
+      return activeFreqs.reduce((sum, f) => sum + Math.sin(2 * Math.PI * f.hz * t), 0);
+    });
+
+    // Compute real DFT
+    const { freqs, magnitudes } = computeDFT(signal, FS);
+
+    // Sample the spectrum at common display frequencies for clarity
+    const displayFreqs = [50, 100, 200, 300, 500, 750, 1000, 1500, 2000, 2500, 3000, 3500, 4000];
+    return displayFreqs.map(fDisplay => {
+      // Find nearest FFT bin to display frequency
+      let closestIdx = 0;
+      let minDist = Math.abs(freqs[0] - fDisplay);
+      for (let i = 1; i < freqs.length; i++) {
+        const dist = Math.abs(freqs[i] - fDisplay);
+        if (dist < minDist) {
+          minDist = dist;
+          closestIdx = i;
+        }
+      }
+      return {
+        f: fDisplay >= 1000 ? `${fDisplay/1000}k` : `${fDisplay}`,
+        mag: parseFloat(magnitudes[closestIdx].toFixed(3))
+      };
+    });
+  }, [activeFreqs]);
 
   return (
     <div className="bg-slate-900 rounded-3xl p-6 flex flex-col gap-6 border-4 border-slate-800 text-white" dir="ltr">
