@@ -58,10 +58,10 @@ export const TopNav: React.FC<TopNavProps> = ({
           </span>
         )}
 
-        {/* RIGHT: brand + logo */}
+        {/* RIGHT: brand + logo — with right padding so logo isn't clipped */}
         <button
           onClick={() => setLocation('/')}
-          className="flex items-center gap-2 sm:gap-3 focus-visible:outline-none shrink-0"
+          className="flex items-center gap-2 sm:gap-3 focus-visible:outline-none shrink-0 pr-1 sm:pr-2"
           aria-label="דף הבית"
         >
           <span className="hidden sm:inline text-sm sm:text-lg font-bold tracking-tight text-slate-900">
@@ -70,10 +70,13 @@ export const TopNav: React.FC<TopNavProps> = ({
           <img
             src={logoIcon}
             alt="Engineering Mastery"
-            width={40}
-            height={40}
             className="shrink-0 select-none"
-            style={{ width: '40px', height: '40px', objectFit: 'contain' }}
+            style={{
+              width: '52px',
+              height: '52px',
+              objectFit: 'contain',
+              display: 'block',
+            }}
             draggable={false}
           />
         </button>
@@ -84,7 +87,7 @@ export const TopNav: React.FC<TopNavProps> = ({
       {progress && progress.total > 0 && (
         <div className="h-[3px] bg-slate-100">
           <div
-            className="h-full bg-blue-500 transition-[width] duration-500"
+            className="h-full bg-[hsl(var(--coral))] transition-[width] duration-500"
             style={{ width: `${Math.min(100, (progress.current / progress.total) * 100)}%` }}
           />
         </div>

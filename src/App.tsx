@@ -17,6 +17,7 @@ import { H1, Lead } from './ui/Typography';
 import { Button } from './ui/Button';
 import Footer from './components/Footer';
 import { BottomNav } from './ui/BottomNav';
+import { InstallBanner } from './ui/InstallBanner';
 import { Bell } from 'lucide-react';
 
 // ─── Page transition ───────────────────────────────────────────────
@@ -254,6 +255,7 @@ export default function App() {
       </AnimatePresence>
 
       <Analytics />
+      <InstallBanner />
 
       {!hideGlobalNav && <Footer />}
       {!hideGlobalNav && !isLocked && <BottomNav />}
