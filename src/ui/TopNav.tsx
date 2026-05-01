@@ -30,9 +30,10 @@ export const TopNav: React.FC<TopNavProps> = ({
         'h-16 sm:h-20',
         className
       )}
+      style={{ overflow: 'visible' }}
       dir="ltr"
     >
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-2 px-4 sm:px-8">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-2 px-4 pl-4 pr-5 sm:px-8 sm:pr-10">
 
         {/* LEFT: stats */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
@@ -72,10 +73,11 @@ export const TopNav: React.FC<TopNavProps> = ({
             alt="Engineering Mastery"
             className="shrink-0 select-none"
             style={{
-              width: '52px',
-              height: '52px',
+              width: '48px',
+              height: '48px',
               objectFit: 'contain',
               display: 'block',
+              marginRight: '6px',
             }}
             draggable={false}
           />
