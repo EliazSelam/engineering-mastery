@@ -2,16 +2,16 @@
 
 /*
 ═══════════════════════════════════════════════════════════════════════════
-  ENGINEERING MASTERY — DESIGN SYSTEM V2
-  Editorial Premium · Lumina × Eliaz
-  Inspired by: Stripe, Linear, Vercel, The New York Times
+  ENGINEERING MASTERY — DESIGN SYSTEM V3
+  Coral · Dark Blue · Gold · Charcoal
+  Lumina × Eliaz · Claude Design export
 ═══════════════════════════════════════════════════════════════════════════
 */
 
 @theme {
   /* ───── Type stack ──────────────────────────────────────────── */
-  --font-sans: "Inter", "Heebo", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Fraunces", "Playfair Display", Georgia, serif;
+  --font-sans: "Open Sans", "Heebo", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   /* ───── Fluid type scale (clamp-based, editorial) ─────────── */
@@ -59,65 +59,76 @@
 }
 
 /*
-───── Color System (HSL components, light theme) ───────────────────────
-Engineering-first palette: precise, technical, high-tech.
-Blue primary · Cyan control accent · Orange energy-only (≤5%).
+───── Color System V3 (HSL components, light theme) ─────────────────────
+Engineering Mastery palette: Coral · Dark Blue · Gold · Charcoal
+Coral = Primary/Titles · Blue = Structure · Gold = Insights/KPI
 */
 :root {
-  /* ── Primary — Technical Blue (CTA, links, progress) ─────── */
-  --color-primary:        221 83% 53%;   /* #2563EB Blue */
-  --color-primary-soft:   221 90% 95%;   /* Blue-50 */
-  --color-primary-ink:    221 68% 35%;   /* Blue-700 (text on light bg) */
-  --color-primary-hover:  220 72% 46%;   /* #1D4ED8 Blue dark */
+  /* ── Coral — Primary / Titles / CTA ─────────────────────── */
+  --coral:              14 100% 60%;   /* #FF6B35 */
+  --coral-soft:         16  95% 95%;   /* #FFF1EB */
+  --coral-hover:        14  90% 51%;   /* #E85A24 */
+  --coral-dark:         13  80% 44%;   /* #C44B1E */
+  --coral-ink:          13  75% 28%;   /* #7A2810 */
 
-  /* ── Secondary — Control Cyan (DSP / signal / technical) ─── */
-  --color-secondary:      192 95% 44%;   /* #06B6D4 Control Cyan */
-  --color-secondary-soft: 192 80% 94%;
-  --color-secondary-ink:  192 90% 22%;
+  --color-primary:      var(--coral);
+  --color-primary-soft: var(--coral-soft);
+  --color-primary-hover:var(--coral-hover);
+  --color-primary-ink:  var(--coral-ink);
 
-  /* ── Accent — Gold (insights / KPIs) ────────────────────── */
-  --color-accent:         43 97% 49%;    /* #F7B801 Gold */
-  --color-accent-soft:    43 95% 95%;
-  --color-accent-ink:     36 75% 32%;
+  /* ── Dark Blue — Structure / Context / Navigation ────────── */
+  --blue:               209 100% 27%;  /* #004E89 */
+  --blue-soft:          210  60% 94%;  /* #E6F0F7 */
+  --blue-hover:         209 100% 21%;  /* #003D6B */
+  --blue-ink:           211 100% 10%;  /* #001C31 */
 
-  /* ── Energy — Orange (streak flame · ≤5% of UI) ─────────── */
-  --color-energy:         14 100% 60%;   /* #FF6B35 Energy Orange */
-  --color-energy-soft:    14 95% 96%;
-  --color-energy-ink:     14 68% 38%;
+  --color-secondary:    var(--blue);
+  --color-secondary-soft: var(--blue-soft);
+  --color-secondary-ink:  var(--blue-ink);
 
-  /* ── Cool Graphite ink scale (technical / precise) ──────── */
-  --ink-950: 222 47%  8%;    /* #0B1120 Deep Graphite */
-  --ink-900: 222 35%  13%;   /* #141929 */
-  --ink-800: 222 20%  20%;   /* #29303D — body text */
-  --ink-700: 222 15%  30%;   /* #42495A */
-  --ink-600: 222 12%  42%;   /* #5C6475 */
-  --ink-500: 222 10%  55%;   /* #7D8490 — muted text */
-  --ink-400: 222 10%  68%;   /* #9FA5AE */
-  --ink-300: 222 15%  82%;   /* #C5CAD3 — borders */
-  --ink-200: 222 18%  91%;   /* #DDE1EB — subtle fills */
-  --ink-100: 220 22%  95%;   /* #ECF0F6 — surface-2 */
-  --ink-50:  220 14%  97%;   /* #F5F7FA — canvas ≈ F7F8FA */
+  /* ── Gold — Insights / KPI / Highlights ─────────────────── */
+  --gold:               43  93% 49%;   /* #F7B801 */
+  --gold-soft:          44  95% 94%;   /* #FEF8E6 */
+  --gold-hover:         43  90% 41%;   /* #D9A001 */
+  --gold-ink:           40  82% 28%;   /* #835E00 */
+
+  --color-accent:       var(--gold);
+  --color-accent-soft:  var(--gold-soft);
+  --color-accent-ink:   var(--gold-ink);
+
+  /* ── Charcoal — Body Text Scale ─────────────────────────── */
+  --ink-950:  0   0%  9%;   /* #171717 */
+  --ink-900:  0   0% 18%;   /* #2E2E2E — body text */
+  --ink-800:  0   0% 28%;   /* #474747 */
+  --ink-700:  0   0% 38%;   /* #616161 */
+  --ink-600:  0   0% 50%;   /* #808080 */
+  --ink-500:  0   0% 62%;   /* #9E9E9E — muted */
+  --ink-400:  0   0% 74%;   /* #BDBDBD */
+  --ink-300:  0   0% 84%;   /* #D6D6D6 — borders */
+  --ink-200:  0   0% 91%;   /* #E8E8E8 — subtle fills */
+  --ink-100:  0   0% 95%;   /* #F2F2F2 — surface-2 */
+  --ink-50:   0   0% 98%;   /* #FAFAFA — canvas */
 
   /* Semantic aliases */
-  --color-bg:          var(--ink-50);
-  --color-surface:     0 0% 100%;
-  --color-surface-2:   var(--ink-100);
-  --color-surface-3:   var(--ink-200);
-  --color-border:      var(--ink-300);
+  --color-bg:            var(--ink-50);
+  --color-surface:       0 0% 100%;
+  --color-surface-2:     var(--ink-100);
+  --color-surface-3:     var(--ink-200);
+  --color-border:        var(--ink-300);
   --color-border-strong: var(--ink-400);
-  --color-text:        var(--ink-800);
-  --color-text-muted:  var(--ink-600);
-  --color-text-faint:  var(--ink-500);
+  --color-text:          var(--ink-900);
+  --color-text-muted:    var(--ink-700);
+  --color-text-faint:    var(--ink-500);
 
   /* State colors */
-  --color-success: 142 71% 38%;
-  --color-success-soft: 142 60% 94%;
-  --color-warning: 35 92% 50%;
-  --color-warning-soft: 35 95% 95%;
-  --color-error:   0 72% 50%;
-  --color-error-soft: 0 75% 96%;
-  --color-info:    221 83% 53%;
-  --color-info-soft: 221 90% 95%;
+  --color-success:      145  55% 36%;
+  --color-success-soft: 145  50% 93%;
+  --color-warning:       43  93% 49%;
+  --color-warning-soft:  44  95% 94%;
+  --color-error:          0  68% 48%;
+  --color-error-soft:     0  70% 95%;
+  --color-info:          var(--blue);
+  --color-info-soft:     var(--blue-soft);
 
   /* Pastels (for category chips, legacy compatibility) */
   --color-pastel-teal:   174 60% 93%;
@@ -163,20 +174,21 @@ Blue primary · Cyan control accent · Orange energy-only (≤5%).
     line-height: 1.6;
   }
 
-  /* Headings: tight tracking, display-grade */
+  /* Headings: Montserrat Bold — Engineering Mastery brand */
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: -0.02em;
     color: hsl(var(--ink-900));
   }
+  h1 { color: hsl(var(--coral)); }
+  h2 { color: hsl(var(--blue)); }
 
-  /* Editorial serif on demand */
+  /* Display class */
   .font-display {
     font-family: var(--font-display);
-    font-feature-settings: "ss01", "ss02", "liga";
-    font-weight: 500;
-    letter-spacing: -0.025em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   /* Consistent selection */
