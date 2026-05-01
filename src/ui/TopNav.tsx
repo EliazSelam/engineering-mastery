@@ -82,6 +82,8 @@ export const TopNav: React.FC<TopNavProps> = ({
             height: '30px',
             objectFit: 'contain',
             display: 'block',
+            paddingRight: '8px',
+            boxSizing: 'content-box',
           }}
           draggable={false}
         />
