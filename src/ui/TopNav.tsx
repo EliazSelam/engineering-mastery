@@ -26,14 +26,16 @@ export const TopNav: React.FC<TopNavProps> = ({
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 border-b border-slate-200/70 bg-white/95 backdrop-blur-sm',
+        'relative sticky top-0 z-50 border-b border-slate-200/70 bg-white/95 backdrop-blur-sm',
         'h-16 sm:h-20',
         className
       )}
-      style={{ overflow: 'visible' }}
       dir="ltr"
     >
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-2 px-4 pl-4 pr-5 sm:px-8 sm:pr-10">
+      <div
+        className="mx-auto flex h-full max-w-7xl items-center gap-2"
+        style={{ paddingLeft: '16px', paddingRight: '80px' }}
+      >
 
         {/* LEFT: stats */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
@@ -59,31 +61,31 @@ export const TopNav: React.FC<TopNavProps> = ({
           </span>
         )}
 
-        {/* RIGHT: brand + logo — with right padding so logo isn't clipped */}
-        <button
-          onClick={() => setLocation('/')}
-          className="flex items-center gap-2 sm:gap-3 focus-visible:outline-none shrink-0"
-          aria-label="דף הבית"
-        >
-          <span className="hidden sm:inline text-sm sm:text-lg font-bold tracking-tight text-slate-900">
-            Engineering Mastery
-          </span>
-          <img
-            src={logoIcon}
-            alt="Engineering Mastery"
-            className="shrink-0 select-none"
-            style={{
-              width: '48px',
-              height: '48px',
-              objectFit: 'contain',
-              display: 'block',
-              marginRight: '6px',
-            }}
-            draggable={false}
-          />
-        </button>
-
       </div>
+
+      {/* LOGO — absolutely positioned, guaranteed distance from right edge */}
+      <button
+        onClick={() => setLocation('/')}
+        className="absolute top-1/2 -translate-y-1/2 flex items-center gap-2 sm:gap-3 focus-visible:outline-none"
+        style={{ right: '16px' }}
+        aria-label="דף הבית"
+      >
+        <span className="hidden sm:inline text-sm sm:text-lg font-bold tracking-tight text-slate-900">
+          Engineering Mastery
+        </span>
+        <img
+          src={logoIcon}
+          alt="Engineering Mastery"
+          className="shrink-0 select-none"
+          style={{
+            width: '44px',
+            height: '44px',
+            objectFit: 'contain',
+            display: 'block',
+          }}
+          draggable={false}
+        />
+      </button>
 
       {/* Progress bar */}
       {progress && progress.total > 0 && (
