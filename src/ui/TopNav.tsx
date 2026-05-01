@@ -87,7 +87,7 @@ export const TopNav: React.FC<TopNavProps> = ({
       {progress && progress.total > 0 && (
         <div className="h-[3px] bg-slate-100">
           <div
-            className="h-full bg-[hsl(var(--coral))] transition-[width] duration-500"
+            className="h-full bg-[hsl(var(--color-primary))] transition-[width] duration-500"
             style={{ width: `${Math.min(100, (progress.current / progress.total) * 100)}%` }}
           />
         </div>
