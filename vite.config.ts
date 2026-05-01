@@ -18,10 +18,15 @@ export default defineConfig(({mode}) => {
       // Single-file mode: inline ALL JS/CSS into index.html (works with file://)
       ...(isStatic ? [viteSingleFile()] : [VitePWA({
         registerType: 'autoUpdate',
+        workbox: {
+          skipWaiting: true,
+          clientsClaim: true,
+          cleanupOutdatedCaches: true,
+        },
         manifest: {
           name: 'Engineering Mastery',
           short_name: 'EngMastery',
-          theme_color: '#FF6B35',
+          theme_color: '#2563EB',
           background_color: '#ffffff',
           display: 'standalone',
           start_url: '/',
