@@ -60,31 +60,35 @@
 
 /*
 ───── Color System V3 (HSL components, light theme) ─────────────────────
-Engineering Mastery palette: Coral · Dark Blue · Gold · Charcoal
-Coral = Primary/Titles · Blue = Structure · Gold = Insights/KPI
+Engineering Mastery palette: Blue Primary · Coral Accent · Gold KPI
+Blue = Primary (CTA, buttons, links, progress)
+Coral = Energy accent (streak flame, highlights only)
+Gold  = Insights / KPI
 */
 :root {
-  /* ── Coral — Primary / Titles / CTA ─────────────────────── */
+  /* ── Coral — Energy accent (streak, highlights — NOT primary) */
   --coral:              14 100% 60%;   /* #FF6B35 */
   --coral-soft:         16  95% 95%;   /* #FFF1EB */
   --coral-hover:        14  90% 51%;   /* #E85A24 */
   --coral-dark:         13  80% 44%;   /* #C44B1E */
   --coral-ink:          13  75% 28%;   /* #7A2810 */
 
-  --color-primary:      var(--coral);
-  --color-primary-soft: var(--coral-soft);
-  --color-primary-hover:var(--coral-hover);
-  --color-primary-ink:  var(--coral-ink);
+  /* ── Technical Blue — Primary (CTA, buttons, links, progress) */
+  --blue:               221 83% 53%;   /* #2563EB */
+  --blue-soft:          221 90% 95%;   /* Blue-50  */
+  --blue-hover:         220 72% 46%;   /* #1D4ED8  */
+  --blue-ink:           221 68% 35%;   /* Blue-700 */
+  --blue-dark:          209 100% 27%;  /* #004E89 Dark Blue */
+
+  --color-primary:      var(--blue);
+  --color-primary-soft: var(--blue-soft);
+  --color-primary-hover:var(--blue-hover);
+  --color-primary-ink:  var(--blue-ink);
 
   /* ── Dark Blue — Structure / Context / Navigation ────────── */
-  --blue:               209 100% 27%;  /* #004E89 */
-  --blue-soft:          210  60% 94%;  /* #E6F0F7 */
-  --blue-hover:         209 100% 21%;  /* #003D6B */
-  --blue-ink:           211 100% 10%;  /* #001C31 */
-
-  --color-secondary:    var(--blue);
-  --color-secondary-soft: var(--blue-soft);
-  --color-secondary-ink:  var(--blue-ink);
+  --color-secondary:    209 100% 27%;  /* #004E89 */
+  --color-secondary-soft: 210 60% 94%;
+  --color-secondary-ink:  211 100% 10%;
 
   /* ── Gold — Insights / KPI / Highlights ─────────────────── */
   --gold:               43  93% 49%;   /* #F7B801 */
@@ -181,8 +185,6 @@ Coral = Primary/Titles · Blue = Structure · Gold = Insights/KPI
     letter-spacing: -0.02em;
     color: hsl(var(--ink-900));
   }
-  h1 { color: hsl(var(--coral)); }
-  h2 { color: hsl(var(--blue)); }
 
   /* Display class */
   .font-display {

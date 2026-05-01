@@ -32,7 +32,7 @@ export const TopNav: React.FC<TopNavProps> = ({
       )}
       dir="ltr"
     >
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-2 px-3 sm:px-6">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-2 px-4 sm:px-8">
 
         {/* LEFT: stats */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
@@ -61,7 +61,7 @@ export const TopNav: React.FC<TopNavProps> = ({
         {/* RIGHT: brand + logo — with right padding so logo isn't clipped */}
         <button
           onClick={() => setLocation('/')}
-          className="flex items-center gap-2 sm:gap-3 focus-visible:outline-none shrink-0 pr-1 sm:pr-2"
+          className="flex items-center gap-2 sm:gap-3 focus-visible:outline-none shrink-0"
           aria-label="דף הבית"
         >
           <span className="hidden sm:inline text-sm sm:text-lg font-bold tracking-tight text-slate-900">
