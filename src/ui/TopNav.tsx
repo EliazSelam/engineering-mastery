@@ -78,12 +78,10 @@ export const TopNav: React.FC<TopNavProps> = ({
           alt="Engineering Mastery"
           className="shrink-0 select-none"
           style={{
-            width: '30px',
-            height: '30px',
+            width: '20px',
+            height: '20px',
             objectFit: 'contain',
             display: 'block',
-            paddingRight: '8px',
-            boxSizing: 'content-box',
           }}
           draggable={false}
         />
