@@ -18,10 +18,10 @@ const maxes = {
 };
 
 const pads = {
-  tight: 'py-6',
-  base:  'py-10 md:py-12',
-  loose: 'py-16 md:py-20',
-  hero:  'py-20 md:py-28',
+  tight: 'py-4 md:py-6',
+  base:  'py-6 md:py-10 lg:py-12',
+  loose: 'py-10 md:py-16 lg:py-20',
+  hero:  'py-8 sm:py-14 md:py-20 lg:py-28',
 };
 
 export const Section: React.FC<SectionProps> = ({

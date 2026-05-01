@@ -61,7 +61,7 @@ export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: H
     <>
       {/* ─── HERO ─── */}
       <Section pad="hero" max="2xl" className="rise-in">
-        <div className="grid grid-cols-12 gap-8 items-end">
+        <div className="grid grid-cols-12 gap-4 md:gap-8 items-end">
           <div className="col-span-12 lg:col-span-8">
             <Eyebrow className="mb-5">Engineer Daily · Day {currentDay} / 30</Eyebrow>
             <Display className="mb-6 text-[hsl(var(--ink-900))]">
@@ -146,16 +146,16 @@ export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: H
         >
           <div className="grid grid-cols-12 items-stretch text-right">
             {/* Big day number */}
-            <div className="col-span-12 md:col-span-3 flex flex-col justify-between bg-[hsl(var(--ink-950))] text-[hsl(var(--ink-50))] p-8 min-h-[220px] relative overflow-hidden">
+            <div className="col-span-12 md:col-span-3 flex flex-col justify-between bg-[hsl(var(--ink-950))] text-[hsl(var(--ink-50))] p-5 md:p-8 min-h-[160px] md:min-h-[220px] relative overflow-hidden">
               <div className="absolute -left-10 -bottom-10 w-48 h-48 rounded-full bg-[hsl(var(--color-primary)/0.15)] blur-3xl" />
               <Eyebrow className="text-[hsl(var(--ink-300))] relative z-10">Day</Eyebrow>
-              <div className="font-display text-[6.5rem] leading-[0.9] font-semibold tabular-nums relative z-10">
+              <div className="font-display text-[3.5rem] md:text-[6.5rem] leading-[0.9] font-semibold tabular-nums relative z-10">
                 {String(currentDay).padStart(2, '0')}
               </div>
             </div>
 
             {/* Content */}
-            <div className="col-span-12 md:col-span-9 p-8 flex flex-col gap-4 justify-center">
+            <div className="col-span-12 md:col-span-9 p-4 md:p-8 flex flex-col gap-3 md:gap-4 justify-center">
               <div className="flex items-center gap-2 flex-wrap">
                 <Badge tone="brand" size="sm">{currentLesson.category}</Badge>
                 <Badge tone="neutral" size="sm">{currentLesson.level}</Badge>

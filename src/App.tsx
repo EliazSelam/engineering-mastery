@@ -18,6 +18,7 @@ import { H1, Lead } from './ui/Typography';
 import { Button } from './ui/Button';
 import Footer from './components/Footer';
 import Onboarding from './components/Onboarding';
+import { BottomNav } from './ui/BottomNav';
 import { Bell } from 'lucide-react';
 
 // Page-level fade + slide transition
@@ -249,8 +250,14 @@ export default function App() {
       </AnimatePresence>
       <Analytics />
 
-      {/* ── Footer ─────────────────────────────────────────────── */}
+      {/* ── Footer (desktop only) ───────────────────────────────── */}
       {!hideGlobalNav && <Footer />}
+
+      {/* ── Bottom Nav (mobile only, hidden on DayPage) ─────────── */}
+      {!hideGlobalNav && <BottomNav />}
+
+      {/* ── Mobile bottom padding so content isn't hidden by BottomNav */}
+      {!hideGlobalNav && <div className="h-[60px] md:hidden" />}
     </div>
   );
 }
