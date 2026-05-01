@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Route, Switch, useLocation } from 'wouter';
-import { useHashLocation } from 'wouter/use-hash-location';
 import { Analytics } from '@vercel/analytics/react';
 import { useStudySystem } from './hooks/useStudySystem';
 import Home from './components/Home';
@@ -17,11 +16,10 @@ import { Section } from './ui/Section';
 import { H1, Lead } from './ui/Typography';
 import { Button } from './ui/Button';
 import Footer from './components/Footer';
-import Onboarding from './components/Onboarding';
 import { BottomNav } from './ui/BottomNav';
 import { Bell } from 'lucide-react';
 
-// Page-level fade + slide transition
+// ─── Page transition ───────────────────────────────────────────────
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] } },
@@ -30,16 +28,14 @@ const pageVariants = {
 
 function PageTransition({ children }: { children: React.ReactNode }) {
   return (
-    <motion.div
-      variants={pageVariants}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-    >
+    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
       {children}
     </motion.div>
   );
 }
+
+// ─── Admin secret key ──────────────────────────────────────────────
+const ADMIN_KEY = 'ELIAZ2025';
 
 export default function App() {
   const [location, setLocation] = useLocation();
@@ -47,21 +43,42 @@ export default function App() {
   const [showNotification, setShowNotification] = useState(false);
   const [lastTriggeredMinute, setLastTriggeredMinute] = useState<string | null>(null);
 
-  // ── Onboarding (first-visit only) ──────────────────────────────
-  const [onboardingDone, setOnboardingDone] = useState<boolean>(() => {
-    try { return !!localStorage.getItem('onboarding_done'); } catch { return false; }
+  // ── Admin mode: activate once via ?admin=ELIAZ2025 ────────────
+  const [isAdmin] = useState<boolean>(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('admin') === ADMIN_KEY) {
+        localStorage.setItem('admin_mode', 'true');
+        // Clean URL — remove the secret param
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+      return localStorage.getItem('admin_mode') === 'true';
+    } catch { return false; }
   });
 
-  const handleOnboardingComplete = (role: string) => {
-    try {
-      localStorage.setItem('onboarding_done', '1');
-      localStorage.setItem('user_role', role);
-    } catch { /* ignore */ }
-    setOnboardingDone(true);
-  };
+  // ── Day 1 gate: unlocked after completing first lesson ────────
+  const [day1Unlocked, setDay1Unlocked] = useState<boolean>(() => {
+    try { return !!localStorage.getItem('day1_complete'); } catch { return false; }
+  });
 
+  // isLocked = new user who hasn't finished Day 1 yet
+  const isLocked = !isAdmin && !day1Unlocked;
+
+  // Force new users to Day 1 — can't navigate anywhere else
+  useEffect(() => {
+    if (isLocked && location !== '/day/1') {
+      setLocation('/day/1');
+    }
+  }, [isLocked, location, setLocation]);
+
+  // ── Day complete handler ───────────────────────────────────────
   const handleDayComplete = (dayId: number, score: number) => {
     markDayComplete(dayId, score);
+    // Unlock the full app when Day 1 is finished
+    if (dayId === 1 && !day1Unlocked) {
+      try { localStorage.setItem('day1_complete', '1'); } catch {}
+      setDay1Unlocked(true);
+    }
     setLocation('/');
   };
 
@@ -76,21 +93,16 @@ export default function App() {
         if (!raw) return;
         const settings = JSON.parse(raw);
         if (!settings.enabled) return;
-
-        const now       = new Date();
-        const currentIST = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
-        const triggerKey = `${now.toDateString()}_${currentIST}`;
-
-        if (currentIST === settings.time && lastTriggeredMinute !== triggerKey) {
+        const now = new Date();
+        const currentTime = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false });
+        const triggerKey  = `${now.toDateString()}_${currentTime}`;
+        if (currentTime === settings.time && lastTriggeredMinute !== triggerKey) {
           setLastTriggeredMinute(triggerKey);
           setShowNotification(true);
           setTimeout(() => setShowNotification(false), 15000);
         }
-      } catch {
-        // Silently ignore invalid localStorage data
-      }
+      } catch { /* ignore */ }
     };
-
     const interval = setInterval(checkReminder, 10000);
     checkReminder();
     return () => clearInterval(interval);
@@ -107,24 +119,23 @@ export default function App() {
     return undefined;
   })();
 
-  // Hide global nav on DayPage — LessonShell renders its own nav
   const hideGlobalNav = location.startsWith('/day/') || location === '/lesson';
 
   return (
     <div className="min-h-screen bg-[hsl(var(--color-bg))] text-[hsl(var(--color-text))] font-sans" dir="rtl">
 
-      {/* ── Onboarding overlay — first visit only ─────────────── */}
-      <AnimatePresence>
-        {!onboardingDone && (
-          <Onboarding onComplete={handleOnboardingComplete} />
-        )}
-      </AnimatePresence>
-
       {!hideGlobalNav && (
         <TopNav streak={streak} currentDay={currentDay} breadcrumb={breadcrumb} />
       )}
 
-      {/* ── Page routes with transitions ───────────────────────── */}
+      {/* ── Admin badge — visible only in admin mode ───────────── */}
+      {isAdmin && (
+        <div className="fixed top-2 left-2 z-[999] bg-[hsl(var(--coral))] text-white text-[10px] font-bold px-2 py-1 rounded-full opacity-80">
+          ADMIN
+        </div>
+      )}
+
+      {/* ── Page routes ────────────────────────────────────────── */}
       <AnimatePresence mode="wait">
         <Switch key={location}>
 
@@ -210,17 +221,14 @@ export default function App() {
             </PageTransition>
           </Route>
 
-          {/* ── 404 ──────────────────────────────────────────── */}
           <Route>
-            <PageTransition>
-              <NotFound />
-            </PageTransition>
+            <PageTransition><NotFound /></PageTransition>
           </Route>
 
         </Switch>
       </AnimatePresence>
 
-      {/* ── Reminder toast notification ─────────────────────────── */}
+      {/* ── Reminder toast ──────────────────────────────────────── */}
       <AnimatePresence>
         {showNotification && (
           <motion.div
@@ -237,27 +245,19 @@ export default function App() {
                 <p className="font-bold text-base leading-tight">זמן ללמוד</p>
                 <p className="text-[13px] opacity-70 mt-0.5">השיעור היומי שלך מחכה.</p>
               </div>
-              <Button
-                size="sm"
-                variant="secondary"
-                onClick={() => { setShowNotification(false); setLocation('/lesson'); }}
-              >
+              <Button size="sm" variant="secondary" onClick={() => { setShowNotification(false); setLocation('/lesson'); }}>
                 התחל
               </Button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
       <Analytics />
 
-      {/* ── Footer (desktop only) ───────────────────────────────── */}
       {!hideGlobalNav && <Footer />}
-
-      {/* ── Bottom Nav (mobile only, hidden on DayPage) ─────────── */}
-      {!hideGlobalNav && <BottomNav />}
-
-      {/* ── Mobile bottom padding so content isn't hidden by BottomNav */}
-      {!hideGlobalNav && <div className="h-[60px] md:hidden" />}
+      {!hideGlobalNav && !isLocked && <BottomNav />}
+      {!hideGlobalNav && !isLocked && <div className="h-[60px] md:hidden" />}
     </div>
   );
 }
