@@ -26,7 +26,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   return (
     <header
       className={cn(
-        'relative sticky top-0 z-50 border-b border-slate-200/70 bg-white/95 backdrop-blur-sm',
+        'relative sticky top-0 z-50 border-b border-slate-200/70 bg-white',
         'h-16 sm:h-20',
         className
       )}
@@ -63,10 +63,10 @@ export const TopNav: React.FC<TopNavProps> = ({
 
       </div>
 
-      {/* LOGO — absolutely positioned, guaranteed distance from right edge */}
+      {/* LOGO — fixed to viewport, zero chance of clipping */}
       <button
         onClick={() => setLocation('/')}
-        className="absolute top-1/2 -translate-y-1/2 flex items-center gap-2 sm:gap-3 focus-visible:outline-none"
+        className="fixed top-3 sm:top-4 flex items-center gap-2 sm:gap-3 focus-visible:outline-none z-[60]"
         style={{ right: '16px' }}
         aria-label="דף הבית"
       >
