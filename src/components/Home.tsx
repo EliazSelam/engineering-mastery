@@ -81,24 +81,31 @@ export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: H
       <Section pad="hero" max="2xl" className="rise-in">
         <div className="grid grid-cols-12 gap-4 md:gap-8 items-end">
           <div className="col-span-12 lg:col-span-8">
-            <Eyebrow className="mb-5">Engineer Daily · Day {currentDay} / 30</Eyebrow>
-            <Display className="mb-6 text-[hsl(var(--ink-900))]">
+            <Eyebrow className="mb-3 md:mb-5">Engineer Daily · Day {currentDay} / 30</Eyebrow>
+            {/* Desktop: large display — Mobile: compact h1 */}
+            <h1 className="hidden md:block font-display mb-6 text-[hsl(var(--ink-900))]"
+                style={{ fontSize: 'clamp(2.75rem, 4vw + 2rem, 4.75rem)', fontWeight: 800, lineHeight: 1.1 }}>
               הנדסה, <span className="text-[hsl(var(--color-primary))] italic">שלב-שלב.</span>
-            </Display>
-            <Lead className="max-w-2xl">
+            </h1>
+            <h1 className="md:hidden font-display text-3xl font-bold mb-4 text-[hsl(var(--ink-900))] leading-tight">
+              הנדסה, <span className="text-[hsl(var(--color-primary))]">שלב-שלב.</span>
+            </h1>
+            <p className="text-[hsl(var(--color-text-faint))] text-sm md:text-lg max-w-2xl leading-relaxed">
               30 דקות ביום של אינטואיציה הנדסית — בקרה, הניע חשמלי, עיבוד אותות ואלגוריתמים מתקדמים.
-              כל שיעור נבנה מ-5 שכבות: רקע, תיאוריה, סימולציה אינטראקטיבית, אתגר, סיכום.
-            </Lead>
+              <span className="hidden md:inline"> כל שיעור נבנה מ-5 שכבות: רקע, תיאוריה, סימולציה אינטראקטיבית, אתגר, סיכום.</span>
+            </p>
 
-            <div className="mt-10 flex items-center gap-3 flex-wrap">
+            {/* Mobile: full-width stacked buttons / Desktop: inline row */}
+            <div className="mt-6 md:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Button
                 size="lg"
                 onClick={() => onNavigate('lesson')}
                 iconRight={<ChevronLeft size={18} />}
+                className="w-full sm:w-auto"
               >
                 התחל יום {currentDay}
               </Button>
-              <Button size="lg" variant="secondary" onClick={() => onNavigate('plan')}>
+              <Button size="lg" variant="secondary" onClick={() => onNavigate('plan')} className="w-full sm:w-auto">
                 תוכנית חודשית
               </Button>
               {completedCount > 0 && (
