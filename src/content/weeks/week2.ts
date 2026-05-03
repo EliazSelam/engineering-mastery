@@ -229,6 +229,29 @@ $K_d = 1.44$.
             ],
             explanation: "שיטת 6-Step Commutation מחלקת סיבוב חשמלי ל-6 גזרות של 60 מעלות."
           }
+        ,
+          {
+            id: 2,
+            question: "מה תפקיד חיישן ה-Hall Effect במנוע BLDC?",
+            options: [
+              { id: 'a', text: "מדידת טמפרטורת הסליל", correct: false },
+              { id: 'b', text: "זיהוי מיקום הרוטור לצורך קומוטציה", correct: true },
+              { id: 'c', text: "הגבלת מהירות מקסימלית", correct: false },
+              { id: 'd', text: "מדידת מומנט עומס", correct: false },
+            ],
+            explanation: "חיישן Hall מגלה את שדה הרוטור ומאפשר לבקר לדעת מתי לעבור למצב קומוטציה הבא."
+          },
+          {
+            id: 3,
+            question: "מה קשר בין Back-EMF למהירות סיבוב במנוע BLDC?",
+            options: [
+              { id: 'a', text: "Back-EMF קבוע ללא תלות במהירות", correct: false },
+              { id: 'b', text: "Back-EMF פרופורציונלי לריבוע המהירות", correct: false },
+              { id: 'c', text: "Back-EMF פרופורציונלי ליניארית למהירות: e = Ke·ω", correct: true },
+              { id: 'd', text: "Back-EMF פרופורציונלי להיפוך המהירות", correct: false },
+            ],
+            explanation: "e = Ke·ω היא משוואת Back-EMF בסיסית. ככל שהמנוע מהיר יותר, כך הוא 'מתנגד' יותר לזרם הכניסה."
+          }
         ]
       },
       summary: {
@@ -371,6 +394,29 @@ $\\alpha = \\frac{T_{net}}{J} = \\frac{0.066}{0.002} = 33\\ \\text{rad/s}^2$.
               { id: 'd', text: "להגדיל את המתח", correct: false }
             ],
             explanation: "התמרת Park מאפשרת לנו להסתכל על הזרמים מנקודת המבט של הרוטור המסתובב."
+          }
+        ,
+          {
+            id: 2,
+            question: "מה ההבדל המרכזי בין קומוטציה סטנדרטית (6-Step) לבין FOC?",
+            options: [
+              { id: 'a', text: "FOC משתמש בפחות טרנזיסטורים", correct: false },
+              { id: 'b', text: "FOC שולט בנפרד על מומנט ושטף מגנטי (Id, Iq)", correct: true },
+              { id: 'c', text: "FOC עובד רק עם מנועי AC", correct: false },
+              { id: 'd', text: "אין הבדל — שניהם מייצרים אותה תוצאה", correct: false },
+            ],
+            explanation: "FOC מבצע טרנספורמציית Park להפריד Id (שטף) ו-Iq (מומנט), מה שמאפשר בקרה עצמאית ויעילה."
+          },
+          {
+            id: 3,
+            question: "מה תפקיד טרנספורמציית Park (dq-transform) ב-FOC?",
+            options: [
+              { id: 'a', text: "המרת זרמים AC לסטטיסטיקה", correct: false },
+              { id: 'b', text: "המרת כמויות AC משתנות לכמויות DC קבועות במסגרת הרוטור", correct: true },
+              { id: 'c', text: "חישוב מהירות מזווית הרוטור", correct: false },
+              { id: 'd', text: "סינון הרמוניות מהזרם", correct: false },
+            ],
+            explanation: "בעזרת Park מעבירים את הזרמים ia, ib, ic למסגרת dq הקשורה לרוטור. כך Id ו-Iq הם כמויות קבועות שניתן לשלוט עליהן בקלות עם בקרי PI רגילים."
           }
         ]
       },
@@ -535,6 +581,29 @@ $T_e \\approx \\frac{3}{2}\\cdot4\\cdot0.06\\cdot(-2)
               { id: 'd', text: "חישוב משקל הרובוט", correct: false }
             ],
             explanation: "Inverse Kinematics היא הפעולה שהבקר עושה כדי לדעת איך לסובב את המנועים להגעה ליעד."
+          }
+        ,
+          {
+            id: 2,
+            question: "מה מייצגת מטריצת ה-DH (Denavit-Hartenberg)?",
+            options: [
+              { id: 'a', text: "מטריצת הד'מפינג של הרובוט", correct: false },
+              { id: 'b', text: "מטריצת המעבר בין מערכות צירים עוקבות בזרוע הרובוט", correct: true },
+              { id: 'c', text: "מטריצת האינרציה הכוללת", correct: false },
+              { id: 'd', text: "מטריצת הג'קוביאן של הרובוט", correct: false },
+            ],
+            explanation: "כל חוליה בזרוע הרובוט מתוארת במטריצת DH 4×4, שמאגדת רוטציה ותרגום ממפרק אחד לבא. הרכבת המטריצות נותנת את המיקום הסופי של ה-End Effector."
+          },
+          {
+            id: 3,
+            question: "מה בעיית הסינגולריות בקינמטיקה הפוכה?",
+            options: [
+              { id: 'a', text: "הרובוט מגיע לטמפרטורה גבוהה מדי", correct: false },
+              { id: 'b', text: "קיימות אינסוף פתרונות או אין פתרון לתנוחה נתונה", correct: true },
+              { id: 'c', text: "המחשב לא מסוגל לחשב מהירות מספיק", correct: false },
+              { id: 'd', text: "המפרק חורג מתחום הזוויות שלו", correct: false },
+            ],
+            explanation: "סינגולריות קינמטית מתרחשת כאשר דרגות חופש מסוימות מתיישרות — למשל, כאשר הזרוע מלאה מוארכת. במצב זה ה-Jacobian מאבד דרגה ואין פתרון ייחודי."
           }
         ]
       },
@@ -709,6 +778,29 @@ $T_e \\approx \\frac{3}{2}\\cdot4\\cdot0.06\\cdot(-2)
             ],
             explanation: "פיצוי כבידה מאפשר למנועים להחזיק את הזרוע באוויר 'בחינם' מבחינת לוגיקה של בקרת מיקום."
           }
+        ,
+          {
+            id: 2,
+            question: "מה מייצג ה-Jacobian הרובוטי?",
+            options: [
+              { id: 'a', text: "מטריצת הקשיחות של הזרוע", correct: false },
+              { id: 'b', text: "הקשר בין מהירויות המפרקים ומהירות End Effector", correct: true },
+              { id: 'c', text: "אינרציה כוללת של הרובוט", correct: false },
+              { id: 'd', text: "כוח הגרביטציה על כל חוליה", correct: false },
+            ],
+            explanation: "ẋ = J(q)·q̇ — ה-Jacobian ממפה בין מרחב המפרקים למרחב הקרטזי. הוא משמש גם לחישוב כוחות: τ = Jᵀ·F."
+          },
+          {
+            id: 3,
+            question: "מדוע חשובה פרמטריזציה של המסה בדינמיקת רובוטים?",
+            options: [
+              { id: 'a', text: "כדי לחשב את הצבע הנכון לציור הרובוט", correct: false },
+              { id: 'b', text: "כדי לפשט את הממשק המשתמש", correct: false },
+              { id: 'c', text: "כי מומנט האינרציה משתנה עם תנוחת הרובוט וצריך לחשב אותו בזמן אמת", correct: true },
+              { id: 'd', text: "פרמטריזציה אינה חשובה בדינמיקה", correct: false },
+            ],
+            explanation: "מטריצת האינרציה M(q) תלויה בתנוחת הרובוט. כדי לפתור τ = M(q)q̈ + C(q,q̇)q̇ + G(q), יש לחשב M בכל צעד זמן."
+          }
         ]
       },
       summary: {
@@ -851,6 +943,29 @@ $T_e \\approx \\frac{3}{2}\\cdot4\\cdot0.06\\cdot(-2)
               { id: 'd', text: "הוא עובד רק ב-2D", correct: false }
             ],
             explanation: "RRT מצוין למציאת פתרונות מהירים במרחבים עם הרבה דרגות חופש ומכשולים."
+          }
+        ,
+          {
+            id: 2,
+            question: "מה ההבדל בין תכנון מסלול במרחב קרטזי לבין תכנון במרחב מפרקים?",
+            options: [
+              { id: 'a', text: "אין הבדל — שניהם נותנים אותה תוצאה", correct: false },
+              { id: 'b', text: "מרחב קרטזי: מסלול ישר של ה-End Effector; מרחב מפרקים: תנועה חלקה של הזוויות", correct: true },
+              { id: 'c', text: "תכנון במרחב מפרקים מהיר יותר לחישוב", correct: false },
+              { id: 'd', text: "תכנון קרטזי אפשרי רק עם 6 מפרקים", correct: false },
+            ],
+            explanation: "Cartesian space path: ה-End Effector עוקב אחרי מסלול מוגדר בגיאומטריה. Joint space path: האינטרפולציה נעשית בין זוויות — קלה לחישוב אך המסלול הפיזי פחות צפוי."
+          },
+          {
+            id: 3,
+            question: "מה תפקיד פרופיל מהירות טרפזואידלי (Trapezoidal Profile) בתכנון מסלול?",
+            options: [
+              { id: 'a', text: "הגדלת כוח מרבי", correct: false },
+              { id: 'b', text: "הגבלת תאוצה מקסימלית למניעת ג'רק פתאומי ומניעת עומסים גבוהים", correct: true },
+              { id: 'c', text: "קיצור זמן המסלול בכל מקרה", correct: false },
+              { id: 'd', text: "פישוט חישובי IK", correct: false },
+            ],
+            explanation: "פרופיל טרפזואידלי כולל שלב האצה, קצב קבוע ושלב האטה. כך מגבילים את התאוצה, מפחיתים כוחות דינמיים, ומונעים זעזועים ברובוט ובסביבתו."
           }
         ]
       },
@@ -1022,6 +1137,29 @@ $T_e \\approx \\frac{3}{2}\\cdot4\\cdot0.06\\cdot(-2)
               { id: 'd', text: "סוג של מנוע", correct: false }
             ],
             explanation: "סינגולריות היא מצב מסוכן שבו מתמטיקת הקינמטיקה ההפוכה 'מתפוצצת' (חילוק באפס) והרובוט עלול להשתולל."
+          }
+        ,
+          {
+            id: 2,
+            question: "שלב תכנון מסלול שומר על אילוץ Joint Limit — מה פירושו?",
+            options: [
+              { id: 'a', text: "המגבלה על צריכת האנרגיה", correct: false },
+              { id: 'b', text: "הגבלת תחום הזוויות הפיזי של כל מפרק כדי למנוע פגיעה מכנית", correct: true },
+              { id: 'c', text: "הגבלת מהירות הרובוט", correct: false },
+              { id: 'd', text: "מגבלה על מספר נקודות הביניים", correct: false },
+            ],
+            explanation: "כל מפרק רובוטי מוגבל טווח תנועה (למשל ±170°). תכנון מסלול חייב לוודא שזוויות המפרקים נשארות בגבולות הפיזיים בכל נקודה לאורך המסלול."
+          },
+          {
+            id: 3,
+            question: "מה ייחודו של בקר Computed Torque Control (CTC) לרובוטים?",
+            options: [
+              { id: 'a', text: "הוא בקר פשוט P-only", correct: false },
+              { id: 'b', text: "הוא מפצה על הדינמיקה המלאה של הרובוט, כולל אינרציה, קוריוליס וגרביטציה", correct: true },
+              { id: 'c', text: "הוא עובד ללא מידע על מבנה הרובוט", correct: false },
+              { id: 'd', text: "CTC מיועד רק לרובוטים עם מפרק אחד", correct: false },
+            ],
+            explanation: "CTC הוא linearization by feedback: τ = M(q)(q̈d + Kv·ė + Kp·e) + C + G. הוא מבטל את האי-לינאריות ומשאיר מערכת לינארית פשוטה לבקרה."
           }
         ]
       },

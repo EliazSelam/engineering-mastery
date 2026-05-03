@@ -36,6 +36,40 @@ export const week4Days: DayContent[] = [
           { id: 1, question: 'מה קורה כש-R (רעש מדידה) גדול מאוד?', options: [{ id: 'a', text: 'K → 1, סומכים רק על המדידה', correct: false }, { id: 'b', text: 'K → 0, סומכים רק על החיזוי', correct: true }, { id: 'c', text: 'K → ∞', correct: false }, { id: 'd', text: 'המסנן מתפרק', correct: false }], explanation: 'K = P⁻H^T(HP⁻H^T+R)⁻¹. כש-R→∞, K→0: ה-filter מתעלם מהמדידה ומסתמך על המודל.' },
           { id: 2, question: 'מהו שלב ה-Predict ב-Kalman?', options: [{ id: 'a', text: 'עדכון המצב עם המדידה החדשה', correct: false }, { id: 'b', text: 'חיזוי המצב הבא לפי מודל המערכת', correct: true }, { id: 'c', text: 'חישוב ה-Kalman Gain', correct: false }, { id: 'd', text: 'איפוס ה-covariance', correct: false }], explanation: 'Predict: x̂⁻ₖ = Axₖ₋₁ + Buₖ₋₁. זהו שלב ה-"open loop" — לפני שנצפה מדידה.' },
           { id: 3, question: 'מה מייחד Extended Kalman Filter (EKF)?', options: [{ id: 'a', text: 'מהיר יותר מ-KF רגיל', correct: false }, { id: 'b', text: 'מטפל במערכות לא-לינאריות דרך linearization', correct: true }, { id: 'c', text: 'אינו צריך מודל', correct: false }, { id: 'd', text: 'עובד רק עם GPS', correct: false }], explanation: 'EKF מחשב Jacobian של פונקציות לא-לינאריות ומפעיל Kalman על המערכת הלינאריזית.' }
+        ,
+          {
+            id: 1,
+            question: "שני שלבי מסנן קלמן הם:",
+            options: [
+              { id: 'a', text: "אינטגרציה וגזירה", correct: false },
+              { id: 'b', text: "Predict (חיזוי) ו-Update (עדכון)", correct: true },
+              { id: 'c', text: "דגימה ושחזור", correct: false },
+              { id: 'd', text: "אינטרפולציה ואקסטרפולציה", correct: false },
+            ],
+            explanation: "Predict: x̂⁻ = F·x̂, P⁻ = F·P·Fᵀ + Q. Update: K = P⁻Hᵀ(HP⁻Hᵀ+R)⁻¹, x̂ = x̂⁻ + K(z - Hx̂⁻), P = (I-KH)P⁻."
+          },
+          {
+            id: 2,
+            question: "מה מייצגת מטריצת הקוואריאנס P במסנן קלמן?",
+            options: [
+              { id: 'a', text: "הגבר של הבקר", correct: false },
+              { id: 'b', text: "אי-הוודאות בהערכת המצב (Estimation Uncertainty)", correct: true },
+              { id: 'c', text: "כוח הרעש במדידה", correct: false },
+              { id: 'd', text: "טעות ה-Steady-State", correct: false },
+            ],
+            explanation: "P היא מטריצת קוואריאנס שגיאת ההערכה: P = E[(x-x̂)(x-x̂)ᵀ]. ככל שP קטנה יותר, כך הפילטר בטוח יותר בהערכתו ומשקיע פחות בנתוני המדידה."
+          },
+          {
+            id: 3,
+            question: "מה ה-Kalman Gain K מייצג פיזיקלית?",
+            options: [
+              { id: 'a', text: "עוצמת הרעש במערכת", correct: false },
+              { id: 'b', text: "כמה לסמוך על המדידה החדשה ביחס לחיזוי", correct: true },
+              { id: 'c', text: "תדר העדכון של הפילטר", correct: false },
+              { id: 'd', text: "מרחק בין המצב האמיתי להערכה", correct: false },
+            ],
+            explanation: "K גדול = סומכים על המדידה; K קטן = סומכים על המודל. K = P⁻Hᵀ(HP⁻Hᵀ+R)⁻¹ — יחס בין אי-הוודאות של החיזוי לאי-הוודאות הכוללת."
+          }
         ]
       },
       summary: {
@@ -176,6 +210,40 @@ $P_{k|k}=(1-K_k)P_{k|k-1}
           { id: 1, question: 'מה המשמעות של Q גדול ב-LQR?', options: [{ id: 'a', text: 'חיסכון בכוח', correct: false }, { id: 'b', text: 'עונש גבוה על שגיאת מצב → בקר אגרסיבי יותר', correct: true }, { id: 'c', text: 'מערכת לא יציבה', correct: false }, { id: 'd', text: 'אין השפעה', correct: false }], explanation: 'Q גדול = "כואב לי מאוד אם x ≠ 0" → המינימיזציה תייצר K גדולים לתיקון מהיר.' },
           { id: 2, question: 'מה ההבדל המהותי בין LQR ל-PID?', options: [{ id: 'a', text: 'LQR עובד רק לדרגה ראשונה', correct: false }, { id: 'b', text: 'LQR פועל על וקטור מצב מלא, PID על שגיאה סקלרית', correct: true }, { id: 'c', text: 'PID תמיד מהיר יותר', correct: false }, { id: 'd', text: 'LQR לא יכול לייצב מערכות', correct: false }], explanation: 'PID: u = f(e). LQR: u = -Kx — פועל על כל מרכיבי המצב בו-זמנית.' },
           { id: 3, question: 'מה נדרש כדי לממש LQR בפועל?', options: [{ id: 'a', text: 'רק חיישן מיקום', correct: false }, { id: 'b', text: 'מדידה מלאה של כל רכיבי וקטור המצב x', correct: true }, { id: 'c', text: 'רק אות הכניסה u(t) ומטריצת R', correct: false }, { id: 'd', text: 'מדידת שגיאת המוצא e(t) בלבד', correct: false }], explanation: 'u = -Kx דורש ידיעת x המלא. בפועל לרוב משלבים עם Kalman Observer כי לא כל מצבים נמדדים ישירות.' }
+        ,
+          {
+            id: 1,
+            question: "הנוסחה לגבר ה-LQR היא K = R⁻¹BᵀP. מה P?",
+            options: [
+              { id: 'a', text: "פרמטר ביצועים שמשתמש מגדיר", correct: false },
+              { id: 'b', text: "פתרון משוואת ריקאטי האלגברית: AᵀP + PA − PBR⁻¹BᵀP + Q = 0", correct: true },
+              { id: 'c', text: "מטריצת הקוואריאנס של הרעש", correct: false },
+              { id: 'd', text: "מספר שיורי ממשוואת בקרה אופטימלית", correct: false },
+            ],
+            explanation: "P היא פתרון ה-Algebraic Riccati Equation. ניתנת לחישוב ב-MATLAB: K=lqr(A,B,Q,R) — מוצא P ו-K בצעד אחד."
+          },
+          {
+            id: 2,
+            question: "מה מייצגות מטריצות Q ו-R ב-LQR?",
+            options: [
+              { id: 'a', text: "Q = רעש מצב; R = רעש מדידה", correct: false },
+              { id: 'b', text: "Q = עלות חריגת מצב מהיעד; R = עלות שימוש בבקרה", correct: true },
+              { id: 'c', text: "Q = גבר הפולוסים; R = גבר הזרוסים", correct: false },
+              { id: 'd', text: "Q ו-R נקבעות אוטומטית על ידי המערכת", correct: false },
+            ],
+            explanation: "פונקציית העלות: J = ∫(xᵀQx + uᵀRu)dt. Q גדולה = עונשים גדולים על חריגה מהיעד; R גדולה = מגבילים את עוצמת הבקרה. שינוי Q/R הוא כלי העיצוב של LQR."
+          },
+          {
+            id: 3,
+            question: "מה יתרון ה-LQR על פני כוונון PID ידני?",
+            options: [
+              { id: 'a', text: "LQR תמיד יוצר מערכת מהירה יותר", correct: false },
+              { id: 'b', text: "LQR מוצא גבר אופטימלי לפי קריטריון ביצועים מוגדר ומתאים למערכות Multi-Input Multi-Output", correct: true },
+              { id: 'c', text: "LQR פשוט יותר ליישום מ-PID", correct: false },
+              { id: 'd', text: "LQR עובד ללא צורך במודל המערכת", correct: false },
+            ],
+            explanation: "PID מכוון ידנית ומוגבל ל-SISO. LQR מוצא גבר מיטבי מבחינה מתמטית ומתרחב טבעית ל-MIMO — מתאים לרחפנים, רובוטים, ועוד מערכות מורכבות."
+          }
         ]
       },
       summary: {
@@ -311,6 +379,40 @@ $\\theta_2^{new}= 1.5 + 0.4\\cdot0.1 = 1.54$.
           { id: 1, question: 'מה היתרון המרכזי של MPC על LQR?', options: [{ id: 'a', text: 'הוא פשוט יותר לחישוב', correct: false }, { id: 'b', text: 'הוא יכול לטפל באילוצים (Constraints) בצורה מובנית', correct: true }, { id: 'c', text: 'הוא לא צריך מודל', correct: false }, { id: 'd', text: 'הוא עובד רק בתדרים נמוכים', correct: false }], explanation: 'LQR לא יודע להתמודד עם "אסור לעבור 50 מעלות". MPC כולל את זה בתוך האופטימיזציה.' },
           { id: 2, question: 'מהו Receding Horizon Control?', options: [{ id: 'a', text: 'תכנון למרחק אינסופי', correct: false }, { id: 'b', text: 'פתרון אופק N, ביצוע צעד אחד, וחישוב מחדש', correct: true }, { id: 'c', text: 'הקטנת האופק בכל צעד', correct: false }, { id: 'd', text: 'סוג של פילטר', correct: false }], explanation: 'כדי להתמודד עם שינויים ורעשים, MPC לא מבצע את כל התוכנית העתידית, אלא בודק מחדש בכל דגימה.' },
           { id: 3, question: 'מה קורה למורכבות החישובית ככל ש-N גדל?', options: [{ id: 'a', text: 'נשארת קבועה', correct: false }, { id: 'b', text: 'גדלה, כי הבעיה הופכת לגדולה יותר', correct: true }, { id: 'c', text: 'קטנה', correct: false }, { id: 'd', text: 'תלויה רק ב-R', correct: false }], explanation: 'אופק ארוך יותר דורש יותר משתני החלטה (Decision variables) באופטימיזציה.' }
+        ,
+          {
+            id: 1,
+            question: "מה ה-Receding Horizon ב-MPC?",
+            options: [
+              { id: 'a', text: "המערכת מתרחקת מהיעד לאורך זמן", correct: false },
+              { id: 'b', text: "בכל צעד מחשבים N צעדים קדימה אך מבצעים רק את הצעד הראשון, ואז מחשבים מחדש", correct: true },
+              { id: 'c', text: "האופק מתקצר עם כל צעד בקרה", correct: false },
+              { id: 'd', text: "MPC עובד רק עם אופק אינסופי", correct: false },
+            ],
+            explanation: "MPC פותר אופטימיזציה לN צעדים קדימה, מבצע את הצעד הראשון, ואז שוב פותר מן המצב המחודש. כך תמיד 'רואה' N צעדים קדימה."
+          },
+          {
+            id: 2,
+            question: "מה היתרון המרכזי של MPC על פני LQR?",
+            options: [
+              { id: 'a', text: "MPC פשוט יותר לחישוב", correct: false },
+              { id: 'b', text: "MPC מטפל באופן ישיר באילוצים (Constraints) על מצב ובקרה", correct: true },
+              { id: 'c', text: "MPC לא דורש מודל מערכת", correct: false },
+              { id: 'd', text: "MPC יעיל יותר ל-SISO פשוט", correct: false },
+            ],
+            explanation: "LQR אינו תומך באילוצים ישירים (כמו |u| ≤ 10 או x ≥ 0). MPC פותר QP עם אילוצים מפורשים — חיוני לתהליכים כימיים, כלי רכב אוטונומיים ועוד."
+          },
+          {
+            id: 3,
+            question: "עלות חישובית של MPC גדלה עם אורך האופק N. מדוע?",
+            options: [
+              { id: 'a', text: "מכיוון שצריך לדגום יותר נקודות", correct: false },
+              { id: 'b', text: "כי האופטימיזציה (QP) גדלה בממדים עם N — N משתני בקרה ו-N אילוצי מצב", correct: true },
+              { id: 'c', text: "כי מטריצת הריקאטי גדלה עם N", correct: false },
+              { id: 'd', text: "N לא משפיע על עלות חישובית", correct: false },
+            ],
+            explanation: "MPC פותר QP ממדים (N·nu) × (N·nu) בכל צעד. ב-N=20 ו-nu=2 — מטריצה 40×40. ניתן להשתמש ב-Explicit MPC לחישוב מקדים."
+          }
         ]
       },
       summary: {
@@ -460,6 +562,40 @@ $x_1=5-2=3$.
           { id: 1, question: 'מהו התפקיד של ה-Reference Model?', options: [{ id: 'a', text: 'לספק את פלט הבקרה הישיר', correct: false }, { id: 'b', text: 'להגדיר איך המערכת צריכה להתנהג באופן אידיאלי', correct: true }, { id: 'c', text: 'לסנן רעש', correct: false }, { id: 'd', text: 'לחסוך חשמל', correct: false }], explanation: 'הבקר האדפטיבי מנסה לצמצם את השגיאה בין פלט המערכת הממשית לפלט המודל.' },
           { id: 2, question: 'מה קורה אם ה-Adaptive Gain (גאמא) גדול מדי?', options: [{ id: 'a', text: 'המערכת הופכת למדויקת יותר', correct: false }, { id: 'b', text: 'המערכת עלולה להפוך ללא יציבה ולהתנדנד', correct: true }, { id: 'c', text: 'הלמידה נפסקת', correct: false }, { id: 'd', text: 'אין השפעה', correct: false }], explanation: 'למידה מהירה מדי גורמת לתיקוני יתר (Over-correction) שמובילים לחוסר יציבות.' },
           { id: 3, question: 'מתי נשתמש ב-MRAC במקום ב-PID קבוע?', options: [{ id: 'a', text: 'כשהמערכת פשוטה מאוד', correct: false }, { id: 'b', text: 'כשפרמטרי המערכת משתנים בזמן (למשל צריכת דלק)', correct: true }, { id: 'c', text: 'כשאין לנו מחשב חזק', correct: false }, { id: 'd', text: 'בכל מערכת, ללא יוצא מן הכלל', correct: false }], explanation: 'הכוח של בקרה אדפטיבית הוא בהתמודדות עם חוסר ודאות ושינויים מבניים.' }
+        ,
+          {
+            id: 1,
+            question: "חוק ההסתגלות של MIT Rule ל-MRAC הוא:",
+            options: [
+              { id: 'a', text: "θ̇ = -γ·e·y_p", correct: false },
+              { id: 'b', text: "θ̇ = -γ·e·(∂e/∂θ)", correct: true },
+              { id: 'c', text: "θ̇ = γ·e²", correct: false },
+              { id: 'd', text: "θ̇ = -γ·∫e dt", correct: false },
+            ],
+            explanation: "MIT rule ממזער את e² על ידי gradient descent: dθ/dt = -γ · e · (∂e/∂θ). עבור מודל פשוט: ∂e/∂θ_r ≈ r ו-∂e/∂θ_x ≈ y_p."
+          },
+          {
+            id: 2,
+            question: "מה תפקיד המודל הייחוס (Reference Model) ב-MRAC?",
+            options: [
+              { id: 'a', text: "הוא מוסיף רעש כדי לשפר יציבות", correct: false },
+              { id: 'b', text: "הוא מגדיר את התנהגות הרצויה שה-Plant צריך לחקות", correct: true },
+              { id: 'c', text: "הוא מחשב את גבר Kalman", correct: false },
+              { id: 'd', text: "המודל הייחוס מחליף את ה-Plant בסימולציה בלבד", correct: false },
+            ],
+            explanation: "המודל הייחוס מגדיר מהי תגובה רצויה לאות כניסה r. ה-MRAC מעדכן את פרמטרי הבקר θ עד שה-Plant מתנהג בדיוק כמו המודל הייחוס."
+          },
+          {
+            id: 3,
+            question: "מה הסכנה של גבר הסתגלות γ גבוה מדי ב-MRAC?",
+            options: [
+              { id: 'a', text: "ההסתגלות תהיה איטית מדי", correct: false },
+              { id: 'b', text: "הפרמטרים יתנדנדו במהירות גבוהה ועלולים לערער יציבות", correct: true },
+              { id: 'c', text: "שגיאת Steady-State תגדל", correct: false },
+              { id: 'd', text: "המערכת תתכנס לנקודת שיווי משקל שגויה", correct: false },
+            ],
+            explanation: "γ גבוה מדי → High frequency oscillations בפרמטרים → בקרה אגרסיבית → אי-יציבות. בפרקטיקה מוסיפים σ-modification: θ̇ = -γ(e·∂e/∂θ + σ·θ) לייצוב."
+          }
         ]
       },
       summary: {
@@ -580,6 +716,40 @@ $J(0.5)= (0.5-3)^2 + 2(0.5)^2
           { id: 1, question: 'מדוע משתמשים ב-NN בתוך לולאת בקרה?', options: [{ id: 'a', text: 'כדי לחסוך בחישובים', correct: false }, { id: 'b', text: 'כדי לקרב (Approximate) חוקי בקרה לא-לינאריים מורכבים', correct: true }, { id: 'c', text: 'כי זה נשמע מודרני', correct: false }, { id: 'd', text: 'כדי להעלות את תדר הדגימה', correct: false }], explanation: 'רשתות נוירונים מצטיינות במיפוי של קלט-פלט מורכב שלא ניתן לתיאור פשוט על ידי PID.' },
           { id: 2, question: 'מהו האתגר הגדול ביותר בבקרת NN?', options: [{ id: 'a', text: 'מציאת זיכרון RAM', correct: false }, { id: 'b', text: 'הוכחת יציבות ובטיחות (Robustness)', correct: true }, { id: 'c', text: 'בחירת צבע לגרף', correct: false }, { id: 'd', text: 'קריאת הנתונים', correct: false }], explanation: 'מכיוון ש-NN היא "Black box", קשה מאוד להבטיח שהיא לא תעשה טעות קריטית במצבי קצה.' },
           { id: 3, question: 'איך מאמנים בקר נוירוני ב-Real-time?', options: [{ id: 'a', text: 'באמצעות Gradient Descent על השגיאה מהמטרה', correct: true }, { id: 'b', text: 'על ידי כיבוי והדלקה של המחשב', correct: false }, { id: 'c', text: 'באמצעות Excel', correct: false }, { id: 'd', text: 'אין דרך לעשות זאת', correct: false }], explanation: 'השיטה הנפוצה היא עדכון משקולות הרשת כדי למזער פונקציית עלות (Cost) תוך כדי פעולה.' }
+        ,
+          {
+            id: 1,
+            question: "מהו היתרון של שימוש בבקר רשת נוירונים (NN Controller) על פני LQR?",
+            options: [
+              { id: 'a', text: "NN תמיד יציב יותר מ-LQR", correct: false },
+              { id: 'b', text: "NN יכול לטפל בלא-לינאריות חזקות ואי-וודאות במודל ללא לינאריזציה", correct: true },
+              { id: 'c', text: "NN דורש פחות נתוני אימון", correct: false },
+              { id: 'd', text: "NN זהה ל-LQR בביצועים", correct: false },
+            ],
+            explanation: "LQR מצריך לינאריזציה ומגיע עם ערבויות יציבות רק קרוב לנקודת עבודה. NN בקר יכול ללמוד מיפוי לא-לינארי מורכב — יעיל במיוחד כאשר אין מודל מדויק."
+          },
+          {
+            id: 2,
+            question: "Backpropagation Through Time (BPTT) משמש לאימון בקרים רקורנטיים. מה מטרתו?",
+            options: [
+              { id: 'a', text: "להאיץ חישוב forward pass", correct: false },
+              { id: 'b', text: "להפיץ את שגיאת ה-Cost לאחור בזמן כדי לחשב גרדיאנטים לפרמטרים של מערכת דינמית", correct: true },
+              { id: 'c', text: "לדגום ב-High Rate", correct: false },
+              { id: 'd', text: "BPTT מיועד לרשתות קדמיות בלבד", correct: false },
+            ],
+            explanation: "כאשר הרשת פועלת על מערכת דינמית לאורך N צעדים, צריך לגזור את ה-Cost לגבי כל הפרמטרים בכל נקודת זמן — זוהי הרחבה של Backprop הרגיל לממד הזמן."
+          },
+          {
+            id: 3,
+            question: "מה האתגר העיקרי ביישום NN בבקרה של מערכות הנדסיות בזמן אמת?",
+            options: [
+              { id: 'a', text: "מחסור בחומרה לחישוב", correct: false },
+              { id: 'b', text: "חוסר ערבויות יציבות פורמליות ואי-וודאות לגבי כשלים לא-צפויים", correct: true },
+              { id: 'c', text: "NN אינו יכול ללמוד מבנה לא-לינארי", correct: false },
+              { id: 'd', text: "עלות חישובית של forward pass גבוהה מדי", correct: false },
+            ],
+            explanation: "NN הוא black-box — קשה להוכיח יציבות ולהגדיר תחום תפעולי בטוח. בתעשייה האווירית, הרכב האוטונומי ועוד תחומים קריטיים, נדרשות ערבויות פורמליות שקשה לספק ל-NN."
+          }
         ]
       },
       summary: {
@@ -706,6 +876,40 @@ $\mathcal{L}\approx(0.80506)^2\approx0.6481$.
           { id: 1, question: 'מהו RMS (Rate Monotonic Scheduling)?', options: [{ id: 'a', text: 'תזמון לפי חשיבות המשימה', correct: false }, { id: 'b', text: 'תזמון סטטי הנותן עדיפות למשימות עם המחזור (Period) הקצר ביותר', correct: true }, { id: 'c', text: 'תזמון אקראי', correct: false }, { id: 'd', text: 'תזמון לפי זיכרון', correct: false }], explanation: 'RMS מניח שמשימות מהירות (תדר גבוה) הן קריטיות יותר לתזמון.' },
           { id: 2, question: 'מה קורה אם ניצול המעבד U גדול מ-1?', options: [{ id: 'a', text: 'המשימות ירוצו מהר יותר', correct: false }, { id: 'b', text: 'חלק מהמשימות יחמיצו את ה-Deadline שלהן באופן ודאי', correct: true }, { id: 'c', text: 'המעבד יתחמם ויישרף', correct: false }, { id: 'd', text: 'אין לכך משמעות', correct: false }], explanation: 'U>1 פירושו שיש יותר עבודה מצטברת מאשר זמן מעבד זמין.' },
           { id: 3, question: 'מהי תופעת ה-Priority Inversion?', options: [{ id: 'a', text: 'משימה זוטרה מעכבת משימה דחופה שזקוקה לאותו Mutex/Resource', correct: true }, { id: 'b', text: 'המעבד הופך את סדר הפעולות', correct: false }, { id: 'c', text: 'שגיאת זיכרון', correct: false }, { id: 'd', text: 'ביטול עדיפויות', correct: false }], explanation: 'זהו כשל קלאסי במערכות RTOS שבו משימה בעדיפות נמוכה "נועלת" משימה בעדיפות גבוהה.' }
+        ,
+          {
+            id: 1,
+            question: "מה ההבדל בין RTOS לבין מערכת הפעלה כללית (GPOS כמו Linux)?",
+            options: [
+              { id: 'a', text: "RTOS מהיר יותר בביצועים כלליים", correct: false },
+              { id: 'b', text: "RTOS מבטיח Worst-Case Execution Time (WCET) — תזמון משימות דטרמיניסטי", correct: true },
+              { id: 'c', text: "RTOS דורש פחות זיכרון", correct: false },
+              { id: 'd', text: "GPOS לא יכול להריץ משימות concurrent", correct: false },
+            ],
+            explanation: "GPOS (Linux, Windows) מאפשר throughput גבוה אך זמן תגובה לא-דטרמיניסטי. RTOS (FreeRTOS, VxWorks) מבטיח שמשימה קריטית תתבצע תוך זמן מרבי מוגדר — חיוני לבטיחות."
+          },
+          {
+            id: 2,
+            question: "מה Priority Inversion ואיך Mutex עם Priority Inheritance פותר אותו?",
+            options: [
+              { id: 'a', text: "משימה בעדיפות נמוכה חוסמת גבוהה; Inheritance מעלה זמנית עדיפות הנמוכה", correct: true },
+              { id: 'b', text: "משימה גבוהה חוסמת נמוכה — Inheritance מורידה את הגבוהה", correct: false },
+              { id: 'c', text: "Priority Inversion הוא תכונה מבוקשת ב-RTOS", correct: false },
+              { id: 'd', text: "Mutex לא קשור ל-Priority", correct: false },
+            ],
+            explanation: "Priority Inversion: Task H (גבוה) ממתין ל-Mutex שמוחזק ע״י Task L (נמוך), בעוד Task M (בינוני) רץ ומונע מ-L לשחרר. Inheritance: מעלה זמנית את עדיפות L לרמת H."
+          },
+          {
+            id: 3,
+            question: "מה Interrupt Latency ב-RTOS ולמה הוא קריטי?",
+            options: [
+              { id: 'a', text: "הזמן בין שני Interrupts עוקבים", correct: false },
+              { id: 'b', text: "הזמן מרגע הפעלת Interrupt עד שה-ISR מתחיל לרוץ — קריטי לבטיחות ובקרה", correct: true },
+              { id: 'c', text: "מספר ה-Interrupts לשנייה", correct: false },
+              { id: 'd', text: "עיכוב קבוע המוסף על כל Interrupt", correct: false },
+            ],
+            explanation: "ב-RTOS קריטי, Interrupt Latency חייב להיות תחת מגבלה מוגדרת. למשל, בבקרת בלמים ABS חייבים להגיב בתוך 1ms לאחר חיישן. Latency גבוה = סכנת בטיחות."
+          }
         ]
       },
       summary: {
@@ -824,6 +1028,40 @@ $U=0.575 < 0.7797$,
           { id: 1, question: 'מה ההבדל המרכזי בין Qubit לביט קלאסי?', options: [{ id: 'a', text: 'Qubit מהיר יותר במתח גבוה', correct: false }, { id: 'b', text: 'Qubit יכול להיות ב-Superposition (שני המצבים בו-זמנית)', correct: true }, { id: 'c', text: 'אין הבדל', correct: false }, { id: 'd', text: 'Qubit עובד רק ב-DC', correct: false }], explanation: 'זוהי התכונה הבסיסית המאפשרת למחשב קוונטי לחקור מרחב פתרונות עצום במקביל.' },
           { id: 2, question: 'מה עושה שער Hadamard (H)?', options: [{ id: 'a', text: 'מוחק את הזיכרון', correct: false }, { id: 'b', text: 'מעביר Qubit ממצב ודאי למצב של Superposition שווה', correct: true }, { id: 'c', text: 'מכפיל ב-2', correct: false }, { id: 'd', text: 'מחבר שני ביטים', correct: false }], explanation: 'זהו השער ש"מכניס" את המערכת לעולם הקוונטי ההסתברותי.' },
           { id: 3, question: 'מדוע מחשב קוונטי נחשב למהיר יותר בבעיות מסוימות?', options: [{ id: 'a', text: 'כי תדר השעון שלו גבוה יותר', correct: false }, { id: 'b', text: 'בזכות היכולת לבצע חישובים מקביליים על כל מרחב המצבים בו-זמנית', correct: true }, { id: 'c', text: 'כי הוא קטן יותר', correct: false }, { id: 'd', text: 'כי אין בו התנגדות חשמלית', correct: false }], explanation: 'שזירה וסופרפוזיציה מאפשרות אלגוריתמים (כמו גרובר או שור) שקלאסית ייקחו מיליוני שנים.' }
+        ,
+          {
+            id: 1,
+            question: "מה ייחודו של Qubit לעומת Bit קלאסי?",
+            options: [
+              { id: 'a', text: "Qubit מאחסן 2 ביטים קלאסיים", correct: false },
+              { id: 'b', text: "Qubit יכול להיות בסופרפוזיציה של 0 ו-1 בו-זמנית עד למדידה", correct: true },
+              { id: 'c', text: "Qubit עובד רק ב-0 ולא ב-1", correct: false },
+              { id: 'd', text: "Qubit זהה לביט קלאסי אך מהיר יותר", correct: false },
+            ],
+            explanation: "|ψ⟩ = α|0⟩ + β|1⟩ כאשר |α|²+|β|²=1. הסופרפוזיציה מאפשרת לאלגוריתמים קוונטיים לעבד N מצבים במקביל, אך בעת המדידה מתקבל 0 בהסתברות |α|² או 1 בהסתברות |β|²."
+          },
+          {
+            id: 2,
+            question: "מה אנטנגלמנט (Entanglement) ולמה הוא מועיל לחישוב?",
+            options: [
+              { id: 'a', text: "זה שגיאת חישוב שיש לתקן", correct: false },
+              { id: 'b', text: "שני Qubits קשורים: מדידת אחד קובעת מיידית את מצב השני, ללא קשר למרחק", correct: true },
+              { id: 'c', text: "אנטנגלמנט מאט חישובים קוונטיים", correct: false },
+              { id: 'd', text: "אנטנגלמנט אפשרי רק בטמפרטורת האפס המוחלט", correct: false },
+            ],
+            explanation: "אנטנגלמנט יוצר מתאמים בין Qubits שאין להם מקבילה קלאסית. אלגוריתמים כמו Shor, Grover ו-Quantum Simulation מנצלים אנטנגלמנט ליצירת speedup אקספוננציאלי."
+          },
+          {
+            id: 3,
+            question: "מדוע קשה לבנות מחשב קוונטי גדול?",
+            options: [
+              { id: 'a', text: "Qubits יקרים מאוד לייצור", correct: false },
+              { id: 'b', text: "Decoherence — האינטראקציה עם הסביבה מקלקלת את הסופרפוזיציה", correct: true },
+              { id: 'c', text: "אין אלגוריתמים מספיק חזקים", correct: false },
+              { id: 'd', text: "מחשב קוונטי דורש מעגלים ד' ממדיים", correct: false },
+            ],
+            explanation: "Decoherence: הסביבה מדידה את ה-Qubit ומכבה את הסופרפוזיציה בזמן T2 (בדרך כלל מיקרו-שניות עד מיליות שנייה). Quantum Error Correction מנסה להתמודד עם זה אך דורש qubits עודפים רבים."
+          }
         ]
       },
       summary: {
@@ -919,6 +1157,40 @@ $\frac{1}{\sqrt{2}} (\frac{1}{\sqrt{2}}|0\rangle + \frac{1}{\sqrt{2}}|1\rangle) 
           { id: 1, question: 'מה מאפיין מצב שזור (Entangled)?', options: [{ id: 'a', text: 'הם זזים מהר יותר', correct: false }, { id: 'b', text: 'מצב של קיוביט אחד תלוי באופן מלא במצב של השני', correct: true }, { id: 'c', text: 'הם תמיד ב-0', correct: false }, { id: 'd', text: 'אין קשר ביניהם', correct: false }], explanation: 'בשזירה, המערכת היא יחידה אחת ולא ניתן להפריד את התיאור המתמטי לשני חלקים עצמאיים.' },
           { id: 2, question: 'האם ניתן להעביר מידע מהר מהאור דרך שזירה?', options: [{ id: 'a', text: 'כן, תמיד', correct: false }, { id: 'b', text: 'לא, זה דורש גם ערוץ קלאסי כדי לפענח את התוצאה', correct: true }, { id: 'c', text: 'רק במים', correct: false }, { id: 'd', text: 'כן, אבל רק לטווח קצר', correct: false }], explanation: 'למרות שהמתאם הוא מיידי, העברת מידע שימושי מחייבת עמידה במגבלות תורת היחסות.' },
           { id: 3, question: 'מהו שער CNOT בהקשר של שזירה?', options: [{ id: 'a', text: 'שער שבשילוב עם Hadamard יוצר שזירה', correct: true }, { id: 'b', text: 'שער שמוחק שזירה', correct: false }, { id: 'c', text: 'שער של חיבור', correct: false }, { id: 'd', text: 'שער לוגי רגיל', correct: false }], explanation: 'CNOT (Controlled-NOT) הוא השער הבסיסי ליצירת אינטראקציה ומתאם בין קיוביטים.' }
+        ,
+          {
+            id: 1,
+            question: "מדוע רחפן (Quadrotor) מהווה מערכת underactuated?",
+            options: [
+              { id: 'a', text: "כי יש לו 4 מדחפים ו-4 מנועים", correct: false },
+              { id: 'b', text: "כי יש לו 6 DOF (x,y,z,roll,pitch,yaw) אך רק 4 כניסות בקרה עצמאיות", correct: true },
+              { id: 'c', text: "כי הוא לא יכול לרוח בכל כיוון", correct: false },
+              { id: 'd', text: "Underactuated פירושו שחסרים לו חיישנים", correct: false },
+            ],
+            explanation: "6 דרגות חופש (תנועה ב-3D + 3 סיבובים) אך רק 4 מדחפים. כוח כולל ו-3 מומנטים — תנועה ב-x/y מתבצעת דרך שינוי עמדה (roll/pitch). זה מה שהופך בקרת רחפן למורכבת."
+          },
+          {
+            id: 2,
+            question: "מה תפקיד ה-IMU (Inertial Measurement Unit) בבקרת רחפן?",
+            options: [
+              { id: 'a', text: "מדידת מיקום GPS", correct: false },
+              { id: 'b', text: "מדידת תאוצה זוויתית וליניארית לאמידת עמדה ומהירות בתדר גבוה", correct: true },
+              { id: 'c', text: "שליטה על מהירות המנועים", correct: false },
+              { id: 'd', text: "ניתוח תמונה מצלמה", correct: false },
+            ],
+            explanation: "IMU = Accelerometer + Gyroscope (± Magnetometer). מספק מדידות ב-1000Hz+. בשילוב עם GPS/Barometer דרך Kalman Filter מקבלים הערכת מצב מדויקת לבקרת עמדה."
+          },
+          {
+            id: 3,
+            question: "מבנה בקרה נפוץ לרחפן הוא Cascade (מדורג). מה משמעותו?",
+            options: [
+              { id: 'a', text: "שני בקרי PID בסדרה: בקר מיקום חיצוני מזין יעד עמדה לבקר עמדה פנימי מהיר יותר", correct: true },
+              { id: 'b', text: "ארבעה בקרים עצמאיים, אחד לכל מנוע", correct: false },
+              { id: 'c', text: "בקר יחיד לכל 6 דרגות החופש", correct: false },
+              { id: 'd', text: "מדורג פירושו שהבקר פועל רק בשינויי כיוון", correct: false },
+            ],
+            explanation: "Outer Loop (איטי): position→velocity command. Inner Loop (מהיר, ~1000Hz): attitude/rate control. בקר פנימי חייב להיות ~10× מהיר מהחיצוני לעבודה תקינה."
+          }
         ]
       },
       summary: {
@@ -1013,6 +1285,40 @@ $|\psi_{final}\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$.
           { id: 1, question: 'מתי נשתמש ב-LQR במקום ב-PID באפליקציה תעשייתית?', options: [{ id: 'a', text: 'כשיש לנו מודל מדויק וכל המצבים נמדדים', correct: true }, { id: 'b', text: 'כשאין לנו מחשב חזק', correct: false }, { id: 'c', text: 'תמיד, PID מיושן', correct: false }, { id: 'd', text: 'רק כשיש רוח', correct: false }], explanation: 'LQR הוא אופטימלי מתמטית אך דורש ידע מלא על המערכת שה-PID לא צריך.' },
           { id: 2, question: 'איך Nyquist מופיע גם בסיגנלים וגם בבקרה?', options: [{ id: 'a', text: 'בסיגנלים זה קצב דגימה, ובבקרה זה קריטריון יציבות (Nyquist Plot)', correct: true }, { id: 'b', text: 'זה אותו דבר בדיוק', correct: false }, { id: 'c', text: 'אלו שני אנשים שונים', correct: false }, { id: 'd', text: 'בשימוש רק בחיישנים', correct: false }], explanation: 'הארי נייקוויסט תרם לשני העולמות — הבנת התדירות והבנת היציבות בלולאה סגורה.' },
           { id: 3, question: 'מהו התפקיד המשולב של קלמן ו-PID בדרון?', options: [{ id: 'a', text: 'ניקוי המדידות (קלמן) וביצוע התיקון הפיזי (PID)', correct: true }, { id: 'b', text: 'שניהם עושים אותו דבר', correct: false }, { id: 'c', text: 'קלמן שולט במנועים', correct: false }, { id: 'd', text: 'הם לא קשורים לעבודה ביחד', correct: false }], explanation: 'זהו השילוב הקלאסי של אסטימציה (Estimation) ובקרה (Control).' }
+        ,
+          {
+            id: 1,
+            question: "מהנדס שיכול לתאר מיידית את הפשרה בין Kp גבוה ל-Phase Margin נמוך מראה:",
+            options: [
+              { id: 'a', text: "ידע תיאורטי ללא הבנה מעשית", correct: false },
+              { id: 'b', text: "First-Principles Thinking — הבנת הקשר בין פרמטרים לתוצאות מערכת", correct: true },
+              { id: 'c', text: "ידע בסיסי בלבד שאינו מספיק לעבודה", correct: false },
+              { id: 'd', text: "מיומנות תכנות טובה", correct: false },
+            ],
+            explanation: "Kp גבוה מגדיל מהירות תגובה אך מקטין Phase Margin → מגביר סיכון לאוסילציות. מהנדס שמבין זאת מיידית ויכול לאזן — זה הפרופיל הנדרש לתפקידי Senior."
+          },
+          {
+            id: 2,
+            question: "אחד הכישורים הנדירים שמבדיל מהנדס Senior מ-Junior הוא:",
+            options: [
+              { id: 'a', text: "ידיעת שפות תכנות רבות יותר", correct: false },
+              { id: 'b', text: "היכולת לאמוד ולבצע Trade-off מהיר בין ביצועים, עלות ואמינות", correct: true },
+              { id: 'c', text: "יכולת לכתוב קוד מהיר יותר", correct: false },
+              { id: 'd', text: "מספר שנות הניסיון בלבד", correct: false },
+            ],
+            explanation: "Senior Engineer מבין שכל החלטה הנדסית היא trade-off. בקרה עם Phase Margin גבוה = בטוחה אך איטית. RTOS עם Interrupt Latency נמוך = יקר. הבנת הפשרה היא ה-core skill."
+          },
+          {
+            id: 3,
+            question: "פורטפוליו הנדסי חזק לתפקיד Senior / PM-Technical צריך כולל:",
+            options: [
+              { id: 'a', text: "רשימת טכנולוגיות שלמדת", correct: false },
+              { id: 'b', text: "פרויקטים עם Problem → Method → Results מדידים ו-Lessons Learned", correct: true },
+              { id: 'c', text: "תעודות קורסים בלבד", correct: false },
+              { id: 'd', text: "GitHub עם קוד שלא מתועד", correct: false },
+            ],
+            explanation: "מעסיקים מחפשים עדות ל-System Thinking: מה הייתה הבעיה, איך ניגשת אליה, מה למדת. פרויקט אחד כזה שווה יותר מ-10 קורסים ברשימה."
+          }
         ]
       },
       summary: {

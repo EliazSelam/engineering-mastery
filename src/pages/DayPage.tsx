@@ -8,6 +8,7 @@ import 'katex/dist/katex.min.css';
 import katex from 'katex';
 import { cn } from '@/src/lib/utils';
 import LessonShell from '../components/LessonShell';
+import { SimErrorBoundary } from '../components/SimErrorBoundary';
 import { DAYS } from '../content/days';
 import { ArrowLeft, ArrowDown, ArrowRight, Activity, 
   Thermometer, Wind, Flame, Mic, Heart, Navigation, 
@@ -1789,13 +1790,15 @@ export default function DayPage({ id, onComplete, streak, onPrevDay, onNextDay }
               </div>
             </div>
             <div className="w-full min-h-[420px] rounded-2xl overflow-hidden">
-              {React.createElement(SIMULATION_COMPONENTS[simulation.component] || (() => (
-                <div className="w-full h-[420px] bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center gap-3 text-slate-400">
-                  <span className="text-4xl">🔬</span>
-                  <span className="text-sm font-mono">{simulation.component}</span>
-                  <span className="text-xs">סימולציה בפיתוח</span>
-                </div>
-              )))}
+              <SimErrorBoundary simName={simulation.component}>
+                {React.createElement(SIMULATION_COMPONENTS[simulation.component] || (() => (
+                  <div className="w-full h-[420px] bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center gap-3 text-slate-400">
+                    <span className="text-4xl">🔬</span>
+                    <span className="text-sm font-mono">{simulation.component}</span>
+                    <span className="text-xs">סימולציה בפיתוח</span>
+                  </div>
+                )))}
+              </SimErrorBoundary>
             </div>
           </section>
 

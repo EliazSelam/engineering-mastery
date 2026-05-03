@@ -758,6 +758,40 @@ $H(e^{j2\\pi/5})=0$.
           { id: 1, question: 'מה גורם ל-Spectral Leakage ב-FFT?', options: [{ id: 'a', text: 'תדר דגימה נמוך מדי', correct: false }, { id: 'b', text: 'הנחה שהאות תקופתי בגבולות החלון', correct: true }, { id: 'c', text: 'שגיאת עיגול (round-off)', correct: false }, { id: 'd', text: 'רעש בחיישן', correct: false }], explanation: 'ה-DFT מניח שהאות חוזר על עצמו. קפיצה בקצה = תדרים חדשים מזויפים.' },
           { id: 2, question: 'איזה חלון נותן את ה-leakage הכי נמוך?', options: [{ id: 'a', text: 'Rectangular', correct: false }, { id: 'b', text: 'Hann', correct: false }, { id: 'c', text: 'Blackman', correct: true }, { id: 'd', text: 'Hamming', correct: false }], explanation: 'Blackman נותן את הדיכוי הכי גבוה של side lobes (~-74dB) במחיר main lobe רחב יותר.' },
           { id: 3, question: 'מה קורה לרזולוציה התדרית כשמשתמשים בחלון Hann במקום Rectangular?', options: [{ id: 'a', text: 'עולה', correct: false }, { id: 'b', text: 'נשארת זהה', correct: false }, { id: 'c', text: 'יורדת (main lobe רחב יותר)', correct: true }, { id: 'd', text: 'תלוי בתדר', correct: false }], explanation: 'כל חלון שאינו Rectangular מרחיב את ה-main lobe → פחות יכולת להבדיל בין שני תדרים קרובים.' }
+        ,
+          {
+            id: 1,
+            question: "מה ההבדל המרכזי בין פילטר FIR לבין פילטר IIR?",
+            options: [
+              { id: 'a', text: "FIR מהיר יותר לחישוב מ-IIR", correct: false },
+              { id: 'b', text: "IIR משתמש במשוב (פולוסים), FIR משתמש רק בזרוס (no feedback)", correct: true },
+              { id: 'c', text: "IIR תמיד יציב, FIR עלול להיות לא יציב", correct: false },
+              { id: 'd', text: "FIR ו-IIR זהים למעשה", correct: false },
+            ],
+            explanation: "FIR (Finite Impulse Response) מחשב רק צירופים של כניסות עבר — ללא משוב, תמיד יציב, פאזה לינארית. IIR (Infinite Impulse Response) כולל פולוסים (meshוב), יעיל יותר בסדר נמוך, אך עלול להיות לא יציב."
+          },
+          {
+            id: 2,
+            question: "פולוסים של פילטר IIR חייבים להיות בתוך מעגל היחידה. מה המשמעות?",
+            options: [
+              { id: 'a', text: "כל הפולוסים חייבים לקבל ערך ממשי בין -1 ל-1", correct: false },
+              { id: 'b', text: "מודול כל פולוס pk חייב לקיים |pk| < 1 כדי להבטיח יציבות BIBO", correct: true },
+              { id: 'c', text: "הפולוסים צריכים להיות על ציר Im", correct: false },
+              { id: 'd', text: "מספר הפולוסים חייב להיות זוגי", correct: false },
+            ],
+            explanation: "מערכת LTI בזמן בדיד יציבה ל-BIBO אם ורק אם כל הפולוסים נמצאים בתוך מעגל היחידה ב-z-plane: |pk| < 1 לכל k."
+          },
+          {
+            id: 3,
+            question: "שיטת Bilinear Transform (Tustin) משמשת לדיגיטיזציה של פילטרים אנלוגיים. מה יתרונה?",
+            options: [
+              { id: 'a', text: "היא מקיימת פאזה לינארית מושלמת", correct: false },
+              { id: 'b', text: "היא ממפה ציר jω האנלוגי לתוך מעגל היחידה — לא ניתן לקבל poles מחוץ למעגל", correct: true },
+              { id: 'c', text: "היא מהירה יותר מ-Euler Forward", correct: false },
+              { id: 'd', text: "היא אינה גורמת ל-warping תדרים", correct: false },
+            ],
+            explanation: "Bilinear: s = (2/T)·(z-1)/(z+1). ממפה s-plane שמאל לתוך מעגל היחידה בצורה מלאה — יציבות מובטחת. החיסרון: warping תדרים (ניתן לפצות עם pre-warping)."
+          }
         ]
       },
       summary: {
@@ -876,6 +910,40 @@ $\\left|W_{rect}\\right|_{max,sidelobe}\\approx\\frac{1}{\\sin(3\\pi/(2N))}\\cdo
           { id: 1, question: 'מה מייצג צבע בהיר ב-Spectrogram?', options: [{ id: 'a', text: 'תדר גבוה', correct: false }, { id: 'b', text: 'עוצמת אנרגיה גבוהה בתדר ובזמן הנתון', correct: true }, { id: 'c', text: 'רעש', correct: false }, { id: 'd', text: 'aliasing', correct: false }], explanation: 'בספקטרוגרם, ציר הצבע מייצג log-energy: בהיר = חזק, כהה = חלש.' },
           { id: 2, question: 'מה קורה כשמקטינים את גודל החלון ב-STFT?', options: [{ id: 'a', text: 'רזולוציה תדרית עולה, זמן יורד', correct: false }, { id: 'b', text: 'רזולוציה זמן עולה, תדרית יורד', correct: true }, { id: 'c', text: 'שניהם עולים', correct: false }, { id: 'd', text: 'אין השפעה', correct: false }], explanation: 'חלון קצר = snap בזמן, אבל פחות מחזורים → פחות דיוק תדרי.' },
           { id: 3, question: 'אנלוגי ל-uncertainty principle של Heisenberg: מה לא ניתן לקבל בו-זמנית?', options: [{ id: 'a', text: 'תדר ופאזה', correct: false }, { id: 'b', text: 'רזולוציה מלאה בזמן ובתדר', correct: true }, { id: 'c', text: 'SNR ורזולוציה', correct: false }, { id: 'd', text: 'מהירות וזיכרון', correct: false }], explanation: 'Δt · Δf ≥ 1/(4π) — קומפרומיס בלתי נמנע בין שני המימדים.' }
+        ,
+          {
+            id: 1,
+            question: "מה מציג ספקטרוגרמה (Spectrogram) שה-FFT הרגיל לא יכול להציג?",
+            options: [
+              { id: 'a', text: "עוצמת תדרים ממוצעת על פני האות כולו", correct: false },
+              { id: 'b', text: "שינויי תדרים לאורך הזמן — ספקטרום מקומי", correct: true },
+              { id: 'c', text: "פאזה מדויקת של כל תדר", correct: false },
+              { id: 'd', text: "ספקטרום רציף ביעילות גבוהה יותר", correct: false },
+            ],
+            explanation: "FFT נותן ספקטרום גלובלי — ממוצע על האות כולו. STFT (ספקטרוגרמה) מחשב FFT על חלונות קצרים ומציג כיצד הספקטרום משתנה עם הזמן. חיוני לאותות לא-סטציונריים כמו דיבור, מוזיקה, תקלות מנועים."
+          },
+          {
+            id: 2,
+            question: "מה פשרת ה-Time-Frequency Resolution בספקטרוגרמה?",
+            options: [
+              { id: 'a', text: "חלון ארוך = רזולוציית זמן טובה ורזולוציית תדר טובה", correct: false },
+              { id: 'b', text: "חלון קצר = רזולוציית זמן טובה; חלון ארוך = רזולוציית תדר טובה — לא ניתן לקבל שניהם", correct: true },
+              { id: 'c', text: "ניתן לקבל רזולוציה מושלמת בשניהם עם חלון מתאים", correct: false },
+              { id: 'd', text: "הרזולוציה תלויה רק בתדר הדגימה", correct: false },
+            ],
+            explanation: "זהו עיקרון אי-הוודאות (Heisenberg): Δt·Δf ≥ 1/(4π). חלון קצר → רזולוציית זמן טובה אך רזולוציית תדר גרועה, וההיפך. Wavelet transform מנסה לעקוף זאת."
+          },
+          {
+            id: 3,
+            question: "מדוע משתמשים בחלון Hann (Hanning) לפני חישוב FFT?",
+            options: [
+              { id: 'a', text: "כדי להגביר את האות לפני הדגימה", correct: false },
+              { id: 'b', text: "כדי להפחית Spectral Leakage הנובע מחיתוך האות", correct: true },
+              { id: 'c', text: "כדי להגדיל את תדר הניקוד", correct: false },
+              { id: 'd', text: "חלון Hann מאפשר DFT מהיר יותר", correct: false },
+            ],
+            explanation: "כאשר האות אינו מחזורי בחלון, ה-FFT 'רואה' קפיצות בקצוות — Spectral Leakage. חלון Hann שמסיר בהדרגה את קצוות החלון מפחית משמעותית את ה-Leakage."
+          }
         ]
       },
       summary: {
@@ -1011,6 +1079,40 @@ $\\Delta f=2.5\\text{ Hz}$ — רזולוציית תדר מצוינת, אך נק
           { id: 1, question: 'מה מבטיח יציבות ב-IIR filter?', options: [{ id: 'a', text: 'כל ה-zeros בתוך unit circle', correct: false }, { id: 'b', text: 'כל ה-poles בתוך unit circle', correct: true }, { id: 'c', text: 'phase ישר', correct: false }, { id: 'd', text: 'מספר taps זוגי', correct: false }], explanation: 'ב-Z domain: יציבות ↔ כל הפולים בתוך ה-unit circle (|z|<1).' },
           { id: 2, question: 'z = e^(sT) — מה T?', options: [{ id: 'a', text: 'זמן אינטגרציה', correct: false }, { id: 'b', text: 'זמן דגימה (1/Fs)', correct: true }, { id: 'c', text: 'קבוע הזמן של המסנן', correct: false }, { id: 'd', text: 'תדר הניתוק', correct: false }], explanation: 'T = Ts = 1/Fs הוא מרחק הזמן בין דגימות. הקשר בין s-domain ל-z-domain.' },
           { id: 3, question: 'מה ייחודי ב-FIR לעומת IIR?', options: [{ id: 'a', text: 'FIR יעיל יותר בחישוב', correct: false }, { id: 'b', text: 'FIR תמיד יציב ויכול להיות בעל Linear Phase', correct: true }, { id: 'c', text: 'FIR לא ניתן לממש ב-hardware', correct: false }, { id: 'd', text: 'FIR מתאים רק לאותות אנלוגיים', correct: false }], explanation: 'FIR: ללא poles (כל az=0) → אוטומטית יציב + linear phase אפשרי עם סימטריה.' }
+        ,
+          {
+            id: 1,
+            question: "תדר הניקוד (Nyquist Rate) לאות עם תדר מקסימלי fmax הוא:",
+            options: [
+              { id: 'a', text: "fs = fmax", correct: false },
+              { id: 'b', text: "fs = 2·fmax", correct: true },
+              { id: 'c', text: "fs = 4·fmax", correct: false },
+              { id: 'd', text: "fs = fmax / 2", correct: false },
+            ],
+            explanation: "תיאורמת הדגימה של Nyquist-Shannon: כדי לשחזר אות ברוחב סרט fmax ללא Aliasing, נדגם בתדר fs ≥ 2·fmax. בפועל נשתמש ב-Anti-Aliasing Filter לפני הדגימה."
+          },
+          {
+            id: 2,
+            question: "מהו הקשר בין ה-Z-transform ל-DTFT?",
+            options: [
+              { id: 'a', text: "Z-transform הוא מקרה פרטי של DTFT כאשר z=e^jω", correct: false },
+              { id: 'b', text: "DTFT הוא מקרה פרטי של Z-transform כאשר z=e^jω (על מעגל היחידה)", correct: true },
+              { id: 'c', text: "הם אינם קשורים", correct: false },
+              { id: 'd', text: "Z-transform מחושב על הישר הממשי בלבד", correct: false },
+            ],
+            explanation: "X(z) = Σ x[n]z^{-n}. כאשר z = e^{jω} (|z|=1, על מעגל היחידה), מקבלים X(e^{jω}) = DTFT. לכן DTFT הוא ה-Z-transform על מעגל היחידה."
+          },
+          {
+            id: 3,
+            question: "מה חשיבות בחירת סדר פילטר FIR נמוך ככל האפשר?",
+            options: [
+              { id: 'a', text: "פילטר FIR ממעלה נמוכה יציב יותר", correct: false },
+              { id: 'b', text: "סדר גבוה = עיכוב (delay) גדול יותר בשידור חי, ועלות חישובית גבוהה יותר", correct: true },
+              { id: 'c', text: "פילטר FIR ממעלה נמוכה תמיד מדויק יותר", correct: false },
+              { id: 'd', text: "אין חשיבות לסדר הפילטר", correct: false },
+            ],
+            explanation: "פילטר FIR ממעלה N גורם לעיכוב קבוע של N/2 דגימות. בהשמע חי (real-time audio) עיכוב של כמה מיליות שניה מורגש. בנוסף, סיבוך בזמן O(N) לכל דגימה."
+          }
         ]
       },
       summary: {

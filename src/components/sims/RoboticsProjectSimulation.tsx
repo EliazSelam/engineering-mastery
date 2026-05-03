@@ -29,8 +29,14 @@ export default function RoboticsProjectSimulation() {
     if (dist > l1 + l2 || dist < Math.abs(l1-l2)) return null;
 
     const cosT2 = (distSq - l1*l1 - l2*l2) / (2 * l1 * l2);
-    const t2 = Math.acos(cosT2);
-    const t1 = Math.atan2(dy, dx) - Math.atan2(l2 * Math.sin(t2), l1 + l2 * Math.cos(t2));
+    // Clamp to [-1,1] to guard against floating-point singularities at full extension
+    const cosT2Clamped = Math.max(-1, Math.min(1, cosT2));
+    const t2 = Math.acos(cosT2Clamped);
+    const sinT2 = Math.sin(t2);
+    // Guard against singularity when arm is fully extended (sinT2 ≈ 0)
+    if (Math.abs(sinT2) < 1e-6) return null;
+    const t1 = Math.atan2(dy, dx) - Math.atan2(l2 * sinT2, l1 + l2 * cosT2Clamped);
+    if (!isFinite(t1) || !isFinite(t2)) return null;
     return { a1: t1 * 180 / Math.PI, a2: t2 * 180 / Math.PI };
   };
 
