@@ -34,9 +34,9 @@ export const BottomNav: React.FC = () => {
               key={path}
               onClick={() => setLocation(path)}
               className={cn(
-                'flex flex-1 flex-col items-center justify-center gap-[3px] transition-colors',
+                'relative flex flex-1 flex-col items-center justify-center gap-[3px] transition-colors',
                 active
-                  ? 'text-[hsl(var(--coral))]'
+                  ? 'text-[hsl(var(--color-primary))]'
                   : 'text-slate-400 hover:text-slate-600'
               )}
             >
@@ -54,7 +54,7 @@ export const BottomNav: React.FC = () => {
                 {label}
               </span>
               {active && (
-                <span className="absolute bottom-0 w-6 h-[2px] rounded-full bg-[hsl(var(--coral))]" />
+                <span className="absolute bottom-0 w-6 h-[2px] rounded-full bg-[hsl(var(--color-primary))]" />
               )}
             </button>
           );

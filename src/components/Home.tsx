@@ -59,6 +59,24 @@ export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: H
 
   return (
     <>
+      {/* ─── MOBILE STATS ROW (hidden on lg) ─── */}
+      <div className="lg:hidden border-b border-[hsl(var(--color-border))] bg-[hsl(var(--color-surface))]">
+        <div className="flex items-stretch divide-x divide-[hsl(var(--color-border))] text-center">
+          <div className="flex-1 py-3 px-2">
+            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-[hsl(var(--color-text-faint))]">רצף</p>
+            <p className="text-xl font-bold text-[hsl(var(--color-primary))] tabular-nums">{streak}</p>
+          </div>
+          <div className="flex-1 py-3 px-2">
+            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-[hsl(var(--color-text-faint))]">הושלמו</p>
+            <p className="text-xl font-bold text-[hsl(var(--ink-900))] tabular-nums">{completedCount}<span className="text-sm font-normal text-[hsl(var(--color-text-faint))]">/30</span></p>
+          </div>
+          <div className="flex-1 py-3 px-2">
+            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-[hsl(var(--color-text-faint))]">הבא בעוד</p>
+            <p className="text-base font-bold font-mono text-[hsl(var(--ink-900))] tabular-nums">{timeUntil}</p>
+          </div>
+        </div>
+      </div>
+
       {/* ─── HERO ─── */}
       <Section pad="hero" max="2xl" className="rise-in">
         <div className="grid grid-cols-12 gap-4 md:gap-8 items-end">
@@ -105,8 +123,8 @@ export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: H
             </div>
           </div>
 
-          {/* Right spine — stats */}
-          <div className="col-span-12 lg:col-span-4 flex flex-col gap-3">
+          {/* Right spine — stats (desktop only) */}
+          <div className="hidden lg:flex col-span-12 lg:col-span-4 flex-col gap-3">
             <StatLine eyebrow="רצף פעיל" value={streak} unit="ימים" accent />
             <StatLine eyebrow="הושלמו" value={completedCount} unit={`/ 30 · ${progressPercent}%`} />
             <StatLine eyebrow="השיעור הבא" value={timeUntil} mono />

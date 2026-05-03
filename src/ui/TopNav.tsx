@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'wouter';
 import { cn } from '@/src/lib/utils';
-import { Flame, ChevronRight } from 'lucide-react';
+import { Flame, ChevronLeft } from 'lucide-react';
 import logoIcon from '../../public/logo-icon.png';
 
 interface TopNavProps {
@@ -38,40 +38,35 @@ export const TopNav: React.FC<TopNavProps> = ({
         style={{ paddingLeft: '16px', paddingRight: '80px' }}
       >
 
-        {/* LEFT: back button (hidden on home) */}
-        {!isHome && (
+        {/* LEFT: back button + breadcrumb (hidden on home) */}
+        {!isHome ? (
           <button
             onClick={() => setLocation('/')}
-            className="flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors shrink-0"
+            className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors shrink-0"
             aria-label="חזור לדף הבית"
           >
-            <ChevronRight className="h-4 w-4" />
-            <span className="text-xs font-semibold hidden sm:inline">בית</span>
+            <ChevronLeft className="h-4 w-4 shrink-0" />
+            <span className="text-xs font-semibold truncate max-w-[28vw]">
+              {breadcrumb ?? 'בית'}
+            </span>
           </button>
-        )}
-
-        {/* LEFT: stats */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {streak !== undefined && (
-            <div className="flex h-7 sm:h-9 items-center gap-1 sm:gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-2.5 sm:px-3.5 text-orange-700">
-              <span className="text-xs sm:text-sm font-bold">{streak}</span>
-              <Flame className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-            </div>
-          )}
-          {currentDay !== undefined && (
-            <div className="flex h-7 sm:h-9 items-center gap-1 sm:gap-1.5 rounded-full border border-slate-300 bg-slate-100 px-2.5 sm:px-3.5 text-slate-800">
-              <span className="text-xs sm:text-sm font-bold">{currentDay}/30</span>
-              <span className="text-[8px] sm:text-[9px] font-bold tracking-[0.18em] text-slate-500">DAY</span>
-            </div>
-          )}
-          {trailing}
-        </div>
-
-        {/* CENTER: breadcrumb */}
-        {breadcrumb && (
-          <span className="hidden md:block text-sm font-semibold text-slate-600 truncate max-w-[30vw]">
-            {breadcrumb}
-          </span>
+        ) : (
+          /* HOME: stats row */
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {streak !== undefined && (
+              <div className="flex h-7 sm:h-9 items-center gap-1 sm:gap-1.5 rounded-full border border-orange-200 bg-orange-50 px-2.5 sm:px-3.5 text-orange-700">
+                <span className="text-xs sm:text-sm font-bold">{streak}</span>
+                <Flame className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+              </div>
+            )}
+            {currentDay !== undefined && (
+              <div className="flex h-7 sm:h-9 items-center gap-1 sm:gap-1.5 rounded-full border border-slate-300 bg-slate-100 px-2.5 sm:px-3.5 text-slate-800">
+                <span className="text-xs sm:text-sm font-bold">{currentDay}/30</span>
+                <span className="text-[8px] sm:text-[9px] font-bold tracking-[0.18em] text-slate-500">DAY</span>
+              </div>
+            )}
+            {trailing}
+          </div>
         )}
 
       </div>
