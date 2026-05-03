@@ -55,6 +55,7 @@ import RTOSSimulation from '../components/sims/RTOSSimulation';
 import PortfolioBuilder from '../components/sims/PortfolioBuilder';
 import DronePIDSimulation from '../components/sims/DronePIDSimulation';
 import QuantumSimulation from '../components/sims/QuantumSimulation';
+import EntanglementSimulation from '../components/sims/EntanglementSimulation';
 
 // New simulations will be imported here as they are created
 // import BodePlotSimulation from '../components/sims/BodePlotSimulation';
@@ -98,8 +99,7 @@ export const SIMULATION_COMPONENTS: Record<string, React.ComponentType<any>> = {
   PortfolioBuilder,
   DronePIDSimulation,
   QuantumSimulation,
-  // Aliases
-  EntanglementSimulation: QuantumSimulation,
+  EntanglementSimulation,
 };
 
 const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>>> = {
@@ -1600,6 +1600,73 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
   PoleZeroSimulation: (props: Record<string, any>) => React.createElement(DIAGRAM_COMPONENTS.PoleZeroDiagram, props),
 };
 
+// ─── QuizQuestion ──────────────────────────────────────────────────────────────
+// Self-contained question with per-option state — shows red for wrong, green for
+// correct, explanation after ANY click (not just correct answers).
+interface QuizQuestionProps {
+  q: { id: number; question: string; options: { id: string; text: string; correct: boolean }[]; explanation: string };
+  alreadyCompleted: boolean;
+  onCorrect: () => void;
+}
+function QuizQuestion({ q, alreadyCompleted, onCorrect }: QuizQuestionProps) {
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const revealed = alreadyCompleted || selectedId !== null;
+
+  const handleClick = (optId: string, isCorrect: boolean) => {
+    if (revealed) return;
+    setSelectedId(optId);
+    if (isCorrect) onCorrect();
+  };
+
+  return (
+    <div className="space-y-6">
+      <p className="text-xl font-bold leading-tight">{q.id}. {q.question}</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {q.options.map((opt) => {
+          const isSelected = selectedId === opt.id;
+          const isCorrect = opt.correct;
+          let cls = 'bg-white border-slate-100 hover:border-[hsl(var(--color-primary))] cursor-pointer';
+          if (revealed) {
+            if (isCorrect)
+              cls = 'bg-[hsl(var(--color-success)/0.08)] border-[hsl(var(--color-success))] text-[hsl(var(--color-success))]';
+            else if (isSelected && !isCorrect)
+              cls = 'bg-red-50 border-red-400 text-red-700';
+            else
+              cls = 'bg-white border-slate-100 opacity-40 cursor-default';
+          }
+          return (
+            <button
+              key={opt.id}
+              onClick={() => handleClick(opt.id, opt.correct)}
+              disabled={revealed}
+              className={`text-right p-5 rounded-2xl border-2 transition-all font-bold text-sm flex items-center justify-between gap-3 ${cls}`}
+            >
+              <span className="flex-1">
+                <span className="opacity-50 ml-3">{opt.id.toUpperCase()}.</span>
+                {opt.text}
+              </span>
+              {revealed && isCorrect && <span className="shrink-0 text-base">✅</span>}
+              {revealed && isSelected && !isCorrect && <span className="shrink-0 text-base">❌</span>}
+            </button>
+          );
+        })}
+      </div>
+      {revealed && (
+        <div className={`p-4 rounded-2xl text-sm font-medium leading-relaxed border ${
+          alreadyCompleted || q.options.find(o => o.id === selectedId)?.correct
+            ? 'bg-[hsl(var(--color-success)/0.07)] border-[hsl(var(--color-success)/0.3)] text-[hsl(var(--color-success))]'
+            : 'bg-red-50 border-red-200 text-red-700'
+        }`}>
+          {!alreadyCompleted && selectedId && !q.options.find(o => o.id === selectedId)?.correct && (
+            <p className="font-black mb-1">❌ לא נכון — הנה מדוע:</p>
+          )}
+          {q.explanation}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function DayPage({ id, onComplete, streak, onPrevDay, onNextDay }: DayPageProps) {
   const [, setLocation] = useLocation();
   const [showExtended, setShowExtended] = useState(false);
@@ -1809,32 +1876,12 @@ export default function DayPage({ id, onComplete, streak, onPrevDay, onNextDay }
                <h4 className="text-2xl font-black">בוחן המציאות</h4>
                <div className="flex flex-col gap-12">
                   {challenge.questions.map((q) => (
-                    <div key={q.id} className="space-y-6">
-                       <p className="text-xl font-bold leading-tight">{q.id}. {q.question}</p>
-                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          {q.options.map((opt) => (
-                            <button 
-                              key={opt.id}
-                              onClick={() => {
-                                if (opt.correct) markComplete(`q${q.id}`);
-                              }}
-                              className={`text-right p-5 rounded-2xl border-2 transition-all font-bold text-sm ${
-                                completed.includes(`q${q.id}`) && opt.correct 
-                                  ? 'bg-[hsl(var(--color-success))] border-[hsl(var(--color-success))] text-white scale-[0.98]' 
-                                  : 'bg-white border-slate-100 hover:border-[hsl(var(--color-primary))]'
-                              }`}
-                            >
-                              <span className="opacity-50 ml-3">{opt.id.toUpperCase()}.</span>
-                              {opt.text}
-                            </button>
-                          ))}
-                       </div>
-                       {completed.includes(`q${q.id}`) && (
-                         <div className="p-4 bg-[hsl(var(--color-success)/0.1)] text-[hsl(var(--color-success))] rounded-2xl text-[10px] font-bold">
-                            {q.explanation}
-                         </div>
-                       )}
-                     </div>
+                    <QuizQuestion
+                      key={q.id}
+                      q={q}
+                      alreadyCompleted={completed.includes(`q${q.id}`)}
+                      onCorrect={() => markComplete(`q${q.id}`)}
+                    />
                   ))}
                </div>
             </div>
