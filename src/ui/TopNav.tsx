@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'wouter';
 import { cn } from '@/src/lib/utils';
-import { Flame } from 'lucide-react';
+import { Flame, ChevronRight } from 'lucide-react';
 import logoIcon from '../../public/logo-icon.png';
 
 interface TopNavProps {
@@ -21,7 +21,8 @@ export const TopNav: React.FC<TopNavProps> = ({
   progress,
   className,
 }) => {
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
+  const isHome = location === '/';
 
   return (
     <header
@@ -36,6 +37,18 @@ export const TopNav: React.FC<TopNavProps> = ({
         className="mx-auto flex h-full max-w-7xl items-center gap-2"
         style={{ paddingLeft: '16px', paddingRight: '80px' }}
       >
+
+        {/* LEFT: back button (hidden on home) */}
+        {!isHome && (
+          <button
+            onClick={() => setLocation('/')}
+            className="flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors shrink-0"
+            aria-label="חזור לדף הבית"
+          >
+            <ChevronRight className="h-4 w-4" />
+            <span className="text-xs font-semibold hidden sm:inline">בית</span>
+          </button>
+        )}
 
         {/* LEFT: stats */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
