@@ -24,41 +24,39 @@ const ICON_MAP: Record<string, React.ComponentType<{size?: number}>> = {
   Activity, Zap, Monitor, Battery, Wrench, Globe
 };
 
-// Simulations
-import PIDSimulation from '../components/sims/PIDSimulation';
-import PoleZeroSimulation from '../components/sims/PoleZeroSimulation';
-import BodePlotSimulation from '../components/sims/BodePlotSimulation';
-import NyquistSimulation from '../components/sims/NyquistSimulation';
-import StateSpaceSimulation from '../components/sims/StateSpaceSimulation';
-import KalmanSimulation from '../components/sims/KalmanSimulation';
-import LQRSimulation from '../components/sims/LQRSimulation';
-import WeeklyReviewProject from '../components/sims/WeeklyReviewProject';
-import AutoTuner from '../components/sims/AutoTuner';
-import BLDCSimulation from '../components/sims/BLDCSimulation';
-import FOCSimulation from '../components/sims/FOCSimulation';
-import KinematicsSimulation from '../components/sims/KinematicsSimulation';
-import DynamicsSimulation from '../components/sims/DynamicsSimulation';
-import PathPlanningSimulation from '../components/sims/PathPlanningSimulation';
-import RoboticsProjectSimulation from '../components/sims/RoboticsProjectSimulation';
-import ControlLoopSimulation from '../components/sims/ControlLoopSimulation';
-import AliasingSimulation from '../components/sims/AliasingSimulation';
-import PoleZeroUnitCircle from '../components/sims/PoleZeroUnitCircle';
-import SpectrumAnalyzer from '../components/sims/SpectrumAnalyzer';
-import FIRDesigner from '../components/sims/FIRDesigner';
-import WindowingSimulation from '../components/sims/WindowingSimulation';
-import SpectrogramSimulation from '../components/sims/SpectrogramSimulation';
-import DSPReviewProject from '../components/sims/DSPReviewProject';
-import MPCSimulation from '../components/sims/MPCSimulation';
-import MRACSimulation from '../components/sims/MRACSimulation';
-import NNControlSimulation from '../components/sims/NNControlSimulation';
-import RTOSSimulation from '../components/sims/RTOSSimulation';
-import PortfolioBuilder from '../components/sims/PortfolioBuilder';
-import DronePIDSimulation from '../components/sims/DronePIDSimulation';
-import QuantumSimulation from '../components/sims/QuantumSimulation';
-import EntanglementSimulation from '../components/sims/EntanglementSimulation';
+// Simulations — lazy loaded for performance (each sim is only fetched when first needed)
+const PIDSimulation          = React.lazy(() => import('../components/sims/PIDSimulation'));
+const PoleZeroSimulation     = React.lazy(() => import('../components/sims/PoleZeroSimulation'));
+const BodePlotSimulation     = React.lazy(() => import('../components/sims/BodePlotSimulation'));
+const NyquistSimulation      = React.lazy(() => import('../components/sims/NyquistSimulation'));
+const StateSpaceSimulation   = React.lazy(() => import('../components/sims/StateSpaceSimulation'));
+const KalmanSimulation       = React.lazy(() => import('../components/sims/KalmanSimulation'));
+const LQRSimulation          = React.lazy(() => import('../components/sims/LQRSimulation'));
+const WeeklyReviewProject    = React.lazy(() => import('../components/sims/WeeklyReviewProject'));
+const AutoTuner              = React.lazy(() => import('../components/sims/AutoTuner'));
+const BLDCSimulation         = React.lazy(() => import('../components/sims/BLDCSimulation'));
+const FOCSimulation          = React.lazy(() => import('../components/sims/FOCSimulation'));
+const KinematicsSimulation   = React.lazy(() => import('../components/sims/KinematicsSimulation'));
+const DynamicsSimulation     = React.lazy(() => import('../components/sims/DynamicsSimulation'));
+const PathPlanningSimulation = React.lazy(() => import('../components/sims/PathPlanningSimulation'));
+const RoboticsProjectSimulation = React.lazy(() => import('../components/sims/RoboticsProjectSimulation'));
+const ControlLoopSimulation  = React.lazy(() => import('../components/sims/ControlLoopSimulation'));
+const AliasingSimulation     = React.lazy(() => import('../components/sims/AliasingSimulation'));
+const PoleZeroUnitCircle     = React.lazy(() => import('../components/sims/PoleZeroUnitCircle'));
+const SpectrumAnalyzer       = React.lazy(() => import('../components/sims/SpectrumAnalyzer'));
+const FIRDesigner            = React.lazy(() => import('../components/sims/FIRDesigner'));
+const WindowingSimulation    = React.lazy(() => import('../components/sims/WindowingSimulation'));
+const SpectrogramSimulation  = React.lazy(() => import('../components/sims/SpectrogramSimulation'));
+const DSPReviewProject       = React.lazy(() => import('../components/sims/DSPReviewProject'));
+const MPCSimulation          = React.lazy(() => import('../components/sims/MPCSimulation'));
+const MRACSimulation         = React.lazy(() => import('../components/sims/MRACSimulation'));
+const NNControlSimulation    = React.lazy(() => import('../components/sims/NNControlSimulation'));
+const RTOSSimulation         = React.lazy(() => import('../components/sims/RTOSSimulation'));
+const PortfolioBuilder       = React.lazy(() => import('../components/sims/PortfolioBuilder'));
+const DronePIDSimulation     = React.lazy(() => import('../components/sims/DronePIDSimulation'));
+const QuantumSimulation      = React.lazy(() => import('../components/sims/QuantumSimulation'));
+const EntanglementSimulation = React.lazy(() => import('../components/sims/EntanglementSimulation'));
 import { EntanglementDiagram } from '../components/DiagramComponents';
-
-// New simulations will be imported here as they are created
 // import BodePlotSimulation from '../components/sims/BodePlotSimulation';
 
 interface DayPageProps {
@@ -1797,7 +1795,12 @@ export default function DayPage({ id, onComplete, streak, onPrevDay, onNextDay }
             )}
 
             <div className="flex flex-col gap-8">
-              {React.createElement(DIAGRAM_COMPONENTS[theory.diagram] || (() => <div className="bg-slate-100 aspect-video rounded-3xl flex items-center justify-center">DUMMY DIAGRAM: {theory.diagram}</div>))}
+              {React.createElement(DIAGRAM_COMPONENTS[theory.diagram] || (() => (
+                <div className="bg-slate-50 aspect-video rounded-3xl flex flex-col items-center justify-center gap-2 border-2 border-dashed border-slate-200">
+                  <span className="text-2xl">🔧</span>
+                  <span className="text-xs font-mono text-slate-400">diagram: {theory.diagram}</span>
+                </div>
+              )))}
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                 {/* ── Key Equation ─────────────────────────── */}
@@ -1861,13 +1864,20 @@ export default function DayPage({ id, onComplete, streak, onPrevDay, onNextDay }
             </div>
             <div className="w-full min-h-[420px] rounded-2xl overflow-hidden">
               <SimErrorBoundary simName={simulation.component}>
-                {React.createElement(SIMULATION_COMPONENTS[simulation.component] || (() => (
-                  <div className="w-full h-[420px] bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center gap-3 text-slate-400">
-                    <span className="text-4xl">🔬</span>
-                    <span className="text-sm font-mono">{simulation.component}</span>
-                    <span className="text-xs">סימולציה בפיתוח</span>
+                <React.Suspense fallback={
+                  <div className="w-full h-[420px] bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center gap-3 text-slate-400 animate-pulse">
+                    <span className="text-4xl">⚙️</span>
+                    <span className="text-sm font-mono">טוען סימולציה...</span>
                   </div>
-                )))}
+                }>
+                  {React.createElement(SIMULATION_COMPONENTS[simulation.component] || (() => (
+                    <div className="w-full h-[420px] bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center gap-3 text-slate-400">
+                      <span className="text-4xl">🔬</span>
+                      <span className="text-sm font-mono">{simulation.component}</span>
+                      <span className="text-xs">סימולציה בפיתוח</span>
+                    </div>
+                  )))}
+                </React.Suspense>
               </SimErrorBoundary>
             </div>
           </section>
