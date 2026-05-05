@@ -56,6 +56,7 @@ import PortfolioBuilder from '../components/sims/PortfolioBuilder';
 import DronePIDSimulation from '../components/sims/DronePIDSimulation';
 import QuantumSimulation from '../components/sims/QuantumSimulation';
 import EntanglementSimulation from '../components/sims/EntanglementSimulation';
+import { EntanglementDiagram } from '../components/DiagramComponents';
 
 // New simulations will be imported here as they are created
 // import BodePlotSimulation from '../components/sims/BodePlotSimulation';
@@ -1598,6 +1599,8 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
   // Aliases for Content Compatibility
   BodeDiagramBase: (props: Record<string, any>) => React.createElement(DIAGRAM_COMPONENTS.BodeDiagram, props),
   PoleZeroSimulation: (props: Record<string, any>) => React.createElement(DIAGRAM_COMPONENTS.PoleZeroDiagram, props),
+  // Missing diagram keys — imported from DiagramComponents.tsx
+  EntanglementDiagram,
 };
 
 // ─── QuizQuestion ──────────────────────────────────────────────────────────────
