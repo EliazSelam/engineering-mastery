@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Route, Switch, useLocation } from 'wouter';
-import { Analytics } from '@vercel/analytics/react';
 import { useStudySystem } from './hooks/useStudySystem';
 import Home from './components/Home';
 import DayPage from './pages/DayPage';
@@ -254,7 +253,6 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <Analytics />
       <InstallBanner />
 
       {!hideGlobalNav && <Footer />}
