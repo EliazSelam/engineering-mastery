@@ -9,7 +9,7 @@
 */
 
 @theme {
-  /* ───── Color utilities (Tailwind v4 — generates bg-*/text-*/etc.) ── */
+  /* ───── Color utilities (Tailwind v4 — generates bg-X, text-X, etc.) ── */
   /* Approved palette — NO coral #FF6B35, NO gold #F7B801               */
   --color-primary:   #3078B0;   /* medium blue  */
   --color-secondary: #1B2F5A;   /* deep navy    */
