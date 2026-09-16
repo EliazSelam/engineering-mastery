@@ -75,7 +75,7 @@ export default function LQRSimulation() {
       {
         label: 'Effort (Energy)',
         data: data.map(d => d.effort),
-        borderColor: '#FF6B35',
+        borderColor: '#3078B0',
         borderWidth: 1,
         borderDash: [5, 5],
         pointRadius: 0,

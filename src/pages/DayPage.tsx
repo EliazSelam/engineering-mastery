@@ -104,60 +104,84 @@ export const SIMULATION_COMPONENTS: Record<string, React.ComponentType<any>> = {
 const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>>> = {
   ControlLoopDiagram: () => {
     return (
-      <div className="bg-slate-50 aspect-video rounded-3xl p-8 text-slate-900 border-4 border-slate-200 relative overflow-hidden group shadow-sm">
+      <div className="bg-slate-50 aspect-video rounded-3xl p-6 text-slate-900 border-4 border-slate-200 relative overflow-hidden group shadow-sm flex flex-col items-center justify-center gap-4">
         <div className="absolute inset-0 bg-grid-slate-900/[0.03]" />
-        <div className="flex items-center justify-between w-full max-w-sm mx-auto h-full gap-2 z-10 relative">
-          <div className="flex flex-col items-center gap-2">
-             <div className="text-[8px] font-mono text-slate-500 uppercase tracking-widest pl-2">R(s)</div>
-             <div className="w-10 h-10 rounded-full border-2 border-slate-200 flex items-center justify-center font-black text-xl text-coral bg-white shadow-lg">Σ</div>
-             <span className="text-[8px] font-black text-slate-400 uppercase tracking-tighter">Reference</span>
-          </div>
-          
-          <div className="flex-1 h-px bg-slate-300 relative">
-             <motion.div 
-               animate={{ left: ['0%', '100%'] }} 
-               transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-               className="absolute top-[-2px] w-1.5 h-1.5 bg-coral rounded-full shadow-[0_0_8px_#FF6B35]" 
-             />
-             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-y-4 border-y-transparent border-l-8 border-l-slate-300" />
+
+        {/* ── Forward path ──────────────────────────────────── */}
+        <div className="flex items-center gap-2 w-full max-w-xs mx-auto z-10 relative">
+
+          {/* Summing junction */}
+          <div className="flex flex-col items-center shrink-0">
+            <div className="text-[8px] font-mono text-slate-400 uppercase mb-0.5">R(s)</div>
+            <div className="w-9 h-9 rounded-full border-2 border-[#3078B0]/40 flex items-center justify-center font-black text-lg text-[#3078B0] bg-white shadow-md">Σ</div>
+            <div className="text-[7px] text-slate-400 mt-0.5 uppercase">Ref</div>
           </div>
 
-          <div className="p-4 bg-deep-blue border-2 border-white/20 rounded-2xl flex flex-col items-center shadow-xl group-hover:scale-105 transition-transform duration-500 bg-gradient-to-br from-deep-blue to-[#003865]">
-             <span className="text-[10px] font-black uppercase italic tracking-tighter text-white">Controller</span>
-             <div className="text-[8px] font-mono mt-1 text-white/50 bg-black/20 px-2 rounded">C(s)</div>
+          {/* Wire → Controller */}
+          <div className="flex-1 h-px bg-slate-300 relative overflow-visible">
+            <motion.div
+              animate={{ left: ['0%', '100%'] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+              className="absolute -top-[3px] w-1.5 h-1.5 rounded-full bg-[#3078B0]"
+            />
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-y-[3px] border-y-transparent border-l-[6px] border-l-slate-300" />
           </div>
 
-          <div className="flex-1 h-px bg-slate-300 relative">
-             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-y-4 border-y-transparent border-l-8 border-l-slate-300" />
+          {/* Controller block */}
+          <div className="shrink-0 px-3 py-2.5 bg-[#1B2F5A] rounded-xl flex flex-col items-center shadow-lg group-hover:scale-105 transition-transform duration-300">
+            <span className="text-[9px] font-black uppercase tracking-tight text-white">Controller</span>
+            <span className="text-[8px] font-mono text-white/50 mt-0.5">C(s)</span>
           </div>
 
-          <div className="p-4 bg-coral border-2 border-white/20 rounded-2xl flex flex-col items-center shadow-xl group-hover:scale-95 transition-transform duration-500 bg-gradient-to-tr from-coral to-[#E55A2A]">
-             <span className="text-[10px] font-black uppercase italic tracking-tighter text-white">Plant</span>
-             <div className="text-[8px] font-mono mt-1 text-white/50 bg-black/20 px-2 rounded font-black">G(s)</div>
+          {/* Wire → Plant */}
+          <div className="flex-1 h-px bg-slate-300 relative overflow-visible">
+            <motion.div
+              animate={{ left: ['0%', '100%'] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'linear', delay: 0.5 }}
+              className="absolute -top-[3px] w-1.5 h-1.5 rounded-full bg-[#3078B0]"
+            />
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-y-[3px] border-y-transparent border-l-[6px] border-l-slate-300" />
           </div>
 
-          <div className="flex-1 h-px bg-slate-300 relative">
-             <div className="absolute -top-4 right-0 w-2 h-2 bg-coral rounded-full animate-ping" />
-             <div className="absolute -right-4 -top-2 text-[8px] font-mono text-slate-500 font-black uppercase italic">Y(s) Out</div>
+          {/* Plant block */}
+          <div className="shrink-0 px-3 py-2.5 bg-[#3078B0] rounded-xl flex flex-col items-center shadow-lg group-hover:scale-95 transition-transform duration-300">
+            <span className="text-[9px] font-black uppercase tracking-tight text-white">Plant</span>
+            <span className="text-[8px] font-mono text-white/50 mt-0.5">G(s)</span>
+          </div>
+
+          {/* Output wire */}
+          <div className="flex-1 h-px bg-slate-300 relative overflow-visible">
+            <div className="absolute -top-[5px] right-0 w-2.5 h-2.5 bg-[#3078B0] rounded-full animate-ping opacity-60" />
+          </div>
+
+          {/* Output node */}
+          <div className="flex flex-col items-center shrink-0">
+            <div className="text-[8px] font-mono text-slate-400 uppercase mb-0.5">Y(s)</div>
+            <div className="w-9 h-9 rounded-full border-2 border-slate-200 flex items-center justify-center bg-white shadow-md">
+              <div className="w-2.5 h-2.5 bg-[#3078B0] rounded-full" />
+            </div>
+            <div className="text-[7px] text-slate-400 mt-0.5 uppercase">Output</div>
           </div>
         </div>
 
-        {/* Feedback Line with animated dash */}
-        <svg className="absolute inset-x-0 bottom-12 h-16 w-full -translate-y-2 pointer-events-none">
-           <motion.path 
-              d="M 360 0 L 360 40 L 65 40 L 65 15" 
-              fill="none" 
-              stroke="#FF6B35" 
-              strokeWidth="2" 
-              strokeDashoffset="0"
-              strokeDasharray="10 5"
-              animate={{ strokeDashoffset: [45, 0] }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-           />
-        </svg>
+        {/* ── Feedback path (pure CSS — no fragile SVG) ─────── */}
+        <div className="w-full max-w-xs mx-auto z-10 relative">
+          <div className="relative h-7 mx-4">
+            <div className="absolute inset-x-0 inset-y-0 border-b-2 border-l-2 border-r-2 border-dashed border-[#3078B0]/35 rounded-b-lg">
+              <motion.div
+                animate={{ left: ['90%', '10%'] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                className="absolute bottom-[-4px] w-2 h-2 rounded-full bg-[#3078B0]/60"
+              />
+            </div>
+            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[7px] font-mono text-slate-400 bg-slate-50 px-2 whitespace-nowrap uppercase tracking-wide">
+              H(s) = 1 · Unity Feedback
+            </div>
+          </div>
+        </div>
 
-        <div className="absolute top-4 left-4 text-[10px] font-mono text-slate-500 uppercase font-black opacity-30 italic">Architecture: Unity Feedback Control</div>
-        <div className="absolute bottom-4 left-4 text-[8px] font-mono text-emerald-600 font-bold uppercase italic bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">Closed Loop System</div>
+        <div className="absolute top-4 left-4 text-[9px] font-mono text-slate-400 uppercase font-black opacity-30 italic">Unity Feedback Control</div>
+        <div className="absolute bottom-5 left-4 text-[7px] font-mono text-emerald-600 font-bold uppercase italic bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">Closed Loop System</div>
       </div>
     );
   },
@@ -225,13 +249,13 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
             <motion.div 
                animate={{ scale: [1, 1.3, 1], x: [-35, -35], y: [45, 45] }}
                transition={{ duration: 3, repeat: Infinity }}
-               className="absolute text-coral font-black text-2xl z-20 drop-shadow-[0_0_15px_rgba(255,107,53,0.6)] cursor-help"
+               className="absolute text-coral font-black text-2xl z-20 drop-shadow-[0_0_15px_rgba(48,120,176,0.6)] cursor-help"
                title="Pole 1"
             >×</motion.div>
             <motion.div 
                animate={{ scale: [1, 1.3, 1], x: [-35, -35], y: [-45, -45] }}
                transition={{ duration: 3, repeat: Infinity }}
-               className="absolute text-coral font-black text-2xl z-20 drop-shadow-[0_0_15px_rgba(255,107,53,0.6)] cursor-help"
+               className="absolute text-coral font-black text-2xl z-20 drop-shadow-[0_0_15px_rgba(48,120,176,0.6)] cursor-help"
                title="Pole 2"
             >×</motion.div>
 
@@ -317,7 +341,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
            {/* Critical point marker */}
            <div className="absolute left-[calc(25%-8px)] top-1/2 -translate-y-1/2 w-4 h-4 flex items-center justify-center z-30">
               <div className="w-2 h-2 bg-coral rounded-full animate-ping absolute" />
-              <div className="w-2.5 h-2.5 bg-coral rounded-full shadow-[0_0_10px_#FF6B35]" />
+              <div className="w-2.5 h-2.5 bg-coral rounded-full shadow-[0_0_10px_#3078B0]" />
               <div className="absolute -top-6 text-[8px] font-mono text-coral font-black bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded border border-coral/20 shadow-sm pointer-events-none">(-1, 0j)</div>
            </div>
            
@@ -372,7 +396,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
         <div className="absolute inset-0 bg-grid-slate-900/[0.04]" />
         <div className="flex items-center gap-8 relative z-10 w-full max-w-xs mx-auto">
            <motion.div 
-             animate={{ borderColor: isHovered ? '#FF6B35' : '#e2e8f0', scale: isHovered ? 1.1 : 1 }}
+             animate={{ borderColor: isHovered ? '#3078B0' : '#e2e8f0', scale: isHovered ? 1.1 : 1 }}
              className="w-20 h-20 bg-white border-4 rounded-3xl flex flex-col items-center justify-center shadow-2xl relative transition-colors duration-500"
            >
               <div className="text-3xl font-black text-coral drop-shadow-sm">∫</div>
@@ -390,7 +414,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
 
            <motion.div 
              animate={{ scale: isHovered ? 1.15 : 1 }}
-             className="w-20 h-20 bg-gradient-to-br from-deep-blue to-[#003865] border-4 border-white/20 rounded-3xl flex flex-col items-center justify-center shadow-2xl relative"
+             className="w-20 h-20 bg-gradient-to-br from-deep-blue to-[#1B2F5A] border-4 border-white/20 rounded-3xl flex flex-col items-center justify-center shadow-2xl relative"
            >
               <div className="text-3xl font-black text-white italic">x</div>
               <span className="text-[8px] font-black absolute -top-5 text-slate-500 uppercase tracking-tighter font-mono">State Vector</span>
@@ -476,7 +500,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
                    <motion.div 
                      animate={{ width: ['0%', '100%'] }} 
                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} 
-                     className="h-full bg-coral rounded-full shadow-[0_0_12px_#FF6B35]" 
+                     className="h-full bg-coral rounded-full shadow-[0_0_12px_#3078B0]" 
                    />
                 </div>
                 <div className="absolute -right-3 top-1/2 -translate-y-1/2 p-2 bg-coral rounded-full border-2 border-white shadow-lg text-white">
@@ -543,7 +567,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
                  className="flex-1 rounded-t-md transition-all duration-300 shadow-sm"
                  animate={{ 
                     height: `${resonance * 100}%`,
-                    backgroundColor: isActive ? '#FF6B35' : '#e2e8f0',
+                    backgroundColor: isActive ? '#3078B0' : '#e2e8f0',
                     opacity: isActive ? 1 : 0.6
                  }}
                />
@@ -591,7 +615,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
                       cy: [40, 80, 40, 80, 40] 
                    }}
                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                   r="7" fill="#FF6B35" className="shadow-[0_0_20px_#FF6B35]"
+                   r="7" fill="#3078B0" className="shadow-[0_0_20px_#3078B0]"
                  />
               </svg>
               <div className="absolute top-2 right-2 text-[7px] font-mono text-slate-400 uppercase tracking-widest">Gradient ∇J</div>
@@ -640,7 +664,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
 
            {/* Update Step */}
            <div className="relative flex flex-col items-center gap-4">
-              <div className="w-24 h-24 bg-gradient-to-br from-white to-coral/5 border-2 border-[#FF6B35] rounded-full flex flex-col items-center justify-center p-3 shadow-2xl relative">
+              <div className="w-24 h-24 bg-gradient-to-br from-white to-coral/5 border-2 border-[#3078B0] rounded-full flex flex-col items-center justify-center p-3 shadow-2xl relative">
                  <div className="absolute inset-0 border-2 border-coral/20 rounded-full animate-pulse pointer-events-none" />
                  <RotateCcw className="text-coral mb-1" size={24} />
                  <span className="text-[10px] font-black uppercase text-coral tracking-tighter">Correct</span>
@@ -655,7 +679,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
               <span className="text-[8px] font-black text-slate-500 uppercase tracking-tight">Covariance Extrapolation (P)</span>
            </div>
            <div className="flex items-center gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-coral animate-ping shadow-[0_0_8px_#FF6B35]" />
+              <div className="w-2.5 h-2.5 rounded-full bg-coral animate-ping shadow-[0_0_8px_#3078B0]" />
               <span className="text-[8px] font-black text-coral uppercase tracking-tight">Measurement Innovation</span>
            </div>
         </div>
@@ -677,7 +701,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
                   animate={{ height: `${20 + Math.sin(i * 0.4) * 60}%` }}
                   className={cn(
                     "flex-1 rounded-t-md transition-shadow duration-500",
-                    i === 0 ? "bg-coral shadow-[0_0_20px_rgba(255,107,53,0.5)] border-t-2 border-white/50" : "bg-emerald-500"
+                    i === 0 ? "bg-coral shadow-[0_0_20px_rgba(48,120,176,0.5)] border-t-2 border-white/50" : "bg-emerald-500"
                   )}
                   style={{ 
                     opacity: i === 0 ? 1 : 0.5 - (i/18)*0.4,
@@ -772,7 +796,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
                     <motion.div 
                       animate={{ x: [0, 64], opacity: [0, 1, 0] }}
                       transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.5, ease: "linear" }}
-                      className="absolute top-1/2 -translate-y-1/2 w-4 h-0.5 bg-coral shadow-[0_0_8px_#FF6B35]" 
+                      className="absolute top-1/2 -translate-y-1/2 w-4 h-0.5 bg-coral shadow-[0_0_8px_#3078B0]" 
                     />
                  </div>
                ))}
@@ -784,7 +808,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
                {[0, 1, 2].map(i => (
                  <motion.div 
                    key={i}
-                   animate={{ backgroundColor: ['#ffffff', '#FF6B3510', '#ffffff'] }}
+                   animate={{ backgroundColor: ['#ffffff', '#3078B010', '#ffffff'] }}
                    transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
                    className="w-8 h-8 rounded-full bg-white border-2 border-coral flex items-center justify-center shadow-lg shadow-coral/5"
                  >
@@ -796,7 +820,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
 
             {/* Output Layer */}
             <div className="flex flex-col justify-center">
-               <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-deep-blue to-[#003865] flex items-center justify-center shadow-2xl relative border-2 border-white/20">
+               <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-deep-blue to-[#1B2F5A] flex items-center justify-center shadow-2xl relative border-2 border-white/20">
                   <div className="text-white font-black text-xs">Σ</div>
                   <motion.div 
                     animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
@@ -957,7 +981,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
         A/D Stage: Temporal Discretization
       </div>
       <div className="absolute bottom-4 left-4 text-[9px] font-mono text-coral uppercase font-black flex items-center gap-3 bg-white/60 px-3 py-1.5 rounded-full border border-coral/10 shadow-sm">
-        <div className="w-2 h-2 bg-coral rounded-full animate-pulse shadow-[0_0_10px_#FF6B35]"/>
+        <div className="w-2 h-2 bg-coral rounded-full animate-pulse shadow-[0_0_10px_#3078B0]"/>
         Sampled Function x[n] = x(nTs)
       </div>
       <div className="absolute top-4 right-4 text-[10px] font-mono text-emerald-600 uppercase font-black italic bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
@@ -990,7 +1014,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
              className="w-16 h-16 border-2 border-slate-200 rounded-full flex items-center justify-center relative shadow-inner"
            >
               <div className="absolute inset-0 border-t-2 border-deep-blue rounded-full shadow-[0_0_15px_rgba(0,78,137,0.2)]" />
-              <div className="w-2.5 h-2.5 bg-coral rounded-full shadow-[0_0_10px_#FF6B35]" />
+              <div className="w-2.5 h-2.5 bg-coral rounded-full shadow-[0_0_10px_#3078B0]" />
            </motion.div>
            <div className="px-2 py-0.5 bg-slate-900 text-white rounded text-[7px] font-mono font-black tracking-widest">Butterfly Op</div>
         </div>
@@ -1000,7 +1024,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
             <div className="w-2 h-4 bg-coral/10 rounded-t" />
             <motion.div 
                animate={{ height: ['40%', '80%', '40%'] }}
-               className="w-2.5 bg-coral rounded-t-md shadow-[0_0_12px_#FF6B35]" 
+               className="w-2.5 bg-coral rounded-t-md shadow-[0_0_12px_#3078B0]" 
             />
             <div className="w-2 h-3 bg-coral/5 rounded-t" />
             <motion.div 
@@ -1034,13 +1058,13 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
           <motion.div 
             initial={{ scale: 0, rotate: -45 }} 
             animate={{ scale: 1, rotate: 0 }}
-            className="absolute top-1/4 left-1/4 text-3xl text-coral font-black drop-shadow-[0_0_10px_rgba(255,107,53,0.3)] transition-transform hover:scale-125 cursor-help"
+            className="absolute top-1/4 left-1/4 text-3xl text-coral font-black drop-shadow-[0_0_10px_rgba(48,120,176,0.3)] transition-transform hover:scale-125 cursor-help"
             title="Stable Pole"
           >×</motion.div>
           <motion.div 
             initial={{ scale: 0, rotate: -45 }} 
             animate={{ scale: 1, rotate: 0 }} transition={{ delay: 0.15 }}
-            className="absolute bottom-1/4 left-1/4 text-3xl text-coral font-black drop-shadow-[0_0_10px_rgba(255,107,53,0.3)] transition-transform hover:scale-125 cursor-help"
+            className="absolute bottom-1/4 left-1/4 text-3xl text-coral font-black drop-shadow-[0_0_10px_rgba(48,120,176,0.3)] transition-transform hover:scale-125 cursor-help"
             title="Stable Pole"
           >×</motion.div>
           
@@ -1094,7 +1118,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
         <div className="flex flex-col items-center gap-2">
           <div className="px-3 py-1.5 bg-slate-50 border-2 border-slate-200 rounded-xl text-[9px] font-mono text-slate-500 font-bold shadow-sm">y[n]</div>
           <ArrowDown className="text-slate-300" size={14} />
-          <div className="w-3 h-3 bg-coral rounded-full shadow-[0_0_10px_rgba(255,107,53,0.3)]" />
+          <div className="w-3 h-3 bg-coral rounded-full shadow-[0_0_10px_rgba(48,120,176,0.3)]" />
         </div>
       </div>
       
@@ -1471,11 +1495,11 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
            </div>
 
            {/* Optimal Path */}
-           <svg className="absolute inset-0 w-full h-full pointer-events-none drop-shadow-[0_0_15px_rgba(255,107,53,0.4)]">
+           <svg className="absolute inset-0 w-full h-full pointer-events-none drop-shadow-[0_0_15px_rgba(48,120,176,0.4)]">
               <motion.path 
                 d="M 40 140 C 120 140, 80 80, 180 80 S 300 40, 360 40" 
                 fill="none" 
-                stroke="#FF6B35" 
+                stroke="#3078B0" 
                 strokeWidth="4" 
                 strokeLinecap="round"
                 strokeDasharray="10 6"

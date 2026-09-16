@@ -92,11 +92,11 @@ export default function QuantumSimulation() {
                 }}
                 animate={{ 
                   rotateZ: (state.theta * 180) / Math.PI,
-                  filter: prob0 > 0.1 && prob0 < 0.9 ? 'drop-shadow(0 0 10px #FF6B35)' : 'none'
+                  filter: prob0 > 0.1 && prob0 < 0.9 ? 'drop-shadow(0 0 10px #3078B0)' : 'none'
                 }}
                 transition={{ type: 'spring', damping: 15 }}
               >
-                <div className={`w-full h-full rounded-full transition-colors ${prob0 > 0.1 && prob0 < 0.9 ? 'bg-[#FF6B35]' : 'bg-emerald-400'}`} />
+                <div className={`w-full h-full rounded-full transition-colors ${prob0 > 0.1 && prob0 < 0.9 ? 'bg-[#3078B0]' : 'bg-emerald-400'}`} />
                 <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow-lg" />
               </motion.div>
 
@@ -126,7 +126,7 @@ export default function QuantumSimulation() {
               </div>
               <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                  <motion.div 
-                   className="h-full bg-[#FF6B35]" 
+                   className="h-full bg-[#3078B0]" 
                    animate={{ width: `${prob1 * 100}%` }}
                  />
               </div>
@@ -187,7 +187,7 @@ export default function QuantumSimulation() {
       <div className="flex gap-4 p-4 bg-indigo-500/5 rounded-2xl border border-indigo-500/10">
          <Info size={20} className="text-indigo-400 shrink-0" />
          <p className="text-[10px] text-slate-400 leading-relaxed">
-           <strong className="text-indigo-300">Intuition:</strong> Adding gates like <span className="text-emerald-400 font-bold">Hadamard</span> puts the qubit in <span className="text-[#FF6B35] font-bold">Superposition</span>. Measurement forces the probability wave to collapse into a single classical state (0 or 1).
+           <strong className="text-indigo-300">Intuition:</strong> Adding gates like <span className="text-emerald-400 font-bold">Hadamard</span> puts the qubit in <span className="text-[#3078B0] font-bold">Superposition</span>. Measurement forces the probability wave to collapse into a single classical state (0 or 1).
          </p>
       </div>
     </div>

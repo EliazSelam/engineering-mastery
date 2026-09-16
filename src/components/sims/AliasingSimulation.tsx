@@ -59,21 +59,21 @@ export default function AliasingSimulation() {
           <YAxis domain={[-1.3, 1.3]} tick={{ fontSize: 10, fill: '#64748b' }} />
           <Tooltip contentStyle={{ background: '#0f172a', border: '1px solid #334155', fontSize: 11 }} />
           <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Line type="monotone" dataKey="original" stroke="#004E89" dot={false} strokeWidth={2} name={`Original (${signalFreq} Hz)`} isAnimationActive={false} />
-          <Line type="monotone" dataKey="reconstructed" stroke="#F7B801" dot={false} strokeWidth={2} strokeDasharray={isAliasing ? "5 3" : "0"} name={`Reconstructed (${aliasedFreq.toFixed(1)} Hz)`} isAnimationActive={false} />
+          <Line type="monotone" dataKey="original" stroke="#1B2F5A" dot={false} strokeWidth={2} name={`Original (${signalFreq} Hz)`} isAnimationActive={false} />
+          <Line type="monotone" dataKey="reconstructed" stroke="#7B5A3C" dot={false} strokeWidth={2} strokeDasharray={isAliasing ? "5 3" : "0"} name={`Reconstructed (${aliasedFreq.toFixed(1)} Hz)`} isAnimationActive={false} />
         </LineChart>
       </ResponsiveContainer>
 
       <div className="grid grid-cols-2 gap-4">
         <div className="bg-slate-800 rounded-2xl p-4 flex flex-col gap-2 border border-slate-700">
           <p className="text-[10px] font-black text-slate-500 uppercase">Signal Frequency</p>
-          <input type="range" min={1} max={25} step={0.5} value={signalFreq} onChange={e => setSignalFreq(parseFloat(e.target.value))} className="accent-[#004E89]" />
-          <span className="text-lg font-black text-[#004E89] font-mono">{signalFreq} Hz</span>
+          <input type="range" min={1} max={25} step={0.5} value={signalFreq} onChange={e => setSignalFreq(parseFloat(e.target.value))} className="accent-[#1B2F5A]" />
+          <span className="text-lg font-black text-[#1B2F5A] font-mono">{signalFreq} Hz</span>
         </div>
         <div className="bg-slate-800 rounded-2xl p-4 flex flex-col gap-2 border border-slate-700">
           <p className="text-[10px] font-black text-slate-500 uppercase">Sampling Rate (Fs)</p>
-          <input type="range" min={5} max={60} step={1} value={samplingRate} onChange={e => setSamplingRate(parseFloat(e.target.value))} className="accent-[#FF6B35]" />
-          <span className="text-lg font-black text-[#FF6B35] font-mono">{samplingRate} Hz</span>
+          <input type="range" min={5} max={60} step={1} value={samplingRate} onChange={e => setSamplingRate(parseFloat(e.target.value))} className="accent-[#3078B0]" />
+          <span className="text-lg font-black text-[#3078B0] font-mono">{samplingRate} Hz</span>
         </div>
       </div>
     </div>

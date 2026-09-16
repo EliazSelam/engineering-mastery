@@ -101,7 +101,7 @@ export default function MPCSimulation() {
               <input 
                 type="range" min={0} max={20} step={1} 
                 value={target} onChange={(e) => setTarget(parseInt(e.target.value))}
-                className="accent-[#F7B801] w-24"
+                className="accent-[#7B5A3C] w-24"
               />
             </div>
             <button 
@@ -135,7 +135,7 @@ export default function MPCSimulation() {
               stroke="#10b981"
               strokeWidth={3}
               dot={(props: any) => {
-                if (data.chartData[props.index].type === 'Predicted') return <circle cx={props.cx} cy={props.cy} r={2} fill="#F7B801" stroke="none" />;
+                if (data.chartData[props.index].type === 'Predicted') return <circle cx={props.cx} cy={props.cy} r={2} fill="#7B5A3C" stroke="none" />;
                 return null;
               }}
               name="Trajectory"
@@ -144,7 +144,7 @@ export default function MPCSimulation() {
             <Line
               type="step"
               dataKey={() => target}
-              stroke="#F7B801"
+              stroke="#7B5A3C"
               strokeDasharray="5 5"
               name="Setpoint"
               dot={false}

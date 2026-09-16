@@ -61,7 +61,7 @@ export default function DronePIDSimulation() {
               <input 
                 type="range" min={-5} max={5} step={1} 
                 value={wind} onChange={(e) => setWind(parseInt(e.target.value))}
-                className="accent-[#FF6B35] w-32"
+                className="accent-[#3078B0] w-32"
               />
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function DronePIDSimulation() {
          <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
                <YAxis domain={[-10, 10]} hide />
-               <Line type="monotone" dataKey="angle" stroke="#FF6B35" strokeWidth={2} dot={false} isAnimationActive={false} />
+               <Line type="monotone" dataKey="angle" stroke="#3078B0" strokeWidth={2} dot={false} isAnimationActive={false} />
             </LineChart>
          </ResponsiveContainer>
       </div>

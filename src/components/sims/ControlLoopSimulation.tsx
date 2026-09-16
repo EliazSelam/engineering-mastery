@@ -65,8 +65,8 @@ export default function ControlLoopSimulation() {
   const SliderRow = ({ label, value, setter, min, max, step: s }: { label: string; value: number; setter: (v: number) => void; min: number; max: number; step: number }) => (
     <div className="flex items-center gap-3">
       <span className="text-xs font-bold text-slate-400 w-6 text-right font-mono">{label}</span>
-      <input type="range" min={min} max={max} step={s} value={value} onChange={e => setter(parseFloat(e.target.value))} className="flex-1 accent-[#FF6B35]" />
-      <span className="text-xs font-mono text-[#FF6B35] w-10 text-right">{value.toFixed(1)}</span>
+      <input type="range" min={min} max={max} step={s} value={value} onChange={e => setter(parseFloat(e.target.value))} className="flex-1 accent-[#3078B0]" />
+      <span className="text-xs font-mono text-[#3078B0] w-10 text-right">{value.toFixed(1)}</span>
     </div>
   );
 
@@ -83,12 +83,12 @@ export default function ControlLoopSimulation() {
       </div>
 
       <div className="flex gap-2">
-        <button onClick={() => setIsRunning(r => !r)} className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${isRunning ? 'bg-red-500 text-white' : 'bg-[#FF6B35] text-white'}`}>{isRunning ? '⏹ עצור' : '▶ הפעל'}</button>
-        <button onClick={handleDisturbance} disabled={!isRunning} className="px-4 py-1.5 rounded-xl text-xs font-bold bg-[#F7B801] text-slate-900 disabled:opacity-30">⚡ הפרעה</button>
+        <button onClick={() => setIsRunning(r => !r)} className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${isRunning ? 'bg-red-500 text-white' : 'bg-[#3078B0] text-white'}`}>{isRunning ? '⏹ עצור' : '▶ הפעל'}</button>
+        <button onClick={handleDisturbance} disabled={!isRunning} className="px-4 py-1.5 rounded-xl text-xs font-bold bg-[#7B5A3C] text-slate-900 disabled:opacity-30">⚡ הפרעה</button>
         <button onClick={handleReset} className="px-4 py-1.5 rounded-xl text-xs font-bold bg-slate-700 text-white">↺ איפוס</button>
       </div>
 
-      <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 italic text-sm text-[#FF6B35]">
+      <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 italic text-sm text-[#3078B0]">
         {getTakeaway()}
       </div>
 
@@ -107,8 +107,8 @@ export default function ControlLoopSimulation() {
           />
           <Tooltip contentStyle={{ background: '#0f172a', border: '1px solid #334155', fontSize: 11 }} />
           <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Line type="monotone" dataKey="setpoint" stroke="#F7B801" strokeDasharray="4 4" dot={false} strokeWidth={1.5} name="Setpoint" isAnimationActive={false} />
-          <Line type="monotone" dataKey="position" stroke="#FF6B35" dot={false} strokeWidth={2} name="Position" isAnimationActive={false} />
+          <Line type="monotone" dataKey="setpoint" stroke="#7B5A3C" strokeDasharray="4 4" dot={false} strokeWidth={1.5} name="Setpoint" isAnimationActive={false} />
+          <Line type="monotone" dataKey="position" stroke="#3078B0" dot={false} strokeWidth={2} name="Position" isAnimationActive={false} />
         </LineChart>
       </ResponsiveContainer>
       <div className="bg-slate-800 rounded-2xl p-4 flex flex-col gap-3">

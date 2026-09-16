@@ -54,25 +54,25 @@ export default function FIRDesigner() {
           <XAxis dataKey="f" tick={{fontSize:9,fill:'#64748b'}} label={{value:'Normalized Freq',position:'insideBottom',offset:-5,fontSize:9,fill:'#64748b'}}/>
           <YAxis domain={[-80,5]} tick={{fontSize:9,fill:'#64748b'}} label={{value:'dB',angle:-90,position:'insideLeft',fontSize:9,fill:'#64748b'}}/>
           <Tooltip contentStyle={{background:'#0f172a',border:'1px solid #334155',fontSize:10}} />
-          <ReferenceLine x={fc} stroke="#F7B801" strokeDasharray="4 2" label={{value:'fc',fill:'#F7B801',fontSize:9}}/>
+          <ReferenceLine x={fc} stroke="#7B5A3C" strokeDasharray="4 2" label={{value:'fc',fill:'#7B5A3C',fontSize:9}}/>
           <ReferenceLine y={-3} stroke="#64748b" strokeDasharray="2 2"/>
-          <Line type="monotone" dataKey="mag" stroke="#FF6B35" dot={false} strokeWidth={2} isAnimationActive={false}/>
+          <Line type="monotone" dataKey="mag" stroke="#3078B0" dot={false} strokeWidth={2} isAnimationActive={false}/>
         </LineChart>
       </ResponsiveContainer>
 
       <div className="grid grid-cols-3 gap-3">
         <div className="bg-slate-800 rounded-xl p-3 flex flex-col gap-2 border border-slate-700">
           <p className="text-[9px] text-slate-500 uppercase">Cutoff fc</p>
-          <input type="range" min={0.05} max={0.45} step={0.01} value={fc} onChange={e=>setFc(parseFloat(e.target.value))} className="accent-[#F7B801]"/>
-          <span className="font-black font-mono text-[#F7B801] text-sm">{fc.toFixed(2)}π</span>
+          <input type="range" min={0.05} max={0.45} step={0.01} value={fc} onChange={e=>setFc(parseFloat(e.target.value))} className="accent-[#7B5A3C]"/>
+          <span className="font-black font-mono text-[#7B5A3C] text-sm">{fc.toFixed(2)}π</span>
         </div>
         <div className="bg-slate-800 rounded-xl p-3 flex flex-col gap-2 border border-slate-700">
           <p className="text-[9px] text-slate-500 uppercase">Taps (Order)</p>
-          <div className="flex gap-1 flex-wrap">{[5,11,21,31,51].map(t=><button key={t} onClick={()=>setTaps(t)} className={`px-2 py-0.5 rounded text-[10px] font-bold ${taps===t?'bg-[#FF6B35] text-white':'bg-slate-700 text-slate-400'}`}>{t}</button>)}</div>
+          <div className="flex gap-1 flex-wrap">{[5,11,21,31,51].map(t=><button key={t} onClick={()=>setTaps(t)} className={`px-2 py-0.5 rounded text-[10px] font-bold ${taps===t?'bg-[#3078B0] text-white':'bg-slate-700 text-slate-400'}`}>{t}</button>)}</div>
         </div>
         <div className="bg-slate-800 rounded-xl p-3 flex flex-col gap-1 border border-slate-700">
           <p className="text-[9px] text-slate-500 uppercase">Window Type</p>
-          {(['rectangular','hamming','hann'] as Win[]).map(w=><button key={w} onClick={()=>setWin(w)} className={`px-2 py-0.5 rounded text-[10px] font-bold text-left ${win===w?'bg-[#004E89] text-white':'bg-slate-700 text-slate-400 uppercase'}`}>{w}</button>)}
+          {(['rectangular','hamming','hann'] as Win[]).map(w=><button key={w} onClick={()=>setWin(w)} className={`px-2 py-0.5 rounded text-[10px] font-bold text-left ${win===w?'bg-[#1B2F5A] text-white':'bg-slate-700 text-slate-400 uppercase'}`}>{w}</button>)}
         </div>
       </div>
     </div>

@@ -80,9 +80,9 @@ export default function PoleZeroUnitCircle() {
             <line x1={0} y1={C} x2={SIZE} y2={C} stroke="#334155" strokeWidth={1} />
             <circle cx={C} cy={C} r={R} fill="none" stroke="#475569" strokeWidth={1.5} strokeDasharray="4 2" />
             <text x={C+R+3} y={C+4} fill="#64748b" fontSize="8">1</text>
-            <circle cx={zeroPos.x} cy={zeroPos.y} r={6} fill="none" stroke="#004E89" strokeWidth={2} />
-            <circle cx={zeroConj.x} cy={zeroConj.y} r={6} fill="none" stroke="#004E89" strokeWidth={2} />
-            {[polePos, poleConj].map((p, i) => <g key={i}><line x1={p.x-6} y1={p.y-6} x2={p.x+6} y2={p.y+6} stroke="#FF6B35" strokeWidth={2.5}/><line x1={p.x+6} y1={p.y-6} x2={p.x-6} y2={p.y+6} stroke="#FF6B35" strokeWidth={2.5}/></g>)}
+            <circle cx={zeroPos.x} cy={zeroPos.y} r={6} fill="none" stroke="#1B2F5A" strokeWidth={2} />
+            <circle cx={zeroConj.x} cy={zeroConj.y} r={6} fill="none" stroke="#1B2F5A" strokeWidth={2} />
+            {[polePos, poleConj].map((p, i) => <g key={i}><line x1={p.x-6} y1={p.y-6} x2={p.x+6} y2={p.y+6} stroke="#3078B0" strokeWidth={2.5}/><line x1={p.x+6} y1={p.y-6} x2={p.x-6} y2={p.y+6} stroke="#3078B0" strokeWidth={2.5}/></g>)}
           </svg>
         </div>
         <div className="flex-1">
@@ -92,13 +92,13 @@ export default function PoleZeroUnitCircle() {
               <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
               <XAxis dataKey="w" tick={{ fontSize: 9, fill: '#64748b' }} />
               <YAxis domain={[-40, 20]} tick={{ fontSize: 9, fill: '#64748b' }} />
-              <Line type="monotone" dataKey="mag" stroke="#FF6B35" dot={false} strokeWidth={2} isAnimationActive={false} />
+              <Line type="monotone" dataKey="mag" stroke="#3078B0" dot={false} strokeWidth={2} isAnimationActive={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2">
-        {[['Pole |z|', poleR, setPoleR, 0, 1.3, 0.01, '#FF6B35'], ['Pole θ°', poleTheta, setPoleTheta, 0, 180, 1, '#FF6B35'], ['Zero |z|', zeroR, setZeroR, 0, 1.2, 0.01, '#004E89'], ['Zero θ°', zeroTheta, setZeroTheta, 0, 180, 1, '#004E89']].map(([label, val, set, min, max, step, color]: any) => (
+        {[['Pole |z|', poleR, setPoleR, 0, 1.3, 0.01, '#3078B0'], ['Pole θ°', poleTheta, setPoleTheta, 0, 180, 1, '#3078B0'], ['Zero |z|', zeroR, setZeroR, 0, 1.2, 0.01, '#1B2F5A'], ['Zero θ°', zeroTheta, setZeroTheta, 0, 180, 1, '#1B2F5A']].map(([label, val, set, min, max, step, color]: any) => (
           <div key={label} className="bg-slate-800 rounded-lg p-2 flex flex-col gap-1">
             <p className="text-[9px] text-slate-500 uppercase">{label}</p>
             <input type="range" min={min} max={max} step={step} value={val} onChange={e => set(parseFloat(e.target.value))} style={{ accentColor: color }} className="w-full" />

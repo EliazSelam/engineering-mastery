@@ -63,7 +63,7 @@ export default function WindowingSimulation() {
               <input 
                 type="range" min={1} max={15} step={0.1} 
                 value={signalFreq} onChange={(e) => setSignalFreq(parseFloat(e.target.value))}
-                className="accent-[#FF6B35] w-32"
+                className="accent-[#3078B0] w-32"
               />
             </div>
           </div>
@@ -84,8 +84,8 @@ export default function WindowingSimulation() {
             <YAxis domain={[-70, 10]} tick={{ fontSize: 9, fill: '#64748b' }} />
             <Tooltip contentStyle={{ background: '#0f172a', border: '1px solid #334155', fontSize: '10px' }} />
             <Legend wrapperStyle={{ fontSize: 10 }} />
-            <Line type="monotone" dataKey="Rectangular" stroke="#FF6B35" dot={false} strokeWidth={2} isAnimationActive={false} />
-            <Line type="monotone" dataKey="Hamming" stroke="#004E89" dot={false} strokeWidth={2} isAnimationActive={false} />
+            <Line type="monotone" dataKey="Rectangular" stroke="#3078B0" dot={false} strokeWidth={2} isAnimationActive={false} />
+            <Line type="monotone" dataKey="Hamming" stroke="#1B2F5A" dot={false} strokeWidth={2} isAnimationActive={false} />
             <Line type="monotone" dataKey="Hann" stroke="#10b981" dot={false} strokeWidth={2} isAnimationActive={false} />
           </LineChart>
         </ResponsiveContainer>

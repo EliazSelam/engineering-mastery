@@ -92,7 +92,7 @@ export default function MRACSimulation() {
               <input 
                 type="range" min={0.01} max={2} step={0.05} 
                 value={gamma} onChange={(e) => setGamma(parseFloat(e.target.value))}
-                className="accent-[#FF6B35] w-32"
+                className="accent-[#3078B0] w-32"
               />
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function MRACSimulation() {
             <YAxis domain={[0, 1.2]} tick={{ fontSize: 9, fill: '#64748b' }} />
             <Legend verticalAlign="top" wrapperStyle={{ fontSize: 10 }} />
             <Line type="monotone" dataKey="refModel" stroke="#475569" strokeWidth={2} dot={false} name="Reference Model" />
-            <Line type="monotone" dataKey="actual" stroke="#FF6B35" strokeWidth={3} dot={false} name="Actual Plant" />
+            <Line type="monotone" dataKey="actual" stroke="#3078B0" strokeWidth={3} dot={false} name="Actual Plant" />
           </LineChart>
         </ResponsiveContainer>
       </div>

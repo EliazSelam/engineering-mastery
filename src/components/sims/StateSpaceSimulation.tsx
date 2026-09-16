@@ -211,13 +211,13 @@ export default function StateSpaceSimulation() {
                 <div className="space-y-2">
                   <div className="flex justify-between text-[10px] font-mono text-slate-400">
                     <span>Damping (Resist)</span>
-                    <span className="text-[#FF6B35]">{matrixA[1][1].toFixed(2)}</span>
+                    <span className="text-[#3078B0]">{matrixA[1][1].toFixed(2)}</span>
                   </div>
                   <input 
                     type="range" min="-2" max="2" step="0.1" 
                     value={matrixA[1][1]} 
                     onChange={e => setMatrixA(m => [[m[0][0], m[0][1]], [m[1][0], parseFloat(e.target.value)]])}
-                    className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-[#FF6B35]"
+                    className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-[#3078B0]"
                   />
                 </div>
               </div>

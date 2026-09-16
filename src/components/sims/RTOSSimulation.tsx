@@ -14,8 +14,8 @@ export default function RTOSSimulation() {
 
   const tasks = [
     { name: 'T1', period: 3, color: 'bg-emerald-500', label: 'Sensor' },
-    { name: 'T2', period: 5, color: 'bg-[#FF6B35]', label: 'Control' },
-    { name: 'T3', period: 7, color: 'bg-[#004E89]', label: 'Logs' },
+    { name: 'T2', period: 5, color: 'bg-[#3078B0]', label: 'Control' },
+    { name: 'T3', period: 7, color: 'bg-[#1B2F5A]', label: 'Logs' },
   ];
 
   const grid = useMemo(() => {
@@ -52,7 +52,7 @@ export default function RTOSSimulation() {
               <input 
                 type="range" min={10} max={30} step={1} 
                 value={ticks} onChange={(e) => setTicks(parseInt(e.target.value))}
-                className="accent-[#FF6B35] w-32"
+                className="accent-[#3078B0] w-32"
               />
             </div>
           </div>
@@ -103,7 +103,7 @@ export default function RTOSSimulation() {
            <span className="text-[9px] text-slate-400 font-black uppercase tracking-tighter">Utilization: {Math.round((grid.flat().filter(v => v).length / (ticks * 1)) * 100)}%</span>
         </div>
         <div className="bg-slate-800 p-2 rounded-xl flex items-center justify-center gap-2 border border-slate-700">
-           <div className="w-2 h-2 rounded-full bg-[#FF6B35]" />
+           <div className="w-2 h-2 rounded-full bg-[#3078B0]" />
            <span className="text-[9px] text-slate-400 font-black uppercase tracking-tighter">Preemption: ACTIVE</span>
         </div>
       </div>

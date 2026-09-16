@@ -93,7 +93,7 @@ export default function KalmanSimulation() {
       {
         label: 'Kalman Estimate',
         data: data.map(d => d.estimate),
-        borderColor: '#FF6B35',
+        borderColor: '#3078B0',
         borderWidth: 3,
         pointRadius: 0,
         tension: 0.1,
@@ -113,7 +113,7 @@ export default function KalmanSimulation() {
         </p>
       </div>
 
-      <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700 mb-6 italic text-sm text-[#FF6B35]">
+      <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700 mb-6 italic text-sm text-[#3078B0]">
         {getTakeaway()}
       </div>
 

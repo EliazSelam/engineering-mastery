@@ -43,7 +43,7 @@ export default function SpectrogramSimulation() {
               <input 
                 type="range" min={1} max={10} step={1} 
                 value={freq} onChange={(e) => setFreq(parseInt(e.target.value))}
-                className="accent-[#FF6B35] w-32"
+                className="accent-[#3078B0] w-32"
               />
             </div>
           </div>
@@ -82,7 +82,7 @@ export default function SpectrogramSimulation() {
       </div>
 
       <div className="bg-slate-800 p-3 rounded-xl border border-slate-700 flex items-center gap-4">
-         <div className="w-full h-2 bg-gradient-to-r from-slate-900 to-[#FF6B35] rounded-full" />
+         <div className="w-full h-2 bg-gradient-to-r from-slate-900 to-[#3078B0] rounded-full" />
          <div className="flex justify-between w-24 text-[8px] text-slate-500 font-black uppercase shrink-0">
             <span>Low Power</span>
             <span>Max</span>

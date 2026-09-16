@@ -75,9 +75,9 @@ export default function BodePlotSimulation() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                     <XAxis dataKey="w" type="number" scale="log" domain={[0.1, 100]} hide />
                     <YAxis domain={[-40, 40]} tick={{ fontSize: 9, fill: '#64748b' }} />
-                    <ReferenceLine x={wc} stroke="#FF6B35" strokeDasharray="3 3" label={{ value: 'ωn', fill: '#FF6B35', fontSize: 10, position: 'top' }} />
+                    <ReferenceLine x={wc} stroke="#3078B0" strokeDasharray="3 3" label={{ value: 'ωn', fill: '#3078B0', fontSize: 10, position: 'top' }} />
                     <ReferenceLine x={sweepFreq} stroke="#10b981" strokeWidth={2} />
-                    <Line type="monotone" dataKey="mag" stroke="#004E89" strokeWidth={3} dot={false} isAnimationActive={false} />
+                    <Line type="monotone" dataKey="mag" stroke="#1B2F5A" strokeWidth={3} dot={false} isAnimationActive={false} />
                  </LineChart>
               </ResponsiveContainer>
            </div>
@@ -91,9 +91,9 @@ export default function BodePlotSimulation() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                     <XAxis dataKey="w" type="number" scale="log" domain={[0.1, 100]} tick={{ fontSize: 9, fill: '#64748b' }} label={{ value: 'ω (rad/s)', position: 'insideBottom', offset: -5, fontSize: 9, fill: '#64748b' }} />
                     <YAxis domain={[-180, 0]} ticks={[-180, -90, 0]} tick={{ fontSize: 9, fill: '#64748b' }} />
-                    <ReferenceLine x={wc} stroke="#FF6B35" strokeDasharray="3 3" />
+                    <ReferenceLine x={wc} stroke="#3078B0" strokeDasharray="3 3" />
                     <ReferenceLine x={sweepFreq} stroke="#10b981" strokeWidth={2} />
-                    <Line type="monotone" dataKey="phase" stroke="#004E89" strokeWidth={3} dot={false} isAnimationActive={false} />
+                    <Line type="monotone" dataKey="phase" stroke="#1B2F5A" strokeWidth={3} dot={false} isAnimationActive={false} />
                  </LineChart>
               </ResponsiveContainer>
            </div>
@@ -105,9 +105,9 @@ export default function BodePlotSimulation() {
               <div className="space-y-4">
                  <div className="flex justify-between items-center text-[10px] uppercase font-black text-slate-500">
                     <span>Damping (ζ)</span>
-                    <span className="text-[#F7B801]">{zeta.toFixed(2)}</span>
+                    <span className="text-[#7B5A3C]">{zeta.toFixed(2)}</span>
                  </div>
-                 <input type="range" min="0.05" max="1.5" step="0.05" value={zeta} onChange={e => setZeta(parseFloat(e.target.value))} className="w-full h-1 appearance-none bg-slate-800 rounded-full accent-[#F7B801]" />
+                 <input type="range" min="0.05" max="1.5" step="0.05" value={zeta} onChange={e => setZeta(parseFloat(e.target.value))} className="w-full h-1 appearance-none bg-slate-800 rounded-full accent-[#7B5A3C]" />
                  <div className="flex justify-between text-[8px] text-slate-600 mt-2">
                     <span>Underdamped</span>
                     <span>Overdamped</span>

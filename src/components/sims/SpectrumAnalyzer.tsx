@@ -3,9 +3,9 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { RotateCcw } from 'lucide-react';
 
 const FREQS = [
-  { hz: 100, label: '100 Hz', color: '#FF6B35' },
-  { hz: 500, label: '500 Hz', color: '#004E89' },
-  { hz: 1000, label: '1 kHz', color: '#F7B801' },
+  { hz: 100, label: '100 Hz', color: '#3078B0' },
+  { hz: 500, label: '500 Hz', color: '#1B2F5A' },
+  { hz: 1000, label: '1 kHz', color: '#7B5A3C' },
   { hz: 3000, label: '3 kHz', color: '#10b981' }
 ];
 const FS = 8000;
@@ -121,7 +121,7 @@ export default function SpectrumAnalyzer() {
               <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
               <XAxis dataKey="t" tick={{ fontSize: 9, fill: '#64748b' }} />
               <YAxis domain={[-1.2, 1.2]} tick={{ fontSize: 9, fill: '#64748b' }} />
-              <Line type="monotone" dataKey="y" stroke="#FF6B35" dot={false} strokeWidth={1.5} isAnimationActive={false} />
+              <Line type="monotone" dataKey="y" stroke="#3078B0" dot={false} strokeWidth={1.5} isAnimationActive={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -132,7 +132,7 @@ export default function SpectrumAnalyzer() {
               <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
               <XAxis dataKey="f" tick={{ fontSize: 8, fill: '#64748b' }} />
               <YAxis domain={[0, 1]} tick={{ fontSize: 9, fill: '#64748b' }} />
-              <Bar dataKey="mag" fill="#004E89" radius={[2,2,0,0]} isAnimationActive={false} />
+              <Bar dataKey="mag" fill="#1B2F5A" radius={[2,2,0,0]} isAnimationActive={false} />
             </BarChart>
           </ResponsiveContainer>
         </div>

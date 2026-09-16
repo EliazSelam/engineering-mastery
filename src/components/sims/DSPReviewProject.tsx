@@ -73,8 +73,8 @@ export default function DSPReviewProject() {
                   onChange={() => setSignalType(s)}
                   className="hidden"
                 />
-                <div className={`w-3 h-3 rounded-full border-2 flex items-center justify-center transition-all ${signalType === s ? 'border-[#004E89]' : 'border-slate-700'}`}>
-                  {signalType === s && <div className="w-1.5 h-1.5 rounded-full bg-[#004E89]" />}
+                <div className={`w-3 h-3 rounded-full border-2 flex items-center justify-center transition-all ${signalType === s ? 'border-[#1B2F5A]' : 'border-slate-700'}`}>
+                  {signalType === s && <div className="w-1.5 h-1.5 rounded-full bg-[#1B2F5A]" />}
                 </div>
                 <span className={`text-[10px] font-bold ${signalType === s ? 'text-white' : 'text-slate-500'}`}>{s}</span>
               </label>
@@ -93,8 +93,8 @@ export default function DSPReviewProject() {
                   onChange={() => setFilterType(f)}
                   className="hidden"
                 />
-                <div className={`w-3 h-3 rounded-full border-2 flex items-center justify-center transition-all ${filterType === f ? 'border-[#FF6B35]' : 'border-slate-700'}`}>
-                  {filterType === f && <div className="w-1.5 h-1.5 rounded-full bg-[#FF6B35]" />}
+                <div className={`w-3 h-3 rounded-full border-2 flex items-center justify-center transition-all ${filterType === f ? 'border-[#3078B0]' : 'border-slate-700'}`}>
+                  {filterType === f && <div className="w-1.5 h-1.5 rounded-full bg-[#3078B0]" />}
                 </div>
                 <span className={`text-[10px] font-bold ${filterType === f ? 'text-white' : 'text-slate-500'}`}>{f}</span>
               </label>
@@ -111,7 +111,7 @@ export default function DSPReviewProject() {
             <YAxis domain={[-1.5, 1.5]} tick={{ fontSize: 9, fill: '#64748b' }} />
             <Legend wrapperStyle={{ fontSize: 10 }} />
             <Line type="monotone" dataKey="raw" stroke="#475569" strokeDasharray="3 3" dot={false} name="Original + Noise" isAnimationActive={false} />
-            <Line type="monotone" dataKey="filtered" stroke="#FF6B35" dot={false} strokeWidth={2} name="Filtered Output" isAnimationActive={false} />
+            <Line type="monotone" dataKey="filtered" stroke="#3078B0" dot={false} strokeWidth={2} name="Filtered Output" isAnimationActive={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>
