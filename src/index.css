@@ -9,6 +9,30 @@
 */
 
 @theme {
+  /* ───── Color utilities (Tailwind v4 — generates bg-*/text-*/etc.) ── */
+  /* Approved palette — NO coral #FF6B35, NO gold #F7B801               */
+  --color-primary:   #3078B0;   /* medium blue  */
+  --color-secondary: #1B2F5A;   /* deep navy    */
+  --color-accent:    #7B5A3C;   /* warm brown   */
+  --color-coral:     #3078B0;   /* → medium blue (replaces forbidden orange) */
+  --color-deep-blue: #1B2F5A;   /* → deep navy  */
+  --color-gold:      #7B5A3C;   /* → warm brown (replaces forbidden gold)    */
+  --color-charcoal:  #4A4540;   /* dark charcoal */
+  --color-cream:     #EEE9E0;   /* warm cream   */
+  --color-light-blue:#D6E8F7;   /* light blue   */
+  /* Ink scale */
+  --color-ink-50:  #FAFAFA;
+  --color-ink-100: #F2F2F2;
+  --color-ink-200: #E8E8E8;
+  --color-ink-300: #D6D6D6;
+  --color-ink-400: #BDBDBD;
+  --color-ink-500: #9E9E9E;
+  --color-ink-600: #808080;
+  --color-ink-700: #616161;
+  --color-ink-800: #474747;
+  --color-ink-900: #2E2E2E;
+  --color-ink-950: #171717;
+
   /* ───── Type stack ──────────────────────────────────────────── */
   --font-sans: "Open Sans", "Heebo", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
@@ -66,35 +90,35 @@ Coral = Energy accent (streak flame, highlights only)
 Gold  = Insights / KPI
 */
 :root {
-  /* ── Coral — Energy accent (streak, highlights — NOT primary) */
-  --coral:              14 100% 60%;   /* #FF6B35 */
-  --coral-soft:         16  95% 95%;   /* #FFF1EB */
-  --coral-hover:        14  90% 51%;   /* #E85A24 */
-  --coral-dark:         13  80% 44%;   /* #C44B1E */
-  --coral-ink:          13  75% 28%;   /* #7A2810 */
+  /* ── Coral alias → medium blue (approved replacement for forbidden #FF6B35) */
+  --coral:              210  61% 44%;  /* #3078B0 medium blue */
+  --coral-soft:         210  50% 95%;  /* light blue tint */
+  --coral-hover:        210  61% 36%;  /* darker medium blue */
+  --coral-dark:         224  53% 28%;  /* deep blue */
+  --coral-ink:          224  53% 22%;  /* deep navy #1B2F5A */
 
   /* ── Technical Blue — Primary (CTA, buttons, links, progress) */
   --blue:               221 83% 53%;   /* #2563EB */
   --blue-soft:          221 90% 95%;   /* Blue-50  */
   --blue-hover:         220 72% 46%;   /* #1D4ED8  */
   --blue-ink:           221 68% 35%;   /* Blue-700 */
-  --blue-dark:          209 100% 27%;  /* #004E89 Dark Blue */
+  --blue-dark:          224  53% 22%;  /* #1B2F5A deep navy */
 
   --color-primary:      var(--blue);
   --color-primary-soft: var(--blue-soft);
   --color-primary-hover:var(--blue-hover);
   --color-primary-ink:  var(--blue-ink);
 
-  /* ── Dark Blue — Structure / Context / Navigation ────────── */
-  --color-secondary:    209 100% 27%;  /* #004E89 */
-  --color-secondary-soft: 210 60% 94%;
-  --color-secondary-ink:  211 100% 10%;
+  /* ── Deep Navy — Structure / Context / Navigation ─────────── */
+  --color-secondary:    224  53% 22%;  /* #1B2F5A deep navy */
+  --color-secondary-soft: 224  40% 94%;
+  --color-secondary-ink:  224  60% 10%;
 
-  /* ── Gold — Insights / KPI / Highlights ─────────────────── */
-  --gold:               43  93% 49%;   /* #F7B801 */
-  --gold-soft:          44  95% 94%;   /* #FEF8E6 */
-  --gold-hover:         43  90% 41%;   /* #D9A001 */
-  --gold-ink:           40  82% 28%;   /* #835E00 */
+  /* ── Gold alias → warm brown (approved replacement for forbidden #F7B801) */
+  --gold:               28  36% 35%;   /* #7B5A3C warm brown */
+  --gold-soft:          28  30% 94%;   /* warm brown tint */
+  --gold-hover:         28  36% 28%;   /* darker brown */
+  --gold-ink:           28  36% 18%;   /* deep brown */
 
   --color-accent:       var(--gold);
   --color-accent-soft:  var(--gold-soft);

@@ -26,7 +26,7 @@ export default defineConfig(({mode}) => {
         manifest: {
           name: 'Engineering Mastery',
           short_name: 'EngMastery',
-          theme_color: '#FF6B35',
+          theme_color: '#3078B0',
           background_color: '#ffffff',
           display: 'standalone',
           start_url: '/',

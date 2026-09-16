@@ -84,7 +84,10 @@ export default function App() {
   };
 
   const streak     = progress.streak;
-  const currentDay = Math.min(Math.max(1, ...progress.completedDays, 0) + 1, 30);
+  // Fix: empty completedDays → day 1 (old formula gave 2 for new users)
+  const currentDay = progress.completedDays.length === 0
+    ? 1
+    : Math.min(Math.max(...progress.completedDays) + 1, 30);
 
   // ── Reminder notification check ───────────────────────────────
   useEffect(() => {
@@ -131,7 +134,7 @@ export default function App() {
 
       {/* ── Admin badge — visible only in admin mode ───────────── */}
       {isAdmin && (
-        <div className="fixed top-2 left-2 z-[999] bg-[hsl(var(--coral))] text-white text-[10px] font-bold px-2 py-1 rounded-full opacity-80">
+        <div className="fixed top-2 left-2 z-[999] bg-[hsl(var(--blue))] text-white text-[10px] font-bold px-2 py-1 rounded-full opacity-80">
           ADMIN
         </div>
       )}
@@ -147,6 +150,7 @@ export default function App() {
                 streak={streak}
                 currentDay={currentDay}
                 onAdvanceDay={() => handleDayComplete(currentDay, 1)}
+                isAdmin={isAdmin}
               />
             </PageTransition>
           </Route>

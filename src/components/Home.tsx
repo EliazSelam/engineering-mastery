@@ -30,9 +30,10 @@ interface HomeProps {
   streak: number;
   currentDay: number;
   onAdvanceDay: () => void;
+  isAdmin?: boolean;
 }
 
-export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: HomeProps) {
+export default function Home({ onNavigate, streak, currentDay, onAdvanceDay, isAdmin }: HomeProps) {
   const currentLesson = DAYS.find(l => l.day === currentDay) || DAYS[DAYS.length - 1];
   const completedCount = Math.max(0, currentDay - 1);
   const [showShare, setShowShare] = useState(false);
@@ -118,13 +119,13 @@ export default function Home({ onNavigate, streak, currentDay, onAdvanceDay }: H
                   שתף התקדמות
                 </Button>
               )}
-              {import.meta.env.DEV && (
+              {(import.meta.env.DEV || isAdmin) && (
                 <button
                   onClick={onAdvanceDay}
                   className="h-12 px-4 text-[13px] text-[hsl(var(--color-text-faint))] hover:text-[hsl(var(--color-primary-ink))] transition-colors flex items-center gap-1.5"
                 >
                   <Zap size={14} />
-                  דלג ליום הבא (dev)
+                  דלג ליום הבא
                 </button>
               )}
             </div>

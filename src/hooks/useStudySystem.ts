@@ -79,8 +79,9 @@ export function useStudySystem() {
       
       let newStreak = prev.streak;
       if (lastActiveDate === yesterdayDate) {
-        newStreak += 1;
-      } else if (lastActiveDate !== todayDate) {
+        newStreak = prev.streak + 1;
+      } else if (lastActiveDate !== todayDate || prev.streak === 0) {
+        // Also fires on first-ever completion (streak === 0) even when lastActive===today
         newStreak = 1;
       }
 
