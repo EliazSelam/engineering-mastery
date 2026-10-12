@@ -513,7 +513,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
                    <motion.div 
                      animate={{ width: ['0%', '100%'] }} 
                      transition={{ duration: 2, repeat: Infinity, delay: 0.8, ease: "easeInOut" }} 
-                     className="h-full bg-deep-blue rounded-full shadow-[0_0_12px_#004E89]" 
+                     className="h-full bg-deep-blue rounded-full shadow-[0_0_12px_#1B2F5A]"
                    />
                 </div>
                 <div className="absolute -right-3 top-1/2 -translate-y-1/2 p-2 bg-deep-blue rounded-full border-2 border-white shadow-lg text-white">
@@ -606,7 +606,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
                  {[20, 30, 40].map(y => (
                    <path key={y} d={`M 0 ${50-y/2} Q 100 ${110-y/2} 200 ${50-y/2}`} fill="none" stroke="#64748b" strokeWidth="0.5" opacity="0.1" />
                  ))}
-                 <path d="M 0 50 Q 100 110 200 50" fill="none" stroke="#004E89" strokeWidth="2" strokeDasharray="4 2" opacity="0.3" />
+                 <path d="M 0 50 Q 100 110 200 50" fill="none" stroke="#1B2F5A" strokeWidth="2" strokeDasharray="4 2" opacity="0.3" />
                  
                  {/* The "Ball" illustrating gradient descent */}
                  <motion.circle 
@@ -958,8 +958,8 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
     <div className="bg-slate-50 aspect-video rounded-3xl p-8 text-slate-900 border-4 border-slate-200 relative overflow-hidden shadow-sm">
       <div className="absolute inset-0 bg-grid-slate-900/[0.03]" />
       <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
-        <path d="M 0 100 Q 50 40 100 100 T 200 100 T 300 100 T 400 100" 
-              stroke="#004E89" strokeWidth="2" fill="none" opacity="0.15"/>
+        <path d="M 0 100 Q 50 40 100 100 T 200 100 T 300 100 T 400 100"
+              stroke="#1B2F5A" strokeWidth="2" fill="none" opacity="0.15"/>
       </svg>
       <div className="absolute inset-0 flex items-center justify-around px-12 z-10">
         {[0,1,2,3,4,5,6,7].map(i => (
@@ -1202,7 +1202,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
       <div className="z-10 flex flex-col items-center gap-2 w-full max-w-sm">
         <motion.div 
           whileHover={{ y: -4 }}
-          className="w-full p-4 bg-gradient-to-br from-[#004E89] to-[#002D50] border-2 border-white/20 rounded-3xl flex items-center justify-between shadow-2xl relative overflow-hidden"
+          className="w-full p-4 bg-gradient-to-br from-[#1B2F5A] to-[#0F1E3A] border-2 border-white/20 rounded-3xl flex items-center justify-between shadow-2xl relative overflow-hidden"
         >
            <div className="absolute inset-0 bg-white/5 skew-x-12 translate-x-12" />
            <Cpu size={20} className="text-white relative z-10" />

@@ -35,7 +35,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 border-b border-slate-200/70 bg-white',
+        'sticky top-0 z-50 border-b border-[hsl(var(--color-border)/0.7)] bg-[hsl(var(--color-surface))]',
         'h-14 sm:h-16',
         className
       )}
@@ -56,7 +56,7 @@ export const TopNav: React.FC<TopNavProps> = ({
             style={{ width: '32px', height: '32px', objectFit: 'contain', display: 'block' }}
             draggable={false}
           />
-          <span className="hidden md:inline text-base font-bold tracking-tight text-slate-900">
+          <span className="hidden md:inline text-base font-bold tracking-tight text-[hsl(var(--color-text))]">
             Engineering Mastery
           </span>
         </button>
@@ -73,7 +73,7 @@ export const TopNav: React.FC<TopNavProps> = ({
                   'px-4 py-2 rounded-lg text-sm font-semibold transition-colors',
                   active
                     ? 'bg-[hsl(var(--color-primary-soft))] text-[hsl(var(--color-primary))]'
-                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                    : 'text-[hsl(var(--ink-600))] hover:bg-[hsl(var(--ink-100))] hover:text-[hsl(var(--ink-900))]'
                 )}
               >
                 {label}
@@ -89,7 +89,7 @@ export const TopNav: React.FC<TopNavProps> = ({
           {!isHome && (
             <button
               onClick={() => setLocation('/')}
-              className="md:hidden flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-slate-600 hover:bg-slate-100 transition-colors"
+              className="md:hidden flex items-center gap-1.5 rounded-full border border-[hsl(var(--color-border))] bg-[hsl(var(--color-bg))] px-3 py-1.5 text-[hsl(var(--ink-600))] hover:bg-[hsl(var(--ink-100))] transition-colors"
               aria-label="חזור לדף הבית"
             >
               <ChevronLeft className="h-4 w-4 shrink-0" />
@@ -105,15 +105,15 @@ export const TopNav: React.FC<TopNavProps> = ({
             !isHome && 'hidden md:flex'
           )}>
             {streak !== undefined && (
-              <div className="flex h-8 items-center gap-1 rounded-full border border-orange-200 bg-orange-50 px-3 text-orange-700">
+              <div className="flex h-8 items-center gap-1 rounded-full border border-[hsl(var(--color-accent)/0.3)] bg-[hsl(var(--color-accent-soft))] px-3 text-[hsl(var(--color-accent))]">
                 <span className="text-xs font-bold">{streak}</span>
                 <Flame className="h-3 w-3" />
               </div>
             )}
             {currentDay !== undefined && (
-              <div className="flex h-8 items-center gap-1 rounded-full border border-slate-300 bg-slate-100 px-3 text-slate-800">
+              <div className="flex h-8 items-center gap-1 rounded-full border border-[hsl(var(--ink-300))] bg-[hsl(var(--ink-100))] px-3 text-[hsl(var(--ink-800))]">
                 <span className="text-xs font-bold">{currentDay}/30</span>
-                <span className="text-[8px] font-bold tracking-[0.18em] text-slate-500 hidden sm:inline">DAY</span>
+                <span className="text-[8px] font-bold tracking-[0.18em] text-[hsl(var(--ink-500))] hidden sm:inline">DAY</span>
               </div>
             )}
             {trailing}
@@ -124,7 +124,7 @@ export const TopNav: React.FC<TopNavProps> = ({
 
       {/* Progress bar */}
       {progress && progress.total > 0 && (
-        <div className="h-[3px] bg-slate-100">
+        <div className="h-[3px] bg-[hsl(var(--ink-100))]">
           <div
             className="h-full bg-[hsl(var(--color-primary))] transition-[width] duration-500"
             style={{ width: `${Math.min(100, (progress.current / progress.total) * 100)}%` }}

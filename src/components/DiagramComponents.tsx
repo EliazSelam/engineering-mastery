@@ -1,6 +1,6 @@
 // DiagramComponents.tsx — All 29 theory diagrams for DayPage
 // Each component is a self-contained SVG diagram illustrating the day's key concept.
-// Brand: Primary #FF6B35 | Secondary #004E89 | Accent #F7B801 | Bg #F8FAFC
+// Brand: Primary #3078B0 | Secondary #1B2F5A | Accent #7B5A3C | Bg #F8FAFC
 
 import React from 'react';
 

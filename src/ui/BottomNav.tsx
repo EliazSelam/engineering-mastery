@@ -22,7 +22,7 @@ export const BottomNav: React.FC = () => {
 
   return (
     <nav
-      className="fixed bottom-0 inset-x-0 z-50 md:hidden bg-white border-t border-slate-200/80"
+      className="fixed bottom-0 inset-x-0 z-50 md:hidden bg-[hsl(var(--color-surface))] border-t border-[hsl(var(--color-border)/0.8)]"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       dir="rtl"
     >
@@ -37,7 +37,7 @@ export const BottomNav: React.FC = () => {
                 'relative flex flex-1 flex-col items-center justify-center gap-[3px] transition-colors',
                 active
                   ? 'text-[hsl(var(--color-primary))]'
-                  : 'text-slate-400 hover:text-slate-600'
+                  : 'text-[hsl(var(--ink-400))] hover:text-[hsl(var(--ink-600))]'
               )}
             >
               <Icon

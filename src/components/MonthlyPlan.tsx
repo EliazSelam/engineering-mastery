@@ -15,8 +15,8 @@ const PLAN = [
   { day: 6, title: 'מרחב המצב (State Space)', category: 'בקרה', emoji: '🏗️' },
   { day: 7, title: 'סיכום שבועי ופרויקט בקרה', category: 'בקרה', emoji: '🧪' },
   { day: 8, title: 'כוונון זיגלר-ניקולס', category: 'בקרה', emoji: '⚡' },
-  { day: 9, title: 'מנועי BLDC וקומוטציה', category: 'מנועים', emoji: '🔊' },
-  { day: 10, title: 'בקרת וקטור (FOC)', category: 'מנועים', emoji: '🌊' },
+  { day: 9, title: 'מנועי BLDC וקומוטציה', category: 'הניע חשמלי', emoji: '🔊' },
+  { day: 10, title: 'בקרת וקטור (FOC)', category: 'הניע חשמלי', emoji: '🌊' },
   { day: 11, title: 'קינמטיקה רובוטית', category: 'רובוטיקה', emoji: '🔬' },
   { day: 12, title: 'רובוטיקה: דינמיקה', category: 'רובוטיקה', emoji: '🎵' },
   { day: 13, title: 'רובוטיקה: תכנון מסלול', category: 'רובוטיקה', emoji: '🗜️' },
@@ -76,7 +76,7 @@ function WeekRing({ progress }: { progress: number }) {
 }
 
 export default function MonthlyPlan({ currentDay, onNavigateDay }: MonthlyPlanProps) {
-  /* Split the 30-day plan into 4 weeks of 7 days (the last week has 9 days) */
+  /* Split the 30-day plan into 4 weeks (last week has 9 days) */
   const weeks = [
     PLAN.slice(0, 7),
     PLAN.slice(7, 14),
@@ -86,12 +86,17 @@ export default function MonthlyPlan({ currentDay, onNavigateDay }: MonthlyPlanPr
 
   const totalDone = Math.max(0, currentDay - 1);
 
+  /* Compute the month the program started from current progress */
+  const programStart = new Date();
+  programStart.setDate(programStart.getDate() - (currentDay - 1));
+  const startLabel = programStart.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+
   return (
     <div className="flex flex-col gap-12">
       {/* Monthly overview strip */}
       <div className="grid grid-cols-12 gap-6 items-end pb-8 border-b border-[hsl(var(--color-border))]">
         <div className="col-span-12 md:col-span-8">
-          <Eyebrow className="mb-3">April 2026 · 30-Day Program</Eyebrow>
+          <Eyebrow className="mb-3">{startLabel} · 30-Day Program</Eyebrow>
           <h2 className="font-display text-[2.5rem] leading-[1.05] tracking-tight text-[hsl(var(--ink-900))]">
             ארבעה שבועות. <span className="italic text-[hsl(var(--color-primary))]">מסלול אחד.</span>
           </h2>

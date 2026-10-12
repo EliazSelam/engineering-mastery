@@ -157,8 +157,8 @@ export default function LessonShell({ dayContent, onComplete, streak, onPrevDay,
               <button
                 onClick={() => {
                   const questions = dayContent.sections.challenge.questions;
-                  const answeredCount = completed.filter(id => id.startsWith('q')).length;
-                  const score = questions.length > 0 ? answeredCount / questions.length : 1;
+                  const correctCount = completed.filter(id => id.startsWith('q')).length;
+                  const score = questions.length > 0 ? correctCount / questions.length : 1;
                   markComplete('summary');
                   onComplete(score);
                 }}
