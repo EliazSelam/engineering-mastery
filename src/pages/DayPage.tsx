@@ -237,7 +237,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
          <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] opacity-100" />
          <div className="w-64 h-64 border border-slate-100 rounded-full flex items-center justify-center relative bg-white/20">
             {/* Axis */}
-            <div className="absolute w-full h-px bg-slate-200" />
+            <div className="absolute w-full h-px bg-[hsl(var(--color-border))]" />
             <div className="absolute h-full w-px bg-slate-200" />
             
             {/* Grid Circles */}
@@ -274,7 +274,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
          </div>
          <div className="absolute top-4 right-4 text-[8px] font-mono text-slate-400 font-black flex flex-col items-end">
             <span>Im(s) jω</span>
-            <div className="w-10 h-px bg-slate-200 mt-1" />
+            <div className="w-10 h-px bg-[hsl(var(--color-border))] mt-1" />
          </div>
       </div>
     );
@@ -313,7 +313,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
            </div>
         </div>
 
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-white/90 backdrop-blur-md px-6 py-2 rounded-2xl border border-slate-200 z-20 shadow-2xl">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-white/90 backdrop-blur-md px-6 py-2 rounded-2xl border border-[hsl(var(--color-border))] z-20 shadow-2xl">
            <div className="flex flex-col items-center">
              <span className="text-[7px] font-mono text-slate-400 uppercase font-black">Frequency ω</span>
              <div className="flex items-center gap-3">
@@ -345,7 +345,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
               <div className="absolute -top-6 text-[8px] font-mono text-coral font-black bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded border border-coral/20 shadow-sm pointer-events-none">(-1, 0j)</div>
            </div>
            
-           <div className="absolute inset-x-0 h-px bg-slate-200" />
+           <div className="absolute inset-x-0 h-px bg-[hsl(var(--color-border))]" />
            <div className="absolute inset-y-0 h-full w-px bg-slate-200" />
            
            <motion.div 
@@ -359,7 +359,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
         </div>
         
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
-           <div className="flex items-center gap-4 bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-slate-200 shadow-2xl">
+           <div className="flex items-center gap-4 bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-[hsl(var(--color-border))] shadow-2xl">
               <div className="flex flex-col">
                 <span className="text-[7px] font-mono text-slate-400 uppercase font-black tracking-widest pl-1">Loop Gain K</span>
                 <div className="flex items-center gap-4">
@@ -422,7 +422,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
         </div>
         
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5">
-           <div className="text-center font-mono text-[9px] text-slate-500 uppercase tracking-widest relative z-10 font-black bg-white/90 backdrop-blur-md px-6 py-1.5 rounded-full border border-slate-200 shadow-xl">
+           <div className="text-center font-mono text-[9px] text-slate-500 uppercase tracking-widest relative z-10 font-black bg-white/90 backdrop-blur-md px-6 py-1.5 rounded-full border border-[hsl(var(--color-border))] shadow-xl">
              {isHovered ? 'Active Signal Propagation' : 'Linear State Representation'}
            </div>
            <code className="text-xs text-deep-blue font-black bg-white/40 px-3 py-0.5 rounded border border-white/50">ẋ(t) = Ax(t) + Bu(t)</code>
@@ -448,7 +448,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
       <div className="bg-slate-50 aspect-video rounded-3xl p-8 flex items-center justify-center text-slate-900 border-4 border-slate-200 relative overflow-hidden group shadow-sm">
         <div className="absolute inset-0 bg-grid-slate-900/5 opacity-5" />
         <div className="flex flex-col gap-8 w-full max-w-md relative z-10">
-          <div className="flex justify-between items-center h-28 relative px-8 border border-slate-200 bg-white/40 rounded-2xl shadow-inner overflow-hidden">
+          <div className="flex justify-between items-center h-28 relative px-8 border border-[hsl(var(--color-border))] bg-white/40 rounded-2xl shadow-inner overflow-hidden">
              <div className="absolute inset-x-0 h-px bg-slate-100 top-1/2 -translate-y-1/2" />
              <div className="flex flex-col items-center relative z-10">
                 <div className="text-[10px] font-black text-slate-400 mb-2 uppercase tracking-tighter">Estimator</div>
@@ -494,7 +494,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
         <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-coral via-slate-100 to-deep-blue opacity-40" />
         <div className="flex flex-col gap-10 w-full max-w-sm relative z-10">
           <div className="flex items-center gap-6">
-             <div className="flex-1 p-4 bg-white border border-slate-200 rounded-2xl relative shadow-xl">
+             <div className="flex-1 p-4 bg-white border border-[hsl(var(--color-border))] rounded-2xl relative shadow-xl">
                 <div className="text-[10px] font-black text-slate-500 uppercase tracking-tight mb-2">Model Inversion</div>
                 <div className="h-1.5 bg-coral/10 rounded-full w-full">
                    <motion.div 
@@ -507,7 +507,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
                   <Zap size={10} />
                 </div>
              </div>
-             <div className="flex-1 p-4 bg-white border border-slate-200 rounded-2xl relative shadow-xl">
+             <div className="flex-1 p-4 bg-white border border-[hsl(var(--color-border))] rounded-2xl relative shadow-xl">
                 <div className="text-[10px] font-black text-slate-500 uppercase tracking-tight mb-2">Error Correction</div>
                 <div className="h-1.5 bg-deep-blue/10 rounded-full w-full">
                    <motion.div 
@@ -573,7 +573,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
                />
              );
            })}
-           <div className="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur-md border border-slate-200 shadow-xl rounded-lg text-[9px] font-black text-coral uppercase flex items-center gap-2">
+           <div className="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur-md border border-[hsl(var(--color-border))] shadow-xl rounded-lg text-[9px] font-black text-coral uppercase flex items-center gap-2">
              <div className="w-1.5 h-1.5 bg-coral rounded-full animate-pulse" />
              Resonant Peak @ 12.4 rad/s
            </div>
@@ -621,7 +621,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
               <div className="absolute top-2 right-2 text-[7px] font-mono text-slate-400 uppercase tracking-widest">Gradient ∇J</div>
            </div>
            
-           <div className="bg-white px-6 py-4 rounded-2xl border border-slate-200 shadow-2xl relative">
+           <div className="bg-white px-6 py-4 rounded-2xl border border-[hsl(var(--color-border))] shadow-2xl relative">
               <div className="absolute -top-2 -left-2 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center">
                 <Target size={8} className="text-white" />
               </div>
@@ -649,7 +649,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
            </div>
 
            <div className="flex flex-col items-center gap-2 flex-1">
-             <div className="w-full h-px bg-slate-200 border-t border-dashed relative">
+             <div className="w-full h-px bg-[hsl(var(--color-border))] border-t border-dashed relative">
                 <motion.div 
                    animate={{ x: ['0%', '100%'], opacity: [0, 1, 0] }}
                    transition={{ duration: 1.5, repeat: Infinity }}
@@ -673,7 +673,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
            </div>
         </div>
         
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-2 bg-white/90 backdrop-blur-md rounded-full border border-slate-200 shadow-2xl">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-2 bg-white/90 backdrop-blur-md rounded-full border border-[hsl(var(--color-border))] shadow-2xl">
            <div className="flex items-center gap-1.5 border-r border-slate-100 pr-4">
               <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm" />
               <span className="text-[8px] font-black text-slate-500 uppercase tracking-tight">Covariance Extrapolation (P)</span>
@@ -711,7 +711,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
               ))}
            </div>
            
-           <div className="flex justify-between items-center bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-slate-200 shadow-2xl">
+           <div className="flex justify-between items-center bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-[hsl(var(--color-border))] shadow-2xl">
               <div className="flex flex-col">
                  <div className="flex items-center gap-2">
                     <span className="text-[11px] font-black text-slate-700 uppercase tracking-tight">Receding Horizon Strategy</span>
@@ -849,7 +849,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
             ].map((task, i) => (
               <div key={i} className="flex items-center gap-4">
                  <span className="text-[8px] font-black text-slate-400 w-20 uppercase tracking-tighter">{task.label}</span>
-                 <div className="flex-1 h-6 bg-white rounded-xl relative overflow-hidden border border-slate-200 shadow-inner">
+                 <div className="flex-1 h-6 bg-white rounded-xl relative overflow-hidden border border-[hsl(var(--color-border))] shadow-inner">
                     <motion.div 
                       animate={{ left: ['0%', '80%', '0%'] }}
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
@@ -860,7 +860,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
                  </div>
               </div>
             ))}
-            <div className="h-px bg-slate-200 mt-4 relative">
+            <div className="h-px bg-[hsl(var(--color-border))] mt-4 relative">
                <div className="absolute top-0 left-0 text-[8px] font-mono text-slate-400 mt-2">t=0</div>
                <div className="absolute top-0 right-0 text-[8px] font-mono text-slate-400 mt-2 italic">Pre-emptive Tick</div>
             </div>
@@ -875,7 +875,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#f1f5f9_0%,transparent_80%)] opacity-100" />
          <div className="flex flex-col gap-12 w-full max-w-sm relative z-10">
             {[0, 1].map(q => (
-              <div key={q} className="h-px bg-slate-200 relative">
+              <div key={q} className="h-px bg-[hsl(var(--color-border))] relative">
                  <div className="absolute -left-12 -top-2 text-[10px] font-mono text-slate-400 font-black">|q{q}⟩</div>
                  <div className="flex absolute inset-0 items-center justify-around translate-y-[-50%] px-8">
                     <div className="w-8 h-8 bg-white border-2 border-emerald-500 rounded flex items-center justify-center text-xs font-black shadow-lg shadow-emerald-500/10">H</div>
@@ -903,7 +903,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
          <div className="grid grid-cols-2 gap-8 relative z-10 w-full max-w-sm">
             <motion.div 
                whileHover={{ y: -5 }}
-               className="p-5 bg-white rounded-3xl border border-slate-200 flex flex-col items-center gap-4 shadow-xl relative overflow-hidden"
+               className="p-5 bg-white rounded-3xl border border-[hsl(var(--color-border))] flex flex-col items-center gap-4 shadow-xl relative overflow-hidden"
             >
                <div className="absolute top-0 right-0 w-16 h-16 bg-emerald-50 -rotate-45 translate-x-8 -translate-y-8" />
                <div className="p-3 bg-emerald-500/10 rounded-2xl relative z-10">
@@ -917,7 +917,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
             
             <motion.div 
                whileHover={{ y: -5 }}
-               className="p-5 bg-white/90 backdrop-blur-md rounded-3xl border border-slate-200 flex flex-col items-center gap-4 shadow-xl relative overflow-hidden"
+               className="p-5 bg-white/90 backdrop-blur-md rounded-3xl border border-[hsl(var(--color-border))] flex flex-col items-center gap-4 shadow-xl relative overflow-hidden"
             >
                <div className="absolute top-0 right-0 w-16 h-16 bg-coral/5 -rotate-45 translate-x-8 -translate-y-8" />
                <div className="p-3 bg-coral/10 rounded-2xl relative z-10">
@@ -1050,7 +1050,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
           <div className="absolute inset-0 border border-deep-blue/10 rounded-full animate-pulse scale-[1.02]" />
           
           {/* Stability Boundary Marker */}
-          <div className="absolute -top-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-white border border-slate-200 rounded-md shadow-sm">
+          <div className="absolute -top-6 left-1/2 -translate-x-1/2 px-2 py-1 bg-white border border-[hsl(var(--color-border))] rounded-md shadow-sm">
              <span className="text-[8px] font-mono text-slate-400 uppercase font-black tracking-widest">Unit Circle |z|=1</span>
           </div>
 
@@ -1145,7 +1145,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
           );
         })}
         <div className="absolute top-0 w-full flex justify-between px-2">
-           <div className="p-1 bg-[#F7B801]/10 border border-[#F7B801]/30 rounded text-[8px] font-mono text-[#F7B801]">Bell Curve</div>
+           <div className="p-1 bg-[hsl(var(--color-accent)/0.1)] border border-[hsl(var(--color-accent)/0.3)] rounded text-[8px] font-mono text-[hsl(var(--color-accent))]">Bell Curve</div>
            <div className="p-1 bg-deep-blue/10 border border-deep-blue/30 rounded text-[8px] font-mono text-deep-blue">Zero Padding Risk</div>
         </div>
       </div>
@@ -1281,7 +1281,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
         </div>
         <div className="mt-auto flex justify-between items-center border-t border-slate-100 pt-4 relative z-10">
            <div className="text-[10px] font-mono text-slate-400 uppercase tracking-widest italic font-black opacity-40">Frequency Response Heuristics</div>
-           <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full border border-slate-200">
+           <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full border border-[hsl(var(--color-border))]">
               <span className="w-2 h-2 bg-coral rounded-full animate-pulse" />
               <span className="text-[8px] font-black text-slate-500 uppercase">Ku: Ultimate Gain</span>
            </div>
@@ -1362,7 +1362,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
              <span className="text-white text-[8px] font-black">S</span>
           </div>
           <div className="w-12 h-12 rounded-full bg-slate-50 border-2 border-slate-100 flex items-center justify-center shadow-inner">
-             <Zap size={20} className="text-[#F7B801] animate-pulse" />
+             <Zap size={20} className="text-[hsl(var(--color-accent))] animate-pulse" />
           </div>
         </motion.div>
         
@@ -1382,25 +1382,25 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
       <div className="absolute inset-0 bg-grid-slate-900/[0.03]" />
       <div className="flex gap-2 items-center relative z-10 w-full max-w-lg bg-white/40 backdrop-blur-md p-6 rounded-3xl border border-white shadow-2xl">
         <div className="flex flex-col items-center gap-2">
-           <div className="px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[8px] font-mono lowercase text-slate-400 font-bold">I_abc</div>
+           <div className="px-2 py-1 bg-slate-50 border border-[hsl(var(--color-border))] rounded text-[8px] font-mono lowercase text-slate-400 font-bold">I_abc</div>
            <ArrowDown className="text-slate-300" size={12} />
            <motion.div whileHover={{ scale: 1.1 }} className="px-4 py-2 bg-deep-blue text-white rounded-xl font-black text-[10px] shadow-lg shadow-deep-blue/20">CLARKE</motion.div>
         </div>
-        <motion.div animate={{ opacity: [0.2, 0.5, 0.2] }} transition={{ duration: 1, repeat: Infinity }} className="w-6 h-px bg-slate-200" />
+        <motion.div animate={{ opacity: [0.2, 0.5, 0.2] }} transition={{ duration: 1, repeat: Infinity }} className="w-6 h-px bg-[hsl(var(--color-border))]" />
         <div className="flex flex-col items-center gap-2">
-           <div className="px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[8px] font-mono italic lowercase text-slate-400 font-bold">I_αβ</div>
+           <div className="px-2 py-1 bg-slate-50 border border-[hsl(var(--color-border))] rounded text-[8px] font-mono italic lowercase text-slate-400 font-bold">I_αβ</div>
            <ArrowDown className="text-slate-300" size={12} />
            <motion.div whileHover={{ scale: 1.1 }} className="px-4 py-2 bg-coral text-white rounded-xl font-black text-[10px] shadow-lg shadow-coral/20">PARK</motion.div>
         </div>
-        <motion.div animate={{ opacity: [0.2, 0.5, 0.2] }} transition={{ duration: 1, repeat: Infinity, delay: 0.5 }} className="w-6 h-px bg-slate-200" />
+        <motion.div animate={{ opacity: [0.2, 0.5, 0.2] }} transition={{ duration: 1, repeat: Infinity, delay: 0.5 }} className="w-6 h-px bg-[hsl(var(--color-border))]" />
         <div className="flex flex-col items-center gap-2">
-           <div className="px-2 py-1 bg-slate-50 border border-slate-200 rounded text-[8px] font-mono lowercase text-slate-400 font-bold">I_dq</div>
+           <div className="px-2 py-1 bg-slate-50 border border-[hsl(var(--color-border))] rounded text-[8px] font-mono lowercase text-slate-400 font-bold">I_dq</div>
            <ArrowDown className="text-slate-300" size={12} />
            <motion.div whileHover={{ scale: 1.1 }} className="px-4 py-2 bg-emerald-500 text-white rounded-xl font-black text-[10px] shadow-lg shadow-emerald-500/20">PI_REGS</motion.div>
         </div>
-        <motion.div animate={{ opacity: [0.2, 0.5, 0.2] }} transition={{ duration: 1, repeat: Infinity, delay: 1 }} className="w-8 h-px bg-slate-200" />
+        <motion.div animate={{ opacity: [0.2, 0.5, 0.2] }} transition={{ duration: 1, repeat: Infinity, delay: 1 }} className="w-8 h-px bg-[hsl(var(--color-border))]" />
         <div className="flex flex-col items-center gap-2">
-           <motion.div whileHover={{ scale: 1.1 }} className="px-4 py-2 bg-[#F7B801] text-white rounded-xl font-black text-[10px] uppercase shadow-lg shadow-[#F7B801]/20 tracking-widest">SVPWM</motion.div>
+           <motion.div whileHover={{ scale: 1.1 }} className="px-4 py-2 bg-[hsl(var(--color-accent))] text-white rounded-xl font-black text-[10px] uppercase shadow-lg shadow-[hsl(var(--color-accent)/0.2)] tracking-widest">SVPWM</motion.div>
            <span className="text-[7px] font-mono text-slate-400 mt-1 uppercase font-black tracking-widest">Vector Drive</span>
         </div>
       </div>
@@ -1429,8 +1429,8 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
              <div className="absolute left-0 w-6 h-6 bg-white border-2 border-slate-200 rounded-full -translate-x-3 -translate-y-1.5 shadow-sm" />
              {/* End Effector */}
              <div className="absolute right-0 w-8 h-8 flex items-center justify-center">
-                <div className="w-4 h-4 bg-[#F7B801] rounded-full shadow-[0_0_12px_#F7B801] animate-pulse" />
-                <div className="absolute -top-4 text-[8px] font-mono text-[#F7B801] font-black uppercase whitespace-nowrap">End Effector</div>
+                <div className="w-4 h-4 bg-[hsl(var(--color-accent))] rounded-full shadow-[0_0_12px_hsl(var(--color-accent))] animate-pulse" />
+                <div className="absolute -top-4 text-[8px] font-mono text-[hsl(var(--color-accent))] font-black uppercase whitespace-nowrap">End Effector</div>
              </div>
           </motion.div>
         </motion.div>
@@ -1458,7 +1458,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
          </div>
       </div>
       <div className="absolute top-4 left-4 text-[10px] font-mono text-slate-400 uppercase tracking-widest font-black opacity-40">Euler-Lagrange Equation</div>
-      <div className="absolute bottom-4 right-4 text-[10px] font-mono text-[#F7B801] bg-white border border-slate-100 px-3 py-1 rounded-full shadow-sm font-bold">d/dt(∂L/∂q̇) - ∂L/∂q = Q</div>
+      <div className="absolute bottom-4 right-4 text-[10px] font-mono text-[hsl(var(--color-accent))] bg-white border border-slate-100 px-3 py-1 rounded-full shadow-sm font-bold">d/dt(∂L/∂q̇) - ∂L/∂q = Q</div>
     </div>
   ),
   PathPlanningDiagram: () => (
@@ -1470,7 +1470,7 @@ const DIAGRAM_COMPONENTS: Record<string, React.ComponentType<Record<string, any>
              animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 4, repeat: Infinity }}
              className="absolute top-12 left-1/2 -translate-x-1/2 w-16 h-16 bg-slate-100 border-2 border-slate-200 rounded-2xl shadow-sm rotate-12 flex items-center justify-center"
            >
-              <div className="w-8 h-8 border border-slate-200 rounded-lg opacity-20" />
+              <div className="w-8 h-8 border border-[hsl(var(--color-border))] rounded-lg opacity-20" />
            </motion.div>
            <motion.div 
              animate={{ scale: [1.05, 1, 1.05] }} transition={{ duration: 5, repeat: Infinity }}
@@ -1889,13 +1889,13 @@ export default function DayPage({ id, onComplete, streak, onPrevDay, onNextDay }
             <div className="w-full min-h-[420px] rounded-2xl overflow-hidden">
               <SimErrorBoundary simName={simulation.component}>
                 <React.Suspense fallback={
-                  <div className="w-full h-[420px] bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center gap-3 text-slate-400 animate-pulse">
+                  <div className="w-full h-[420px] bg-slate-50 rounded-2xl border border-[hsl(var(--color-border))] flex flex-col items-center justify-center gap-3 text-slate-400 animate-pulse">
                     <span className="text-4xl">⚙️</span>
                     <span className="text-sm font-mono">טוען סימולציה...</span>
                   </div>
                 }>
                   {React.createElement(SIMULATION_COMPONENTS[simulation.component] || (() => (
-                    <div className="w-full h-[420px] bg-slate-50 rounded-2xl border border-slate-200 flex flex-col items-center justify-center gap-3 text-slate-400">
+                    <div className="w-full h-[420px] bg-slate-50 rounded-2xl border border-[hsl(var(--color-border))] flex flex-col items-center justify-center gap-3 text-slate-400">
                       <span className="text-4xl">🔬</span>
                       <span className="text-sm font-mono">{simulation.component}</span>
                       <span className="text-xs">סימולציה בפיתוח</span>
@@ -1908,7 +1908,7 @@ export default function DayPage({ id, onComplete, streak, onPrevDay, onNextDay }
 
           {/* Challenge Section */}
           <section id="challenge" ref={el => { sectionRefs.current['challenge'] = el; }} className="scroll-mt-24 space-y-12">
-            <div className="h-px bg-slate-200" />
+            <div className="h-px bg-[hsl(var(--color-border))]" />
             <div className="space-y-8">
                <h4 className="text-2xl font-black">בוחן המציאות</h4>
                <div className="flex flex-col gap-12">
@@ -1926,7 +1926,7 @@ export default function DayPage({ id, onComplete, streak, onPrevDay, onNextDay }
 
           {/* ── Summary Section ─────────────────────────────────── */}
           <section id="summary" ref={el => { sectionRefs.current['summary'] = el; }} className="scroll-mt-24 space-y-8">
-            <div className="h-px bg-slate-200" />
+            <div className="h-px bg-[hsl(var(--color-border))]" />
 
             {/* Header + short/long toggle */}
             <div className="flex items-center justify-between flex-wrap gap-3">
@@ -1934,7 +1934,7 @@ export default function DayPage({ id, onComplete, streak, onPrevDay, onNextDay }
               {summary_extended && (
                 <button
                   onClick={() => setShowExtended(v => !v)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 text-sm font-bold transition-all hover:border-[hsl(var(--color-primary))] hover:text-[hsl(var(--color-primary))]"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl border border-[hsl(var(--color-border))] text-sm font-bold transition-all hover:border-[hsl(var(--color-primary))] hover:text-[hsl(var(--color-primary))]"
                 >
                   {showExtended ? '📝 סיכום קצר' : '📖 סיכום מורחב'}
                 </button>

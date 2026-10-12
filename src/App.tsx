@@ -36,7 +36,7 @@ function PageTransition({ children }: { children: React.ReactNode }) {
 }
 
 // ─── Admin secret key ──────────────────────────────────────────────
-const ADMIN_KEY = 'ELIAZ2025';
+const ADMIN_KEY = import.meta.env.VITE_ADMIN_KEY ?? '';
 
 export default function App() {
   const [location, setLocation] = useLocation();
