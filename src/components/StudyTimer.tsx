@@ -3,11 +3,29 @@ import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '@/src/lib/utils';
 import { Timer as TimerIcon, Play, Pause, RotateCcw, Settings, X, Check } from 'lucide-react';
 
+
+const TIMER_KEY = 'study_timer';
+
+function loadTimerState(): { timeLeft: number; isActive: boolean; customMinutes: number } | null {
+  try {
+    const raw = localStorage.getItem(TIMER_KEY);
+    if (!raw) return null;
+    const saved = JSON.parse(raw) as { timeLeft: number; isActive: boolean; customMinutes: number; savedAt: number };
+    if (saved.isActive && saved.savedAt) {
+      const elapsed = Math.floor((Date.now() - saved.savedAt) / 1000);
+      const remaining = Math.max(0, saved.timeLeft - elapsed);
+      return { ...saved, timeLeft: remaining, isActive: remaining > 0 };
+    }
+    return saved;
+  } catch { return null; }
+}
+
 export default function StudyTimer({ variant = 'default' }: { variant?: 'default' | 'minimal' }) {
-  const [timeLeft, setTimeLeft] = useState(30 * 60);
-  const [isActive, setIsActive] = useState(false);
+  const _saved = loadTimerState();
+  const [timeLeft, setTimeLeft] = useState(_saved?.timeLeft ?? 30 * 60);
+  const [isActive, setIsActive] = useState(_saved?.isActive ?? false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [customMinutes, setCustomMinutes] = useState(30);
+  const [customMinutes, setCustomMinutes] = useState(_saved?.customMinutes ?? 30);
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -27,6 +45,13 @@ export default function StudyTimer({ variant = 'default' }: { variant?: 'default
     return () => { if (interval) clearInterval(interval); };
   }, [isActive, timeLeft]);
 
+
+  // Persist timer state across navigation
+  useEffect(() => {
+    try {
+      localStorage.setItem(TIMER_KEY, JSON.stringify({ timeLeft, isActive, customMinutes, savedAt: Date.now() }));
+    } catch { /* silent */ }
+  }, [timeLeft, isActive, customMinutes]);
   const playCompletionSound = () => {
     try {
       const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();

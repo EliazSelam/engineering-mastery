@@ -279,7 +279,7 @@ c3a1346 fix: redesign TopNav + cleanup public assets
 **פקודה לפוש (העתק והדבק במלואה):**
 
 ```bash
-cd "/Users/eliazselam/Desktop/app for engineers/app for engineers/v3-final/em-project"
+cd "/Users/eliazselam/Desktop/Eliaz-OS/7_app-30day/engineering-mastery"
 git push origin master:main
 ```
 

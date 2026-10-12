@@ -5,7 +5,7 @@
 import React from 'react';
 
 const W = 560, H = 300;
-const P = '#FF6B35', S = '#004E89', A = '#F7B801', G = '#10B981', R = '#EF4444';
+const P = '#1B2F5A', S = '#004E89', A = '#7B5A3C', G = '#10B981', R = '#EF4444';
 const bg = '#F8FAFC', border = '#E2E8F0', txt = '#1E293B', muted = '#64748B';
 
 const DiagramBase: React.FC<{ children: React.ReactNode; title?: string }> = ({ children, title }) => (
